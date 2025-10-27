@@ -51,9 +51,6 @@ plugins:
 nav:
   - 首页: index.md
   - 培训资料&&教程集合:
-<<<<<<< HEAD
-      - 01_VMWare虚拟机的安装与使用: training/25-10-31VMWareWorkstationPro/index.md
-=======
       - CTF是什么: training/what-is-ctf.md
       - 环境与工具准备: 
         - 01_VMWare虚拟机的安装与使用: training/tools/vmware/index.md
@@ -70,7 +67,6 @@ nav:
         - xxx: ctf/reverse/reverse.md
       - Misc:
         - xxx: ctf/misc/misc.md
->>>>>>> 393a372 (增加nav和目录，修改原有目录结构)
   - wiki建设:
       - 提交规范: contributing/contributing.md
       - 撰写规范: contributing/writing.md
