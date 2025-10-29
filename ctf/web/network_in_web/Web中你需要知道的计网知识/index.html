@@ -1454,21 +1454,21 @@
 <p>Burp Suite 是一个常用的中间人代理，用来拦截、修改和重发 HTTP 请求。把浏览器的代理设置为 Burp 后，你可以在它里看到并操作请求/响应的各部分。</p>
 <p>下面用访问百度（www.baidu.com）的过程做一个演示：</p>
 <ol>
-<li>配置好Burp后，在 Burp 中启用拦截：</li>
-</ol>
+<li>
+<p>配置好Burp后，在 Burp 中启用拦截：</p>
 <p><img alt="image-20251030014725823" src="https://mac-pic-1314279731.cos.ap-nanjing.myqcloud.com/image-20251030014725823.png" /></p>
-<ol>
-<li>在浏览器配置好代理后，访问百度</li>
-</ol>
+</li>
+<li>
+<p>在浏览器配置好代理后，访问百度</p>
 <p><img alt="image-20251030014917708" src="https://mac-pic-1314279731.cos.ap-nanjing.myqcloud.com/image-20251030014917708.png" /></p>
-<ol>
-<li>查看请求（不同版本burp显示可能不同）</li>
-</ol>
+</li>
+<li>
+<p>查看请求（不同版本burp显示可能不同）</p>
 <p><img alt="image-20251030015034917" src="https://mac-pic-1314279731.cos.ap-nanjing.myqcloud.com/image-20251030015034917.png" /></p>
 <p>在其中可以看到，我们发起了一个GET请求，访问了www.baidu.com这个域名的根目录</p>
-<ol>
-<li>查看返回</li>
-</ol>
+</li>
+<li>
+<p>查看返回</p>
 <p>在burp中有两种最常用的方法来查看响应包</p>
 <p>（1）在proxy模块的intercept中：鼠标右键-&gt;Do intercept-&gt;Response to this request</p>
 <p><img alt="image-20251030023015093" src="https://mac-pic-1314279731.cos.ap-nanjing.myqcloud.com/image-20251030023015093.png" /></p>
@@ -1478,6 +1478,8 @@
 <p><img alt="image-20251030024605849" src="https://mac-pic-1314279731.cos.ap-nanjing.myqcloud.com/image-20251030024605849.png" /></p>
 <p>然后在repeater模块中，可以多次改数据包查看不同的相应包</p>
 <p><img alt="image-20251030024645116" src="https://mac-pic-1314279731.cos.ap-nanjing.myqcloud.com/image-20251030024645116.png" /></p>
+</li>
+</ol>
 <h3 id="07">07 小总结<a class="headerlink" href="#07" title="Permanent link">&para;</a></h3>
 <blockquote>
 <p>本页内容只是 Web 安全中与计网相关知识的一小部分，帮助大家建立最基础的概念认知。在真实的渗透测试和 CTF 场景中，你会遇到更多协议细节、更复杂的网络结构，以及大量需要灵活判断的情况。比如抓包分析、代理、内网穿透、端口转发、协议特性漏洞利用等等。</p>
