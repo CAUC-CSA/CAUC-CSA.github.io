@@ -1235,7 +1235,7 @@
 </li>
 <li>
 <p>本地构建运行
-   <div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1"></a>mkdocs<span class="w"> </span>serve
+    <div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1"></a>mkdocs<span class="w"> </span>serve<span class="w"> </span>--livereload
 </span></code></pre></div></td></tr></table></div></p>
 </li>
 <li>
@@ -1244,10 +1244,22 @@
 </ol>
 <h2 id="_3">一些建议<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <ol>
-<li>对于内链使用<code>[]()</code>格式即可，对于希望新标签页打开的链接则需在链接后添加<code>{target="_blank"}</code>:
-   <div class="language-markdown highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Markdown</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1"></a>[<span class="nt">点击这里在新窗口中打开链接</span>](<span class="na">https://example.com</span>){target=&quot;_blank&quot;}
+<li>对于内链使用<code>[]()</code>格式即可，对于希望新标签页打开的链接则需在链接后添加<code>{target="_blank" rel="noopener"}</code>，例如：
+    <div class="language-markdown highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Markdown</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1"></a>[<span class="nt">点击这里在新窗口中打开链接</span>](<span class="na">https://example.com</span>){target=&quot;_blank&quot; rel=&quot;noopener&quot;}
 </span></code></pre></div></td></tr></table></div>
-   from N0rth5ea in 2025-10-28</li>
+    from N0rth5ea in 2025-10-28</li>
+<li>本页跳转时，锚点的使用和md不一致，建议本地运行后点击锚点，通过url的显示设置锚点。
+    </br>例如：url为<code>http://127.0.0.1:8000/contributing/writing/#_3</code>
+    </br>本页面为<code>docs/contributing/writing.md</code>，锚点为<code>#_3</code>，则对应跳转声明是：
+    <div class="language-markdown highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Markdown</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1"></a>[<span class="nt">跳转到3. 编写步骤</span>](<span class="na">#_3</span>)
+</span></code></pre></div></td></tr></table></div>
+    忽略pycharm等报错<code>无法解析定位标记 _3</code>，因为mkdocs对锚点的处理与md不一致，实际跳转是可行的。
+    </br>from N0rth5ea in 2025-10-28</li>
+<li>有些md编辑器会导致缩进为3个空格，导致解析异常，如果发现页面显示不理想可以检查是否缩进问题。
+    </br>也可以使用正则表达式替换所有3个空格为4个空格。（推荐工具Notepad3）
+    <div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1"></a>^\s{3}(?!\s)
+</span></code></pre></div></td></tr></table></div>
+    </br>from N0rth5ea in 2025-10-28</li>
 </ol>
 
 

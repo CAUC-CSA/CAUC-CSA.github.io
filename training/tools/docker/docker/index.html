@@ -2010,10 +2010,10 @@
 </li>
 <li>
 <p><strong>添加镜像源配置</strong> </p>
-</li>
+<ul>
 <li>在 JSON 配置中添加 <code>registry-mirrors</code> 字段</li>
 <li>完整的配置应该类似这样：</li>
-</ol>
+</ul>
 <div class="language-json highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">JSON</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
@@ -2044,10 +2044,14 @@
 </span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14"></a><span class="w">  </span><span class="p">]</span>
 </span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="p">}</span>
 </span></code></pre></div></td></tr></table></div>
-<p>!!! note "注意"
-       如果配置文件中已经有其他字段，只需要添加或修改 <code>registry-mirrors</code> 部分即可。</p>
-<ol>
-<li><strong>点击 Apply &amp; Restart</strong> </li>
+<div class="admonition note">
+<p class="admonition-title">注意</p>
+<p>如果配置文件中已经有其他字段，只需要添加或修改 <code>registry-mirrors</code> 部分即可。</p>
+</div>
+</li>
+<li>
+<p><strong>点击 Apply &amp; Restart</strong> </p>
+</li>
 <li>
 <p>配置会自动保存，Docker Desktop 会自动重启以应用新配置</p>
 </li>
@@ -2367,9 +2371,11 @@
 <h3 id="1">1. 容器资源限制<a class="headerlink" href="#1" title="Permanent link">&para;</a></h3>
 <p>防止某个容器吃掉所有资源：
 <div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-31-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-m<span class="w"> </span>512m<span class="w"> </span>--cpus<span class="o">=</span><span class="s2">&quot;0.5&quot;</span><span class="w"> </span>ubuntu
-</span></code></pre></div></td></tr></table></div>
-- <code>-m</code> 限制内存
-- <code>--cpus</code> 限制 CPU 使用率</p>
+</span></code></pre></div></td></tr></table></div></p>
+<ul>
+<li><code>-m</code> 限制内存</li>
+<li><code>--cpus</code> 限制 CPU 使用率</li>
+</ul>
 <h3 id="2">2. 环境变量<a class="headerlink" href="#2" title="Permanent link">&para;</a></h3>
 <p>传递配置给容器：
 <div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-32-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1"></a>docker<span class="w"> </span>run<span class="w"> </span>-e<span class="w"> </span><span class="nv">DATABASE_URL</span><span class="o">=</span>mysql://localhost<span class="w"> </span>myapp<span class="w"> </span><span class="c1"># 这里是传递了一个数据库的地址</span>
