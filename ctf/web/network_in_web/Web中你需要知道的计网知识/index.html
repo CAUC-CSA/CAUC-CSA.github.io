@@ -12,28 +12,28 @@
         <meta name="author" content="中国民航大学网络安全协会">
       
       
-        <link rel="canonical" href="https://cauc-csa.github.io/training/tools/vmware/">
+        <link rel="canonical" href="https://cauc-csa.github.io/ctf/web/network_in_web/Web%E4%B8%AD%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E8%AE%A1%E7%BD%91%E7%9F%A5%E8%AF%86/">
       
       
-        <link rel="prev" href="../../what-is-ctf/">
+        <link rel="prev" href="../../web/">
       
       
-        <link rel="next" href="../docker/docker/">
+        <link rel="next" href="../../../crypto/crypto/">
       
       
-      <link rel="icon" href="../../../images/csa_logo.png">
+      <link rel="icon" href="../../../../images/csa_logo.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.22">
     
     
       
-        <title>01_VMWare虚拟机的安装与使用 - CSA_Wiki</title>
+        <title>Web中你需要知道的计网知识 - CSA_Wiki</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.84d31ad4.min.css">
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.84d31ad4.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -52,7 +52,7 @@
       
     
     
-    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -78,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#vmware-workstation-pro-17" class="md-skip">
+        <a href="#01-ip" class="md-skip">
           跳转至
         </a>
       
@@ -94,9 +94,9 @@
 
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="页眉">
-    <a href="../../.." title="CSA_Wiki" class="md-header__button md-logo" aria-label="CSA_Wiki" data-md-component="logo">
+    <a href="../../../.." title="CSA_Wiki" class="md-header__button md-logo" aria-label="CSA_Wiki" data-md-component="logo">
       
-  <img src="../../../images/csa_logo.png" alt="logo">
+  <img src="../../../../images/csa_logo.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -113,7 +113,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              01_VMWare虚拟机的安装与使用
+              Web中你需要知道的计网知识
             
           </span>
         </div>
@@ -225,7 +225,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../.." class="md-tabs__link">
+      <a href="../../../.." class="md-tabs__link">
         
   
   
@@ -242,13 +242,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../../what-is-ctf/" class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../../../../training/what-is-ctf/" class="md-tabs__link">
           
   
   
@@ -264,11 +262,13 @@
   
   
   
+    
+  
   
     
     
-      <li class="md-tabs__item">
-        <a href="../../../ctf/ctf_index/" class="md-tabs__link">
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../ctf_index/" class="md-tabs__link">
           
   
   
@@ -288,7 +288,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../contributing/contributing/" class="md-tabs__link">
+        <a href="../../../../contributing/contributing/" class="md-tabs__link">
           
   
   
@@ -328,9 +328,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="CSA_Wiki" class="md-nav__button md-logo" aria-label="CSA_Wiki" data-md-component="logo">
+    <a href="../../../.." title="CSA_Wiki" class="md-nav__button md-logo" aria-label="CSA_Wiki" data-md-component="logo">
       
-  <img src="../../../images/csa_logo.png" alt="logo">
+  <img src="../../../../images/csa_logo.png" alt="logo">
 
     </a>
     CSA_Wiki
@@ -357,7 +357,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../.." class="md-nav__link">
+      <a href="../../../.." class="md-nav__link">
         
   
   
@@ -376,29 +376,24 @@
       
   
   
-    
   
   
-  
     
     
     
     
       
-        
-        
-      
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
         
           
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
             
   
   
@@ -411,7 +406,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
             培训资料&&教程集合
@@ -425,7 +420,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../what-is-ctf/" class="md-nav__link">
+      <a href="../../../../training/what-is-ctf/" class="md-nav__link">
         
   
   
@@ -445,8 +440,6 @@
                 
   
   
-    
-  
   
   
     
@@ -457,11 +450,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
         
           
           <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
@@ -477,7 +470,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2_2">
             <span class="md-nav__icon md-icon"></span>
             环境与工具准备
@@ -488,32 +481,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    01_VMWare虚拟机的安装与使用
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../../../training/tools/vmware/" class="md-nav__link">
         
   
   
@@ -524,53 +495,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="目录">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目录
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#vmware-workstation-pro-17_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      VMWare Workstation Pro 17 下载安装
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      镜像文件下载
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      安装虚拟机
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -583,7 +507,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../docker/docker/" class="md-nav__link">
+      <a href="../../../../training/tools/docker/docker/" class="md-nav__link">
         
   
   
@@ -614,7 +538,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../lab/" class="md-nav__link">
+      <a href="../../../../training/lab/" class="md-nav__link">
         
   
   
@@ -641,24 +565,29 @@
       
   
   
+    
   
   
+  
     
     
     
     
-      
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
             
   
   
@@ -671,7 +600,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             CTF技能树
@@ -685,7 +614,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../ctf/ctf_index/" class="md-nav__link">
+      <a href="../../../ctf_index/" class="md-nav__link">
         
   
   
@@ -705,6 +634,8 @@
                 
   
   
+    
+  
   
   
     
@@ -715,11 +646,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
         
           
           <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
@@ -735,7 +666,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_2">
             <span class="md-nav__icon md-icon"></span>
             Web
@@ -749,7 +680,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../ctf/web/web/" class="md-nav__link">
+      <a href="../../web/" class="md-nav__link">
         
   
   
@@ -769,10 +700,30 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../../ctf/web/network_in_web/Web%E4%B8%AD%E4%BD%A0%E9%9C%80%E8%A6%81%E7%9F%A5%E9%81%93%E7%9A%84%E8%AE%A1%E7%BD%91%E7%9F%A5%E8%AF%86/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Web中你需要知道的计网知识
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -783,6 +734,87 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#01-ip" class="md-nav__link">
+    <span class="md-ellipsis">
+      01 IP 地址 — 是什么、为什么、怎么查
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#02-port" class="md-nav__link">
+    <span class="md-ellipsis">
+      02 端口（Port）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#03-domain-name-dns" class="md-nav__link">
+    <span class="md-ellipsis">
+      03 域名（Domain Name）与 DNS
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#04-ip" class="md-nav__link">
+    <span class="md-ellipsis">
+      04 IP、端口、域名之间的关系
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#05-http" class="md-nav__link">
+    <span class="md-ellipsis">
+      05 HTTP协议（基础）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#06-burp-suite-http" class="md-nav__link">
+    <span class="md-ellipsis">
+      06 在 Burp Suite 中分析 HTTP
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#07" class="md-nav__link">
+    <span class="md-ellipsis">
+      07 小总结
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -844,7 +876,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../ctf/crypto/crypto/" class="md-nav__link">
+      <a href="../../../crypto/crypto/" class="md-nav__link">
         
   
   
@@ -916,7 +948,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../ctf/pwn/pwn/" class="md-nav__link">
+      <a href="../../../pwn/pwn/" class="md-nav__link">
         
   
   
@@ -988,7 +1020,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../ctf/reverse/reverse/" class="md-nav__link">
+      <a href="../../../reverse/reverse/" class="md-nav__link">
         
   
   
@@ -1060,7 +1092,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../ctf/misc/misc/" class="md-nav__link">
+      <a href="../../../misc/misc/" class="md-nav__link">
         
   
   
@@ -1139,7 +1171,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../contributing/contributing/" class="md-nav__link">
+      <a href="../../../../contributing/contributing/" class="md-nav__link">
         
   
   
@@ -1162,7 +1194,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../contributing/writing/" class="md-nav__link">
+      <a href="../../../../contributing/writing/" class="md-nav__link">
         
   
   
@@ -1202,8 +1234,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1212,27 +1242,63 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#vmware-workstation-pro-17_1" class="md-nav__link">
+  <a href="#01-ip" class="md-nav__link">
     <span class="md-ellipsis">
-      VMWare Workstation Pro 17 下载安装
+      01 IP 地址 — 是什么、为什么、怎么查
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
+  <a href="#02-port" class="md-nav__link">
     <span class="md-ellipsis">
-      镜像文件下载
+      02 端口（Port）
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
+  <a href="#03-domain-name-dns" class="md-nav__link">
     <span class="md-ellipsis">
-      安装虚拟机
+      03 域名（Domain Name）与 DNS
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#04-ip" class="md-nav__link">
+    <span class="md-ellipsis">
+      04 IP、端口、域名之间的关系
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#05-http" class="md-nav__link">
+    <span class="md-ellipsis">
+      05 HTTP协议（基础）
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#06-burp-suite-http" class="md-nav__link">
+    <span class="md-ellipsis">
+      06 在 Burp Suite 中分析 HTTP
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#07" class="md-nav__link">
+    <span class="md-ellipsis">
+      07 小总结
     </span>
   </a>
   
@@ -1257,90 +1323,165 @@
   
 
 
-<h1 id="vmware-workstation-pro-17">VMWare Workstation Pro 17 安装与配置<a class="headerlink" href="#vmware-workstation-pro-17" title="Permanent link">&para;</a></h1>
-<hr />
-<p>最后更新于 2025-10-27 by N0rth5ea</p>
-<div class="admonition warning">
-<p class="admonition-title">注意</p>
-<p>VMWare Workstation Pro 个人非商业使用已免费提供，却有人花钱买盗版，别做大冤种哈。</p>
-</div>
-<details class="note">
-<summary>参考文章</summary>
+  <h1>Web中你需要知道的计网知识</h1>
+
+<h3 id="01-ip">01 IP 地址 — 是什么、为什么、怎么查<a class="headerlink" href="#01-ip" title="Permanent link">&para;</a></h3>
+<p><strong>定义</strong>：IP 地址（Internet Protocol Address）是网络中设备的唯一标识，用于定位设备并实现通信，类似“门牌号”。</p>
+<p><strong>常见类型</strong></p>
 <ul>
-<li><a href="https://blog.csdn.net/air__j/article/details/142798842" target="_blank">VMware Workstation Pro 17官网下载安装教程</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/1937329854803603766" target="_blank">VMware Workstation Pro 17 官网渠道下载安装教程</a></li>
-<li><a href="https://zhuanlan.zhihu.com/p/684460783" target="_blank">Ubuntu安装步骤</a></li>
-<li><a href="https://blog.csdn.net/Zachyy/article/details/146372003" target="_blank">Kali安装步骤</a></li>
+<li><strong>IPv4</strong>：32 位，点分十进制，如 192.168.0.1。</li>
+<li><strong>IPv6</strong>：128 位，冒号分段，如 2001:0db8::1。</li>
 </ul>
-</details>
-<div class="admonition note">
-<p class="admonition-title">什么是虚拟机，什么是VMWare，我到底在下什么</p>
-<p>虚拟机（Virtual Machine，简称 VM）是一种通过软件模拟的计算机系统，它可以在一台物理计算机（称为宿主机）上运行一个或多个独立的操作系统环境（称为客户机）。每个虚拟机拥有自己的虚拟 CPU、内存、硬盘、网络接口等硬件资源，就像一台真实的计算机一样，但这些资源实际上是由宿主机的操作系统和虚拟化软件分配和管理的。虚拟机常用于开发测试、运行不同操作系统、隔离环境、学习网络安全技术等场景。
-</br>VMware Workstation 是由 VMware 公司开发的一款运行在 Windows 或 Linux 系统上的桌面虚拟化软件。它允许用户在自己的电脑上创建和管理多个虚拟机，每个虚拟机可以安装不同的操作系统（如 Windows、Linux、甚至某些版本的 macOS），并支持快照、克隆、网络配置、共享文件夹等高级功能。对于网络安全学习者来说，VMware Workstation 常被用来搭建实验环境，比如运行靶机、测试恶意软件、练习渗透测试等，以确保操作不会影响到真实系统。
-</br>所以，当你下载 VMware Workstation 时，你下载的是一个可以在你自己的电脑上创建和运行虚拟机的软件工具，而不是虚拟机本身。你需要另外准备操作系统的安装镜像（如 ISO 文件），然后在 VMware Workstation 中创建虚拟机并安装系统。
-</br>by Qwen3-Max</br></br>
-因此显然你的VMWare应该下for windows版本（如果你的电脑是windows）</p>
-</div>
-<h2 id="vmware-workstation-pro-17_1">VMWare Workstation Pro 17 下载安装<a class="headerlink" href="#vmware-workstation-pro-17_1" title="Permanent link">&para;</a></h2>
-<p><a href="https://pan.baidu.com/s/1EojI9HYi8sE9gKQCkq9C-w?pwd=9d3p" target="_blank">直接下载链接，版本25H2，如果需要其他版本参见下方手动安装步骤</a></p>
-<details class="note">
-<summary>手动安装</summary>
+<p><strong>公网IP vs 私网IP</strong></p>
+<ul>
+<li><strong>公网 IP</strong>：可被互联网直接访问（ISP 分配），除了内网IP以外的其他IP段。</li>
+<li><strong>私有 IP</strong>：局域网内部使用，无法在公网直接路由。常见范围：</li>
+<li>A 类：10.0.0.0/8</li>
+<li>B 类：172.16.0.0/12</li>
+<li>C 类：192.168.0.0/16</li>
+</ul>
+<p><strong>如何查看本机 IP</strong></p>
+<ul>
+<li>Windows: ipconfig</li>
+<li>macOS / Linux: ifconfig 或 ip addr show</li>
+</ul>
+<h3 id="02-port">02 端口（Port）<a class="headerlink" href="#02-port" title="Permanent link">&para;</a></h3>
+<p><strong>定义</strong>：端口用来区分同一台主机上的不同网络服务。IP + 端口 组合（IP:Port）唯一标识一个网络服务实例，例如 192.168.1.100:80。</p>
+<p><strong>端口范围</strong>：端口号范围为0到65535，其中：</p>
+<ul>
+<li><strong>知名端口（0-1023）</strong>：用于常见协议和服务，较为固定。例如HTTP为80，HTTPS为443，FTP为21。</li>
+<li><strong>注册端口（1024-49151）</strong>：为特定应用注册，通常由开发者使用。</li>
+<li><strong>动态/私有端口（49152-65535）</strong>：为临时连接分配，通常由操作系统动态使用。</li>
+</ul>
+<h4 id="_1"><strong>常见端口和协议</strong><a class="headerlink" href="#_1" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>HTTP（80）和HTTPS（443）</strong>：网页浏览服务，HTTP不加密，HTTPS加密。</li>
+<li><strong>FTP（21）</strong>：文件传输协议，用于文件上传和下载。</li>
+<li><strong>SSH（22）</strong>：安全外壳协议，远程安全登录。</li>
+<li><strong>SMTP（25）</strong>：简单邮件传输协议，用于发送邮件。</li>
+<li><strong>DNS（53）</strong>：域名系统协议，负责将域名解析为IP地址。</li>
+</ul>
+<h3 id="03-domain-name-dns">03 域名（Domain Name）与 DNS<a class="headerlink" href="#03-domain-name-dns" title="Permanent link">&para;</a></h3>
+<p><strong>域名定义</strong>：域名（Domain Name）是互联网中易于记忆的地址，代表一个IP地址，用户通过域名访问网络资源。域名是IP地址的别名，使人类无需记忆复杂的数字串。例如学校的域名：cauc.edu.cn</p>
+<p><strong>结构</strong>：域名由多个层次组成，分级由点号（.）分隔，如www.example.com。</p>
+<ul>
+<li><strong>顶级域名（TLD）</strong>：域名的最右部分，代表域的类型或所属国家，如.com、.org、.cn、.edu等。</li>
+<li><strong>二级域名</strong>：紧靠顶级域名左侧部分，通常为注册者的名称，例如example。</li>
+<li><strong>三级域名</strong>：更靠左侧的部分，通常为服务名，如www(万维网)，也可以自定义其他名称，如blog.example.com。</li>
+</ul>
+<p><strong>DNS（域名解析）</strong></p>
+<ul>
+<li>工作流程：浏览器访问域名 → 本地/递归 DNS 服务器 → 根/顶级/权威 DNS → 返回 IP。</li>
+<li>最终把域名解析成 IP，浏览器用这个 IP 建立连接。</li>
+</ul>
+<h3 id="04-ip">04 IP、端口、域名之间的关系<a class="headerlink" href="#04-ip" title="Permanent link">&para;</a></h3>
+<p>用户访问 https://www.example.com:443 的过程：</p>
+<ol>
+<li>DNS 将 www.example.com 解析为某个 IP（例如 93.184.216.34）。</li>
+<li>浏览器与 93.184.216.34 的端口 443 建立 TCP（并进行 TLS）连接。</li>
+<li>请求通过该 IP 与端口到达服务器，服务器处理并返回响应。</li>
+</ol>
+<h3 id="05-http">05 HTTP协议（基础）<a class="headerlink" href="#05-http" title="Permanent link">&para;</a></h3>
+<p><strong>基础概念</strong>：<strong>HTTP（超文本传输协议）</strong>是客户端与服务器之间进行通信的协议，基于请求-响应模型。</p>
+<p><strong>特点</strong></p>
+<ul>
+<li>基于请求—响应模型，通常运行在 TCP协议（HTTP/HTTPS）之上。</li>
+<li><strong>无状态</strong>：每个请求独立，服务器默认不保存请求间状态（因此需要 Cookie / Session 等机制）。</li>
+</ul>
+<p><strong>HTTP 请求结构（示例）</strong></p>
+<div class="language-http highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">HTTP</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nf">GET</span> <span class="nn">/index.html</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="na">Host</span><span class="o">:</span> <span class="l">www.example.com</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="na">User-Agent</span><span class="o">:</span> <span class="l">Mozilla/5.0</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="na">Accept</span><span class="o">:</span> <span class="l">text/html</span>
+</span></code></pre></div></td></tr></table></div>
+<div class="language-http highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">HTTP</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span>
+<span class="normal"><a href="#__codelineno-1-4">4</a></span>
+<span class="normal"><a href="#__codelineno-1-5">5</a></span>
+<span class="normal"><a href="#__codelineno-1-6">6</a></span>
+<span class="normal"><a href="#__codelineno-1-7">7</a></span>
+<span class="normal"><a href="#__codelineno-1-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nf">POST</span> <span class="nn">/login</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="na">Host</span><span class="o">:</span> <span class="l">www.example.com</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="na">User-Agent</span><span class="o">:</span> <span class="l">Mozilla/5.0</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="na">Content-Length</span><span class="o">:</span> <span class="l">40</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7"></a>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="p">{</span><span class="nt">&quot;username&quot;</span><span class="p">:</span><span class="s2">&quot;alice&quot;</span><span class="p">,</span><span class="nt">&quot;password&quot;</span><span class="p">:</span><span class="s2">&quot;s3cr3t&quot;</span><span class="p">}</span>
+</span></code></pre></div></td></tr></table></div>
 <ul>
 <li>
-<p>进入<a href="https://www.vmware.com/" target="_blank">VMWare 官网</a></p>
+<p><strong>请求行</strong>：请求方法（GET/POST/PUT/DELETE 等） + 资源路径（此处为<code>index.html</code>） + HTTP 版本（此处为1.1）。</p>
 </li>
 <li>
-<p>搜索并选择<code>Fusion and Workstation</code>或直接点开<a href="https://www.vmware.com/products/desktop-hypervisor/workstation-and-fusion" target="_blank">逃课-搜索结果</a></p>
+<p><strong>请求头</strong>：传递元数据（Host、User-Agent、Cookie、Content-Type 等）。</p>
 </li>
-<li>
-<p>选择VMware Workstation Pro for PC下载（点击Download Now）</p>
-<p><img alt="image-DownloadChoice" src="image-DownloadChoice.png" /></p>
-</li>
-<li>
-<p>会跳转至broadcom网页，注册登录（注册在右上角切换，什么邮箱都行，补充信息地方选I'll do it later）。</p>
-<p><img alt="image-DownloadRegister" src="image-DownloadRegister.png" />
-<img alt="image-DownloadRegisterIgnore" src="image-DownloadRegisterIgnore.png" /></p>
-</li>
-<li>
-<p>逃课方法：<a href="https://support.broadcom.com/group/ecx/productdownloads?subfamily=VMware%20Workstation%20Pro&amp;freeDownloads=true" target="_blank">不知道啥时候会过时的直链（也需要先登录）</a></p>
-</li>
-<li>
-<p>通用方法：在My Dashboard中搜索<code>VMware Workstation</code>，点开第一篇，向下翻到References，找到VMware Workstation，第一个链接即为下载链接</p>
-<p><img alt="image-DownloadUrl" src="image-DownloadUrl.png" /></p>
-</li>
-<li>
-<p>一般下载最新版即可（这里可能有一个勾选框需要点进去看一下才能勾上，然后才能下载），版本号说明：25H2为25年下半年版本</p>
-</li>
-<li>
-<p>安装包直接安装即可，注意安装位置。</p>
-</li>
+<li><strong>请求体</strong>：仅在需要时包含数据（如 POST 的表单或 JSON），例如上示例中的<code>{"username":"alice","password":"s3cr3t"}</code>。</li>
 </ul>
-</details>
-<h2 id="_1">镜像文件下载<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<div class="admonition note">
-<p class="admonition-title">什么是镜像文件</p>
-<p>系统ISO镜像文件是一种包含完整光盘内容（如操作系统安装文件和引导信息）的单一文件，通常用于安装系统、软件分发或制作可启动U盘。
-by Qwen3-Max</br>
-如果你需要在VMWare里安装Kali，则你需要先下载Kali的ISO镜像文件，再通过VMWare挂载上去。</p>
-</div>
-<p>下载链接，无论什么系统，你的目标是一个iso文件，大小一般是几到十几GB:</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">ubuntu 清华源镜像</label><label for="__tabbed_1_2">Kali 官方</label></div>
-<div class="tabbed-content">
-<div class="tabbed-block">
-<p><a href="https://mirrors.tuna.tsinghua.edu.cn/ubuntu-releases/" target="_blank">https://mirrors.tuna.tsinghua.edu.cn/ubuntu-releases/</a>
-</br>比较好用的版本：2204、2404</p>
-</div>
-<div class="tabbed-block">
-<p><a href="https://www.kali.org/get-kali/#kali-installer-images" target="_blank">https://www.kali.org/get-kali/#kali-installer-images</a></p>
-</div>
-</div>
-</div>
-<h2 id="_2">安装虚拟机<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p><strong>HTTP 响应结构（示例）</strong></p>
+<div class="language-http highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">HTTP</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span>
+<span class="normal"><a href="#__codelineno-2-4">4</a></span>
+<span class="normal"><a href="#__codelineno-2-5">5</a></span>
+<span class="normal"><a href="#__codelineno-2-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="na">Content-Type</span><span class="o">:</span> <span class="l">text/html; charset=UTF-8</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="na">Content-Length</span><span class="o">:</span> <span class="l">1024</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="na">Set-Cookie</span><span class="o">:</span> <span class="l">sessionId=abc123</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5"></a>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="p">&lt;</span><span class="nt">HTML</span><span class="p">&gt;</span>...页面内容...<span class="p">&lt;/</span><span class="nt">HTML</span><span class="p">&gt;</span>
+</span></code></pre></div></td></tr></table></div>
 <ul>
-<li>一般按教程装一两次后面就会装了，都是一步步走的傻瓜步骤</li>
-<li><a href="https://zhuanlan.zhihu.com/p/684460783" target="_blank">Ubuntu安装步骤</a></li>
-<li><a href="https://blog.csdn.net/Zachyy/article/details/146372003" target="_blank">Kali安装步骤</a></li>
+<li><strong>状态行</strong>：版本 + 状态码（200/404/500 等）。</li>
+<li><strong>响应头</strong>：元数据（Content-Type、Set-Cookie、Content-Length 等）。</li>
+<li><strong>响应体</strong>：实际资源（HTML、JSON、图片等）。</li>
 </ul>
+<p><strong>常见状态码分类</strong></p>
+<ul>
+<li><strong>2xx</strong>：成功（200 OK）</li>
+<li><strong>3xx</strong>：重定向（301/302）</li>
+<li><strong>4xx</strong>：客户端错误（404/403）</li>
+<li><strong>5xx</strong>：服务器错误（500）</li>
+</ul>
+<h3 id="06-burp-suite-http">06 在 Burp Suite 中分析 HTTP<a class="headerlink" href="#06-burp-suite-http" title="Permanent link">&para;</a></h3>
+<p>Burp Suite 是一个常用的中间人代理，用来拦截、修改和重发 HTTP 请求。把浏览器的代理设置为 Burp 后，你可以在它里看到并操作请求/响应的各部分。</p>
+<p>下面用访问百度（www.baidu.com）的过程做一个演示：</p>
+<ol>
+<li>配置好Burp后，在 Burp 中启用拦截：</li>
+</ol>
+<p><img alt="image-20251030014725823" src="https://mac-pic-1314279731.cos.ap-nanjing.myqcloud.com/image-20251030014725823.png" /></p>
+<ol>
+<li>在浏览器配置好代理后，访问百度</li>
+</ol>
+<p><img alt="image-20251030014917708" src="https://mac-pic-1314279731.cos.ap-nanjing.myqcloud.com/image-20251030014917708.png" /></p>
+<ol>
+<li>查看请求（不同版本burp显示可能不同）</li>
+</ol>
+<p><img alt="image-20251030015034917" src="https://mac-pic-1314279731.cos.ap-nanjing.myqcloud.com/image-20251030015034917.png" /></p>
+<p>在其中可以看到，我们发起了一个GET请求，访问了www.baidu.com这个域名的根目录</p>
+<ol>
+<li>查看返回</li>
+</ol>
+<p>在burp中有两种最常用的方法来查看响应包</p>
+<p>（1）在proxy模块的intercept中：鼠标右键-&gt;Do intercept-&gt;Response to this request</p>
+<p><img alt="image-20251030023015093" src="https://mac-pic-1314279731.cos.ap-nanjing.myqcloud.com/image-20251030023015093.png" /></p>
+<p>获得响应包，但这种方式只能单次查看，只要放掉这个包，无法再查看</p>
+<p><img alt="image-20251030023234326" src="https://mac-pic-1314279731.cos.ap-nanjing.myqcloud.com/image-20251030023234326.png" /></p>
+<p>（2）把请求包发送到repeater模块</p>
+<p><img alt="image-20251030024605849" src="https://mac-pic-1314279731.cos.ap-nanjing.myqcloud.com/image-20251030024605849.png" /></p>
+<p>然后在repeater模块中，可以多次改数据包查看不同的相应包</p>
+<p><img alt="image-20251030024645116" src="https://mac-pic-1314279731.cos.ap-nanjing.myqcloud.com/image-20251030024645116.png" /></p>
+<h3 id="07">07 小总结<a class="headerlink" href="#07" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>本页内容只是 Web 安全中与计网相关知识的一小部分，帮助大家建立最基础的概念认知。在真实的渗透测试和 CTF 场景中，你会遇到更多协议细节、更复杂的网络结构，以及大量需要灵活判断的情况。比如抓包分析、代理、内网穿透、端口转发、协议特性漏洞利用等等。</p>
+<p>后续大家遇到一些不懂的内容和知识，及时自己不断的查漏补缺，继续拓展知识体系，例如深入理解 TCP/IP 分层模型，HTTPS加密机制等等。</p>
+<p>如果你想更轻松地入门网络原理，强烈推荐阅读 <strong>崔鸿老师的《白话计算机网络》</strong> ，非常适合作为学习配套材料。</p>
+<p>对于本篇讲的内容，再多都只是纸上谈兵，自己打开burp，抓几次包，观察几次请求与响应的变化。</p>
+</blockquote>
 
 
 
@@ -1376,7 +1517,7 @@ by Qwen3-Max</br>
       <nav class="md-footer__inner md-grid" aria-label="页脚" >
         
           
-          <a href="../../what-is-ctf/" class="md-footer__link md-footer__link--prev" aria-label="上一页: CTF是什么">
+          <a href="../../web/" class="md-footer__link md-footer__link--prev" aria-label="上一页: Introduction">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1386,20 +1527,20 @@ by Qwen3-Max</br>
                 上一页
               </span>
               <div class="md-ellipsis">
-                CTF是什么
+                Introduction
               </div>
             </div>
           </a>
         
         
           
-          <a href="../docker/docker/" class="md-footer__link md-footer__link--next" aria-label="下一页: 02_Docker超绝入门指南">
+          <a href="../../../crypto/crypto/" class="md-footer__link md-footer__link--next" aria-label="下一页: xxx">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 下一页
               </span>
               <div class="md-ellipsis">
-                02_Docker超绝入门指南
+                xxx
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -1441,14 +1582,14 @@ by Qwen3-Max</br>
     
     
       
-      <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.annotate", "content.code.copy", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.tabs", "navigation.tabs.sticky", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../../../..", "features": ["content.code.annotate", "content.code.copy", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.tabs", "navigation.tabs.sticky", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      <script src="../../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.js"></script>
       
-        <script src="../../../javascripts/pangu-init.js"></script>
+        <script src="../../../../javascripts/pangu-init.js"></script>
       
     
   </body>
