@@ -2019,17 +2019,19 @@
 </div>
 <h4 id="docker-desktop">Docker Desktop 配置方法<a class="headerlink" href="#docker-desktop" title="Permanent link">&para;</a></h4>
 <ol>
-<li><strong>打开 Docker Desktop</strong> </li>
-<li>右键点击系统托盘中的 Docker 图标🐳</li>
 <li>
-<p>选择 <strong>Settings</strong> （设置）（那个小齿轮）或 <strong>Preferences</strong> （首选项）（部分老版本是这样的）</p>
+<p><strong>打开 Docker Desktop</strong> </p>
+<ul>
+<li>右键点击系统托盘中的 Docker 图标🐳</li>
+<li>选择 <strong>Settings</strong> （设置）（那个小齿轮）或 <strong>Preferences</strong> （首选项）（部分老版本是这样的）</li>
+</ul>
 </li>
 <li>
 <p><strong>进入镜像源配置</strong> </p>
-</li>
+<ul>
 <li>点击左侧菜单的 <strong>Docker Engine</strong> </li>
-<li>
-<p>你会看到一个 JSON 配置文件编辑器</p>
+<li>你会看到一个 JSON 配置文件编辑器</li>
+</ul>
 </li>
 <li>
 <p><strong>添加镜像源配置</strong> </p>
@@ -2074,15 +2076,15 @@
 </li>
 <li>
 <p><strong>点击 Apply &amp; Restart</strong> </p>
-</li>
-<li>
-<p>配置会自动保存，Docker Desktop 会自动重启以应用新配置</p>
+<ul>
+<li>配置会自动保存，Docker Desktop 会自动重启以应用新配置</li>
+</ul>
 </li>
 <li>
 <p><strong>验证配置是否生效</strong> 
-   <div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1"></a>docker<span class="w"> </span>info
+    <div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1"></a>docker<span class="w"> </span>info
 </span></code></pre></div></td></tr></table></div>
-   查看输出中的 <code>Registry Mirrors:</code> 部分，应该能看到你配置的镜像源地址。</p>
+    查看输出中的 <code>Registry Mirrors:</code> 部分，应该能看到你配置的镜像源地址。</p>
 </li>
 </ol>
 <h4 id="2024-2025">常用国内镜像源（以下为2024-2025年实测可用的镜像源）<a class="headerlink" href="#2024-2025" title="Permanent link">&para;</a></h4>
@@ -2487,26 +2489,26 @@
 <ol>
 <li>
 <p><strong>不要以 root 用户运行</strong> （如果可能）
-   <div class="language-dockerfile highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Docker</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-39-1">1</a></span>
+    <div class="language-dockerfile highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Docker</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-39-1">1</a></span>
 <span class="normal"><a href="#__codelineno-39-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1"></a><span class="k">RUN</span><span class="w"> </span>useradd<span class="w"> </span>-m<span class="w"> </span>myuser
 </span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2"></a><span class="k">USER</span><span class="w"> </span><span class="s">myuser</span>
 </span></code></pre></div></td></tr></table></div></p>
 </li>
 <li>
 <p><strong>定期更新基础镜像</strong> 
-   <div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-40-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1"></a>docker<span class="w"> </span>pull<span class="w"> </span>ubuntu:latest<span class="w">  </span><span class="c1"># 拉取最新版本</span>
+    <div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-40-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1"></a>docker<span class="w"> </span>pull<span class="w"> </span>ubuntu:latest<span class="w">  </span><span class="c1"># 拉取最新版本</span>
 </span></code></pre></div></td></tr></table></div></p>
 </li>
 <li>
 <p><strong>不要挂载敏感目录</strong> 
-   <div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-41-1">1</a></span>
+    <div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-41-1">1</a></span>
 <span class="normal"><a href="#__codelineno-41-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1"></a><span class="c1"># 危险！</span>
 </span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2"></a>docker<span class="w"> </span>run<span class="w"> </span>-v<span class="w"> </span>/:/host<span class="w"> </span>ubuntu
 </span></code></pre></div></td></tr></table></div></p>
 </li>
 <li>
 <p><strong>限制容器权限</strong> 
-   <div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-42-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--read-only<span class="w"> </span>ubuntu<span class="w">  </span><span class="c1"># 只读文件系统</span>
+    <div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-42-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1"></a>docker<span class="w"> </span>run<span class="w"> </span>--read-only<span class="w"> </span>ubuntu<span class="w">  </span><span class="c1"># 只读文件系统</span>
 </span></code></pre></div></td></tr></table></div></p>
 </li>
 </ol>
