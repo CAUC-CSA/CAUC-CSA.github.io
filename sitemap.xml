@@ -1,67 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
-         <loc>https://cauc-csa.github.io/</loc>
+         <loc>https://cauc-csa.org.cn/</loc>
          <lastmod>2025-10-31</lastmod>
     </url>
     <url>
-         <loc>https://cauc-csa.github.io/contributing/contributing/</loc>
+         <loc>https://cauc-csa.org.cn/contributing/contributing/</loc>
          <lastmod>2025-10-31</lastmod>
     </url>
     <url>
-         <loc>https://cauc-csa.github.io/contributing/writing/</loc>
+         <loc>https://cauc-csa.org.cn/contributing/writing/</loc>
          <lastmod>2025-10-31</lastmod>
     </url>
     <url>
-         <loc>https://cauc-csa.github.io/ctf/ctf_index/</loc>
+         <loc>https://cauc-csa.org.cn/ctf/ctf_index/</loc>
          <lastmod>2025-10-31</lastmod>
     </url>
     <url>
-         <loc>https://cauc-csa.github.io/ctf/crypto/crypto/</loc>
+         <loc>https://cauc-csa.org.cn/ctf/crypto/crypto/</loc>
          <lastmod>2025-10-31</lastmod>
     </url>
     <url>
-         <loc>https://cauc-csa.github.io/ctf/misc/misc/</loc>
+         <loc>https://cauc-csa.org.cn/ctf/misc/misc/</loc>
          <lastmod>2025-10-31</lastmod>
     </url>
     <url>
-         <loc>https://cauc-csa.github.io/ctf/pwn/pwn/</loc>
+         <loc>https://cauc-csa.org.cn/ctf/pwn/pwn/</loc>
          <lastmod>2025-10-31</lastmod>
     </url>
     <url>
-         <loc>https://cauc-csa.github.io/ctf/reverse/reverse/</loc>
+         <loc>https://cauc-csa.org.cn/ctf/reverse/reverse/</loc>
          <lastmod>2025-10-31</lastmod>
     </url>
     <url>
-         <loc>https://cauc-csa.github.io/ctf/web/web/</loc>
+         <loc>https://cauc-csa.org.cn/ctf/web/web/</loc>
          <lastmod>2025-10-31</lastmod>
     </url>
     <url>
-         <loc>https://cauc-csa.github.io/ctf/web/network_in_web/network_in_web/</loc>
+         <loc>https://cauc-csa.org.cn/ctf/web/network_in_web/network_in_web/</loc>
          <lastmod>2025-10-31</lastmod>
     </url>
     <url>
-         <loc>https://cauc-csa.github.io/training/lab/</loc>
+         <loc>https://cauc-csa.org.cn/training/lab/</loc>
          <lastmod>2025-10-31</lastmod>
     </url>
     <url>
-         <loc>https://cauc-csa.github.io/training/what-is-ctf/</loc>
+         <loc>https://cauc-csa.org.cn/training/what-is-ctf/</loc>
          <lastmod>2025-10-31</lastmod>
     </url>
     <url>
-         <loc>https://cauc-csa.github.io/training/tools/Linux/Linux/</loc>
+         <loc>https://cauc-csa.org.cn/training/tools/Linux/Linux/</loc>
          <lastmod>2025-10-31</lastmod>
     </url>
     <url>
-         <loc>https://cauc-csa.github.io/training/tools/docker/docker/</loc>
+         <loc>https://cauc-csa.org.cn/training/tools/docker/docker/</loc>
          <lastmod>2025-10-31</lastmod>
     </url>
     <url>
-         <loc>https://cauc-csa.github.io/training/tools/python/python/</loc>
+         <loc>https://cauc-csa.org.cn/training/tools/python/python/</loc>
          <lastmod>2025-10-31</lastmod>
     </url>
     <url>
-         <loc>https://cauc-csa.github.io/training/tools/vmware/</loc>
+         <loc>https://cauc-csa.org.cn/training/tools/vmware/</loc>
          <lastmod>2025-10-31</lastmod>
     </url>
 </urlset>
