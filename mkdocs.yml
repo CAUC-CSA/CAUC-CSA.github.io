@@ -138,7 +138,7 @@ nav:
         - xxx: ctf/crypto/crypto.md
       - Pwn:
         - xxx: ctf/pwn/pwn.md
-        - 如何优雅地配置pwn环境: ctf/pwn/environment/environment.md
+        - 如何优雅地配置pwn环境: ctf/pwn/environment/pwn_environment.md
       - Reverse:
         - xxx: ctf/reverse/reverse.md
       - Misc:
