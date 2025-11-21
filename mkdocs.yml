@@ -134,6 +134,8 @@ nav:
       - Web: 
         - Introduction: ctf/web/web.md
         - Web中你需要知道的计网知识: ctf/web/network_in_web/network_in_web.md
+        - 基础漏洞原理与演示:
+          - SQL注入---是谁脱了我的库子？: ctf/web/vulnerabilities/sqlinj/sql.md
       - Crypto:
         - xxx: ctf/crypto/crypto.md
       - Pwn:
