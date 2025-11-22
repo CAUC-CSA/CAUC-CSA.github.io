@@ -141,6 +141,9 @@ nav:
       - Pwn:
         - xxx: ctf/pwn/pwn.md
         - 如何优雅地配置pwn环境: ctf/pwn/environment/pwn_environment.md
+        - 栈溢出:
+          - '[Ret2csu]为什么是神？': ctf/pwn/Ret2csu/Ret2csu.md
+          - '[Ret2dlresolve]迈出阅读Glibc源码的第一步': ctf/pwn/Ret2dlresolve/Ret2dlresolve.md
       - Reverse:
         - xxx: ctf/reverse/reverse.md
       - Misc:
