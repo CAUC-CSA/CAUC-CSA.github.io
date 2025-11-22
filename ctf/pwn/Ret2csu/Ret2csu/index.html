@@ -12,28 +12,28 @@
         <meta name="author" content="中国民航大学网络安全协会">
       
       
-        <link rel="canonical" href="https://wiki.cauc-csa.org.cn/ctf/web/web/">
+        <link rel="canonical" href="https://wiki.cauc-csa.org.cn/ctf/pwn/Ret2csu/Ret2csu/">
       
       
-        <link rel="prev" href="../../ctf_index/">
+        <link rel="prev" href="../../environment/pwn_environment/">
       
       
-        <link rel="next" href="../network_in_web/network_in_web/">
+        <link rel="next" href="../../Ret2dlresolve/Ret2dlresolve/">
       
       
-      <link rel="icon" href="../../../images/csa_logo.png">
+      <link rel="icon" href="../../../../images/csa_logo.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.22">
     
     
       
-        <title>Introduction - CSA_Wiki</title>
+        <title>[Ret2csu]为什么是神？ - CSA_Wiki</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.84d31ad4.min.css">
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.84d31ad4.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -52,25 +52,25 @@
       
     
     
-      <link rel="stylesheet" href="../../../assets/document_dates/fonts/material-icons.css">
+      <link rel="stylesheet" href="../../../../assets/document_dates/fonts/material-icons.css">
     
-      <link rel="stylesheet" href="../../../assets/document_dates/tippy/light.css">
+      <link rel="stylesheet" href="../../../../assets/document_dates/tippy/light.css">
     
-      <link rel="stylesheet" href="../../../assets/document_dates/tippy/material.css">
+      <link rel="stylesheet" href="../../../../assets/document_dates/tippy/material.css">
     
-      <link rel="stylesheet" href="../../../assets/document_dates/tippy/shift-away.css">
+      <link rel="stylesheet" href="../../../../assets/document_dates/tippy/shift-away.css">
     
-      <link rel="stylesheet" href="../../../assets/document_dates/tippy/scale.css">
+      <link rel="stylesheet" href="../../../../assets/document_dates/tippy/scale.css">
     
-      <link rel="stylesheet" href="../../../assets/document_dates/tippy/backdrop.css">
+      <link rel="stylesheet" href="../../../../assets/document_dates/tippy/backdrop.css">
     
-      <link rel="stylesheet" href="../../../assets/document_dates/tippy/tippy.css">
+      <link rel="stylesheet" href="../../../../assets/document_dates/tippy/tippy.css">
     
-      <link rel="stylesheet" href="../../../assets/document_dates/core/core.css">
+      <link rel="stylesheet" href="../../../../assets/document_dates/core/core.css">
     
-      <link rel="stylesheet" href="../../../assets/document_dates/user.config.css">
+      <link rel="stylesheet" href="../../../../assets/document_dates/user.config.css">
     
-    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -96,7 +96,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#_1" class="md-skip">
+        <a href="#ret2csu" class="md-skip">
           跳转至
         </a>
       
@@ -112,9 +112,9 @@
 
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="页眉">
-    <a href="../../.." title="CSA_Wiki" class="md-header__button md-logo" aria-label="CSA_Wiki" data-md-component="logo">
+    <a href="../../../.." title="CSA_Wiki" class="md-header__button md-logo" aria-label="CSA_Wiki" data-md-component="logo">
       
-  <img src="../../../images/csa_logo.png" alt="logo">
+  <img src="../../../../images/csa_logo.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -131,7 +131,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Introduction
+              [Ret2csu]为什么是神？
             
           </span>
         </div>
@@ -243,7 +243,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../.." class="md-tabs__link">
+      <a href="../../../.." class="md-tabs__link">
         
   
   
@@ -264,7 +264,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../training/what-is-ctf/" class="md-tabs__link">
+        <a href="../../../../training/what-is-ctf/" class="md-tabs__link">
           
   
   
@@ -286,7 +286,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../../ctf_index/" class="md-tabs__link">
+        <a href="../../../ctf_index/" class="md-tabs__link">
           
   
   
@@ -306,7 +306,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../contributing/contributing/" class="md-tabs__link">
+        <a href="../../../../contributing/contributing/" class="md-tabs__link">
           
   
   
@@ -346,9 +346,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../.." title="CSA_Wiki" class="md-nav__button md-logo" aria-label="CSA_Wiki" data-md-component="logo">
+    <a href="../../../.." title="CSA_Wiki" class="md-nav__button md-logo" aria-label="CSA_Wiki" data-md-component="logo">
       
-  <img src="../../../images/csa_logo.png" alt="logo">
+  <img src="../../../../images/csa_logo.png" alt="logo">
 
     </a>
     CSA_Wiki
@@ -375,7 +375,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../.." class="md-nav__link">
+      <a href="../../../.." class="md-nav__link">
         
   
   
@@ -438,7 +438,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../training/what-is-ctf/" class="md-nav__link">
+      <a href="../../../../training/what-is-ctf/" class="md-nav__link">
         
   
   
@@ -502,7 +502,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../training/tools/vmware/" class="md-nav__link">
+      <a href="../../../../training/tools/vmware/" class="md-nav__link">
         
   
   
@@ -525,7 +525,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../training/tools/Linux/Linux/" class="md-nav__link">
+      <a href="../../../../training/tools/Linux/Linux/" class="md-nav__link">
         
   
   
@@ -548,7 +548,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../training/tools/docker/docker/" class="md-nav__link">
+      <a href="../../../../training/tools/docker/docker/" class="md-nav__link">
         
   
   
@@ -571,7 +571,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../training/tools/python/python/" class="md-nav__link">
+      <a href="../../../../training/tools/python/python/" class="md-nav__link">
         
   
   
@@ -602,7 +602,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../training/lab/" class="md-nav__link">
+      <a href="../../../../training/lab/" class="md-nav__link">
         
   
   
@@ -678,7 +678,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../ctf_index/" class="md-nav__link">
+      <a href="../../../ctf_index/" class="md-nav__link">
         
   
   
@@ -698,8 +698,6 @@
                 
   
   
-    
-  
   
   
     
@@ -710,11 +708,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
         
           
           <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
@@ -730,7 +728,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3_2">
             <span class="md-nav__icon md-icon"></span>
             Web
@@ -741,30 +739,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Introduction
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../../web/web/" class="md-nav__link">
         
   
   
@@ -775,87 +753,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="目录">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目录
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      🎯 需要掌握的能力
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      🔍 常见漏洞类型示例
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      🛠 推荐工具 &amp; 环境
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#web" class="md-nav__link">
-    <span class="md-ellipsis">
-      📌 为什么选择Web？
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#web_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      🍵 对于 Web 说点现实的
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      ⚖️ 安全合规提醒
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      🌟 结语
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -868,7 +765,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../network_in_web/network_in_web/" class="md-nav__link">
+      <a href="../../../web/network_in_web/network_in_web/" class="md-nav__link">
         
   
   
@@ -932,7 +829,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../vulnerabilities/sqlinj/sql/" class="md-nav__link">
+      <a href="../../../web/vulnerabilities/sqlinj/sql/" class="md-nav__link">
         
   
   
@@ -1012,7 +909,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../crypto/crypto/" class="md-nav__link">
+      <a href="../../../crypto/crypto/" class="md-nav__link">
         
   
   
@@ -1040,6 +937,8 @@
                 
   
   
+    
+  
   
   
     
@@ -1050,11 +949,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" checked>
         
           
           <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
@@ -1070,7 +969,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_4">
             <span class="md-nav__icon md-icon"></span>
             Pwn
@@ -1084,7 +983,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/pwn/" class="md-nav__link">
+      <a href="../../pwn/" class="md-nav__link">
         
   
   
@@ -1107,7 +1006,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/environment/pwn_environment/" class="md-nav__link">
+      <a href="../../environment/pwn_environment/" class="md-nav__link">
         
   
   
@@ -1127,6 +1026,8 @@
                 
   
   
+    
+  
   
   
     
@@ -1137,11 +1038,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4_3" checked>
         
           
           <label class="md-nav__link" for="__nav_3_4_3" id="__nav_3_4_3_label" tabindex="0">
@@ -1157,7 +1058,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_4_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_4_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_4_3">
             <span class="md-nav__icon md-icon"></span>
             栈溢出
@@ -1168,10 +1069,32 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../pwn/Ret2csu/Ret2csu/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    [Ret2csu]为什么是神？
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1182,6 +1105,44 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      来源
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      使用
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1194,7 +1155,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../pwn/Ret2dlresolve/Ret2dlresolve/" class="md-nav__link">
+      <a href="../../Ret2dlresolve/Ret2dlresolve/" class="md-nav__link">
         
   
   
@@ -1274,7 +1235,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../reverse/reverse/" class="md-nav__link">
+      <a href="../../../reverse/reverse/" class="md-nav__link">
         
   
   
@@ -1346,7 +1307,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../misc/misc/" class="md-nav__link">
+      <a href="../../../misc/misc/" class="md-nav__link">
         
   
   
@@ -1425,7 +1386,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../contributing/contributing/" class="md-nav__link">
+      <a href="../../../../contributing/contributing/" class="md-nav__link">
         
   
   
@@ -1448,7 +1409,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../contributing/writing/" class="md-nav__link">
+      <a href="../../../../contributing/writing/" class="md-nav__link">
         
   
   
@@ -1488,6 +1449,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1498,7 +1461,7 @@
         <li class="md-nav__item">
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
-      🎯 需要掌握的能力
+      来源
     </span>
   </a>
   
@@ -1507,52 +1470,7 @@
         <li class="md-nav__item">
   <a href="#_2" class="md-nav__link">
     <span class="md-ellipsis">
-      🔍 常见漏洞类型示例
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      🛠 推荐工具 &amp; 环境
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#web" class="md-nav__link">
-    <span class="md-ellipsis">
-      📌 为什么选择Web？
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#web_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      🍵 对于 Web 说点现实的
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_4" class="md-nav__link">
-    <span class="md-ellipsis">
-      ⚖️ 安全合规提醒
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_5" class="md-nav__link">
-    <span class="md-ellipsis">
-      🌟 结语
+      使用
     </span>
   </a>
   
@@ -1577,108 +1495,75 @@
   
 
 
-  <h1>Introduction</h1>
-
-<blockquote>
-<p>Author: YoSheep （网络空间安全协会老狗）</p>
-</blockquote>
-<p>Web 安全部分是 CTF 竞赛中最基础、最核心的方向之一。由于现实世界中绝大多数业务都以 Web 系统为主要载体，因此 Web 题在比赛中占比高，对参赛者的渗透测试能力、漏洞理解能力有一定要求。另外，目前许多线下赛 Web 方向的题目也作为主线之一。</p>
-<h3 id="_1">🎯 需要掌握的能力<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
-<ul>
-<li>基本 Web 安全工具的使用（BurpSuite、nmap、sqlmap、......）</li>
-<li>常见 Web 漏洞的原理和利用方法</li>
-<li>能够编写基本脚本来辅助渗透测试和漏洞验证</li>
-<li>Web 应用的源码审计能力，能通过阅读后/前端代码发现逻辑错误或漏洞点</li>
-<li>... ...</li>
-</ul>
-<h3 id="_2">🔍 常见漏洞类型示例<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
-<table>
-<thead>
-<tr>
-<th><strong>漏洞类型</strong></th>
-<th><strong>简要说明</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>SQL 注入</td>
-<td>数据库查询语句攻击者可控，进而能够操控数据库</td>
-</tr>
-<tr>
-<td>跨站脚本（XSS）</td>
-<td>恶意脚本注入，达到执行任意JS代码，进而劫持用户信息等</td>
-</tr>
-<tr>
-<td>文件上传漏洞</td>
-<td>上传脚本执行 or 通过上传的文件拿到目标服务器权限（getshell）</td>
-</tr>
-<tr>
-<td>文件包含漏洞</td>
-<td>通过 include/require 等函数加载恶意文件</td>
-</tr>
-<tr>
-<td>目录遍历/穿越</td>
-<td>读取敏感文件等信息泄露</td>
-</tr>
-<tr>
-<td>SSRF</td>
-<td>模拟服务器请求，访问内部资源</td>
-</tr>
-<tr>
-<td>CSRF</td>
-<td>冒名执行敏感操作</td>
-</tr>
-<tr>
-<td>SSTI</td>
-<td>攻击者能够在模板语法中注入表达式或代码</td>
-</tr>
-<tr>
-<td>逻辑漏洞</td>
-<td>绕过权限、越权访问等</td>
-</tr>
-<tr>
-<td>... ...</td>
-<td>... ...</td>
-</tr>
-</tbody>
-</table>
-<h3 id="_3">🛠 推荐工具 &amp; 环境<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
-<blockquote>
-<p>建议按需安装，不必一次性装满工具箱，这样可能会导致弄一堆自己都不知道有什么用的东西。</p>
-</blockquote>
-<p>推荐：</p>
-<ul>
-<li><strong>BurpSuite</strong>：流量拦截与修改工具，<strong>刚需</strong>，可用yakit代替</li>
-<li><strong>Python2&amp;3</strong>：写脚本用的主要语言。有一些工具需要python2环境，但大多数时候使用python3，因此最好两个版本都装</li>
-<li><strong>Hackbar</strong> ：浏览器插件，用于临时构造和发送 HTTP 请求（GET/POST），方便调试与测试输入数据。</li>
-<li><strong>dirsearch / 御剑</strong>：目录扫描工具，用于 fuzz 和发现隐藏目录/文件</li>
-<li><strong>nmap</strong>：端口/服务发现。</li>
-<li>... ...</li>
-</ul>
-<h3 id="web">📌 为什么选择Web？<a class="headerlink" href="#web" title="Permanent link">&para;</a></h3>
-<ul>
-<li>
-<p>入门快，正反馈及时</p>
-</li>
-<li>
-<p>与真实渗透测试联系紧密</p>
-</li>
-<li>CTF中题量大，线下赛刚需</li>
-<li>未来就业面广</li>
-</ul>
-<h3 id="web_1">🍵 对于 Web 说点现实的<a class="headerlink" href="#web_1" title="Permanent link">&para;</a></h3>
-<ul>
-<li>入门虽然快，想要学到上限也很难，知识体量庞大</li>
-<li>赛道人多，卷，无论在CTF赛场还是就业市场都卷</li>
-<li>未来就业岗位中，底层岗位较多（运营、安服），上限可能不高</li>
-</ul>
-<h3 id="_4">⚖️ 安全合规提醒<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
-<p>所有测试仅可在<strong>授权的靶场或得到明确许可的环境</strong>中进行。未经授权的测试可能导致法律责任。</p>
-<h3 id="_5">🌟 结语<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
-<p>总的来说， Web 是一个能够比较容易上手、就业的方向，但也从来不是<strong>随便便学就能变强</strong>的方向，也同样需要不断的练习、思考。相比于其他门槛较高的方向，Web 安全由于市场饱和，想要争取到一些研究类的岗位，难度会明显高于其余。</p>
-<p>对于选择 Web 的同学，你可能在未来的凌晨，卡在一个 Payload 上，也可能因为一个逻辑点没想到错过一血，但当你真正解出一道题、挖到一个漏洞，总会发现所有的一切都值得。</p>
-<p>希望各位师傅不是为了“卷”而学，而是真正感兴趣，寻求突破、成长，在掌握自己的努力。希望此Wiki中Web的内容能为各位推开一点点大门，剩下的部分，欢迎你自己闯～</p>
-<div class='document-dates-plugin-wrapper document-dates-bottom'><div class='document-dates-plugin' locale=''><span data-tippy-content data-tippy-raw='2025-10-28'><span class='material-icons' data-icon='doc_created'></span><time datetime='2025-10-28T02:07:09+11:00'>2025-10-28 02:07:09</time></span><span data-tippy-content data-tippy-raw='2025-10-29'><span class='material-icons' data-icon='doc_modified'></span><time datetime='2025-10-29T21:43:38+08:00'>2025-10-29 21:43:38</time></span></div></div>
+<h1 id="ret2csu">[Ret2csu]为什么是神？<a class="headerlink" href="#ret2csu" title="Permanent link">&para;</a></h1>
+<hr />
+<p>最后更新于 2025-11-22 by XDLiu</p>
+<details class="note">
+<summary>在谈论这个问题之前，我想先说说其他pwn手法相较于它究竟差在了哪里。</summary>
+<p>首先是犯下<strong>傲慢之罪的ret2text</strong>。它总以为程序里自带一个完美的<code>get_shell</code>或<code>system("/bin/sh")</code>函数等着它去调用，轻蔑地忽视了那些需要自己动手构造调用链的凡人。当<code>ASLR</code>开启，或程序中没有后门，它的傲慢将化为泡影。</p>
+<p>接着是犯下<strong>愤怒之罪的ret2t_shellcode</strong>。它将自己的意志（<code>shellcode</code>）强行注入栈或堆中，妄图执行，却时常因没有执行权限的NX保护（天条）而被无情地拦下，最终只能在段错误（<code>SIGSEGV</code>）的怒火中崩溃。</p>
+<p>再然后是犯下<strong>懒惰之罪的常规ROP</strong>。它总是懒洋洋地期望着能找到现成的<code>pop rdi; ret</code>这类<code>gadget</code>，从不愿在没有直接可用工具时自己去想办法。一旦程序里缺少这种便利的零件，它便束手无策，只能瘫倒在地。</p>
+<p>犯下<strong>嫉妒之罪的ret2syscall</strong>。它嫉妒着内核享有的至高权力，处心积虑地寻找<code>syscall; ret</code>指令，妄图伪造调用号来染指那不属于它的力量。但寻找<code>syscall</code>的过程本身，就是它无法摆脱的枷锁。</p>
+<p>犯下<strong>贪婪之罪的ret2libc</strong>。它从不满足于程序本身有限的资源，贪婪地窥视着庞大而丰富的<code>libc</code>动态库。为了得到其中的<code>system</code>函数，它必须先泄露一个地址，再费尽心机计算整个库的基址，其贪欲昭然若揭。</p>
+<p>犯下<strong>暴食之罪的SROP</strong>。它更是欲壑难填，不满足于控制一两个寄存器。它试图通过一个<code>sigreturn</code>调用吞下整个寄存器上下文（<code>Sigcontext Frame</code>），一次性将<code>RDI, RSI, RDX, RAX</code>…乃至<code>RIP</code>全部据为己有，其暴食的姿态，令人咋舌。</p>
+<p>最后，是犯下<strong>淫欲之罪的ret2dlresolve</strong>。它觊觎着那些甚至没有被加载到GOT表中的“禁忌”函数，通过伪造数据结构、欺骗链接器（<code>_dl_runtime_resolve</code>）的感情，来达到它不可告人的邪恶目的，其手法之诡秘，用心之险恶，堪称ROP中的靡靡之音。</p>
+<p><strong>而Ret2csu，祂就是神。</strong></p>
+<p>当世界（指64位ELF程序）一片混沌，找不到任何可用的<code>gadget</code>时，祂出现了。祂不依赖现成的后门，也不惧怕NX的阻拦。祂不需泄露<code>libc</code>的地址，也不屑于<code>SROP</code>那般浮夸。祂，仅仅利用<code>__libc_csu_init</code>中那段普世长存的代码，便创造了秩序。祂以两次调用，优雅地掌控了<code>EDI, RSI, RDX</code>这函数调用的“三位一体”，为凡人铺设了通往任意函数调用的通天大道。</p>
+<p>在gadget的荒漠中，<code>Ret2csu</code>就是唯一的绿洲。</p>
+<p>所以，味大，无需多盐。</p>
+</details>
+<hr />
+<h3 id="_1">来源<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<p>该手法涉及到一个函数<code>__libc_csu_init</code>在默认编译的情况下基本都会带有该函数，利用该函数的一部分代码可以做到没有pop系列的情况下，控制3个参数并调用任意代码。</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a>    0x4005d0 &lt;__libc_csu_init+80&gt;:       mov    rdx,r15
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2"></a>    0x4005d3 &lt;__libc_csu_init+83&gt;:       mov    rsi,r14
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3"></a>    0x4005d6 &lt;__libc_csu_init+86&gt;:       mov    edi,r13d
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4"></a>    0x4005d9 &lt;__libc_csu_init+89&gt;:       call   QWORD PTR [r12+rbx*8]
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5"></a>    0x4005dd &lt;__libc_csu_init+93&gt;:       add    rbx,0x1
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6"></a>    0x4005e1 &lt;__libc_csu_init+97&gt;:       cmp    rbx,rbp
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7"></a>    0x4005e4 &lt;__libc_csu_init+100&gt;:      jne    0x4005d0 &lt;__libc_csu_init+80&gt;
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8"></a>    0x4005e6 &lt;__libc_csu_init+102&gt;:      mov    rbx,QWORD PTR [rsp+0x8]
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9"></a>    0x4005eb &lt;__libc_csu_init+107&gt;:      mov    rbp,QWORD PTR [rsp+0x10]
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10"></a>    0x4005f0 &lt;__libc_csu_init+112&gt;:      mov    r12,QWORD PTR [rsp+0x18]
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11"></a>    0x4005f5 &lt;__libc_csu_init+117&gt;:      mov    r13,QWORD PTR [rsp+0x20]
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12"></a>    0x4005fa &lt;__libc_csu_init+122&gt;:      mov    r14,QWORD PTR [rsp+0x28]
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13"></a>    0x4005ff &lt;__libc_csu_init+127&gt;:      mov    r15,QWORD PTR [rsp+0x30]
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14"></a>    0x400604 &lt;__libc_csu_init+132&gt;:      add    rsp,0x38
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15"></a>    0x400608 &lt;__libc_csu_init+136&gt;:      ret
+</span></code></pre></div></td></tr></table></div>
+<p>简单看过上面汇编，以上面为例一般选择先执行<code>0x4005e6</code>后再次执行<code>0x4005d0</code>即可控制参数了</p>
+<h3 id="_2">使用<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<div class="language-python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Python</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span>
+<span class="normal"><a href="#__codelineno-1-4">4</a></span>
+<span class="normal"><a href="#__codelineno-1-5">5</a></span>
+<span class="normal"><a href="#__codelineno-1-6">6</a></span>
+<span class="normal"><a href="#__codelineno-1-7">7</a></span>
+<span class="normal"><a href="#__codelineno-1-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="c1"># 假设 csu_pop_addr 和 csu_call_addr 已经定义</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="c1"># 需要注意func是得指向代码段的指针的指针，比如想要执行read函数，func就得是got表地址，恰好got表储存的是read函数地址</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="n">ret2csu</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">edi</span><span class="p">,</span> <span class="n">rsi</span><span class="p">,</span> <span class="n">rdx</span><span class="p">,</span> <span class="n">func</span><span class="p">:</span> \
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4"></a>    <span class="n">p64</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">func</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">edi</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">rsi</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">rdx</span><span class="p">)</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5"></a>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="c1"># ========== 使用示例 ==========</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7"></a><span class="c1"># payload = p64(csu_pop_addr) + ret2csu(0, data_addr, 5, read_got_addr) + p64(csu_call_addr) + ret2csu(1, data_addr, 5, write_got_addr)</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="c1"># print(payload)</span>
+</span></code></pre></div></td></tr></table></div>
+<div class='document-dates-plugin-wrapper document-dates-bottom'><div class='document-dates-plugin' locale=''><span data-tippy-content data-tippy-raw='2025-11-22'><span class='material-icons' data-icon='doc_created'></span><time datetime='2025-11-22T14:33:48+08:00'>2025-11-22 14:33:48</time></span><span data-tippy-content data-tippy-raw='2025-11-22'><span class='material-icons' data-icon='doc_modified'></span><time datetime='2025-11-22T14:33:48+08:00'>2025-11-22 14:33:48</time></span></div></div>
 
 
 
@@ -1717,7 +1602,7 @@
       <nav class="md-footer__inner md-grid" aria-label="页脚" >
         
           
-          <a href="../../ctf_index/" class="md-footer__link md-footer__link--prev" aria-label="上一页: Introduction">
+          <a href="../../environment/pwn_environment/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 如何优雅地配置pwn环境">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1727,20 +1612,20 @@
                 上一页
               </span>
               <div class="md-ellipsis">
-                Introduction
+                如何优雅地配置pwn环境
               </div>
             </div>
           </a>
         
         
           
-          <a href="../network_in_web/network_in_web/" class="md-footer__link md-footer__link--next" aria-label="下一页: Web中你需要知道的计网知识">
+          <a href="../../Ret2dlresolve/Ret2dlresolve/" class="md-footer__link md-footer__link--next" aria-label="下一页: [Ret2dlresolve]迈出阅读Glibc源码的第一步">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 下一页
               </span>
               <div class="md-ellipsis">
-                Web中你需要知道的计网知识
+                [Ret2dlresolve]迈出阅读Glibc源码的第一步
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -1782,26 +1667,26 @@
     
     
       
-      <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.annotate", "content.code.copy", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.tabs", "navigation.tabs.sticky", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../../../..", "features": ["content.code.annotate", "content.code.copy", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.tabs", "navigation.tabs.sticky", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      <script src="../../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.js"></script>
       
-        <script src="../../../assets/javascripts/pangu-init.js"></script>
+        <script src="../../../../assets/javascripts/pangu-init.js"></script>
       
-        <script src="../../../assets/document_dates/tippy/popper.min.js"></script>
+        <script src="../../../../assets/document_dates/tippy/popper.min.js"></script>
       
-        <script src="../../../assets/document_dates/tippy/tippy.umd.min.js"></script>
+        <script src="../../../../assets/document_dates/tippy/tippy.umd.min.js"></script>
       
-        <script src="../../../assets/document_dates/core/default.config.js"></script>
+        <script src="../../../../assets/document_dates/core/default.config.js"></script>
       
-        <script src="../../../assets/document_dates/user.config.js"></script>
+        <script src="../../../../assets/document_dates/user.config.js"></script>
       
-        <script src="../../../assets/document_dates/core/utils.js"></script>
+        <script src="../../../../assets/document_dates/core/utils.js"></script>
       
-        <script src="../../../assets/document_dates/core/core.js"></script>
+        <script src="../../../../assets/document_dates/core/core.js"></script>
       
     
   </body>

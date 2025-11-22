@@ -2,74 +2,82 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://wiki.cauc-csa.org.cn/</loc>
-         <lastmod>2025-11-21</lastmod>
+         <lastmod>2025-11-22</lastmod>
     </url>
     <url>
          <loc>https://wiki.cauc-csa.org.cn/contributing/contributing/</loc>
-         <lastmod>2025-11-21</lastmod>
+         <lastmod>2025-11-22</lastmod>
     </url>
     <url>
          <loc>https://wiki.cauc-csa.org.cn/contributing/writing/</loc>
-         <lastmod>2025-11-21</lastmod>
+         <lastmod>2025-11-22</lastmod>
     </url>
     <url>
          <loc>https://wiki.cauc-csa.org.cn/ctf/ctf_index/</loc>
-         <lastmod>2025-11-21</lastmod>
+         <lastmod>2025-11-22</lastmod>
     </url>
     <url>
          <loc>https://wiki.cauc-csa.org.cn/ctf/crypto/crypto/</loc>
-         <lastmod>2025-11-21</lastmod>
+         <lastmod>2025-11-22</lastmod>
     </url>
     <url>
          <loc>https://wiki.cauc-csa.org.cn/ctf/misc/misc/</loc>
-         <lastmod>2025-11-21</lastmod>
+         <lastmod>2025-11-22</lastmod>
     </url>
     <url>
          <loc>https://wiki.cauc-csa.org.cn/ctf/pwn/pwn/</loc>
-         <lastmod>2025-11-21</lastmod>
+         <lastmod>2025-11-22</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.cauc-csa.org.cn/ctf/pwn/Ret2csu/Ret2csu/</loc>
+         <lastmod>2025-11-22</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.cauc-csa.org.cn/ctf/pwn/Ret2dlresolve/Ret2dlresolve/</loc>
+         <lastmod>2025-11-22</lastmod>
     </url>
     <url>
          <loc>https://wiki.cauc-csa.org.cn/ctf/pwn/environment/pwn_environment/</loc>
-         <lastmod>2025-11-21</lastmod>
+         <lastmod>2025-11-22</lastmod>
     </url>
     <url>
          <loc>https://wiki.cauc-csa.org.cn/ctf/reverse/reverse/</loc>
-         <lastmod>2025-11-21</lastmod>
+         <lastmod>2025-11-22</lastmod>
     </url>
     <url>
          <loc>https://wiki.cauc-csa.org.cn/ctf/web/web/</loc>
-         <lastmod>2025-11-21</lastmod>
+         <lastmod>2025-11-22</lastmod>
     </url>
     <url>
          <loc>https://wiki.cauc-csa.org.cn/ctf/web/network_in_web/network_in_web/</loc>
-         <lastmod>2025-11-21</lastmod>
+         <lastmod>2025-11-22</lastmod>
     </url>
     <url>
          <loc>https://wiki.cauc-csa.org.cn/ctf/web/vulnerabilities/sqlinj/sql/</loc>
-         <lastmod>2025-11-21</lastmod>
+         <lastmod>2025-11-22</lastmod>
     </url>
     <url>
          <loc>https://wiki.cauc-csa.org.cn/training/lab/</loc>
-         <lastmod>2025-11-21</lastmod>
+         <lastmod>2025-11-22</lastmod>
     </url>
     <url>
          <loc>https://wiki.cauc-csa.org.cn/training/what-is-ctf/</loc>
-         <lastmod>2025-11-21</lastmod>
+         <lastmod>2025-11-22</lastmod>
     </url>
     <url>
          <loc>https://wiki.cauc-csa.org.cn/training/tools/Linux/Linux/</loc>
-         <lastmod>2025-11-21</lastmod>
+         <lastmod>2025-11-22</lastmod>
     </url>
     <url>
          <loc>https://wiki.cauc-csa.org.cn/training/tools/docker/docker/</loc>
-         <lastmod>2025-11-21</lastmod>
+         <lastmod>2025-11-22</lastmod>
     </url>
     <url>
          <loc>https://wiki.cauc-csa.org.cn/training/tools/python/python/</loc>
-         <lastmod>2025-11-21</lastmod>
+         <lastmod>2025-11-22</lastmod>
     </url>
     <url>
          <loc>https://wiki.cauc-csa.org.cn/training/tools/vmware/</loc>
-         <lastmod>2025-11-21</lastmod>
+         <lastmod>2025-11-22</lastmod>
     </url>
 </urlset>
