@@ -147,6 +147,7 @@ nav:
         - 栈溢出:
           - '[Ret2csu]为什么是神？': ctf/pwn/Ret2csu/Ret2csu.md
           - '[Ret2dlresolve]迈出阅读Glibc源码的第一步': ctf/pwn/Ret2dlresolve/Ret2dlresolve.md
+          - '[Ret2gets]不靠pop rdi; ret也能控制rdi': ctf/pwn/Ret2gets/Ret2gets.md
       - Reverse:
         - xxx: ctf/reverse/reverse.md
       - Misc:

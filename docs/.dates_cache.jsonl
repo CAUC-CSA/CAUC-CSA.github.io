@@ -3,10 +3,16 @@
 {"ctf/crypto/crypto.md": {"created": "2025-10-28T02:07:09+11:00"}}
 {"ctf/ctf_index.md": {"created": "2025-10-28T02:07:09+11:00"}}
 {"ctf/misc/misc.md": {"created": "2025-10-28T02:07:09+11:00"}}
+{"ctf/pwn/Ret2csu/Ret2csu.md": {"created": "2026-03-13T12:43:48.669247+08:00"}}
+{"ctf/pwn/Ret2dlresolve/Ret2dlresolve.md": {"created": "2026-03-13T12:43:48.672990+08:00"}}
+{"ctf/pwn/Ret2gets/Ret2gets.md": {"created": "2026-03-20T17:13:16.622848+08:00"}}
 {"ctf/pwn/environment/pwn_environment.md": {"created": "2025-11-13T17:02:30.292920+08:00"}}
 {"ctf/pwn/pwn.md": {"created": "2025-10-28T02:07:09+11:00"}}
 {"ctf/reverse/reverse.md": {"created": "2025-10-28T02:07:09+11:00"}}
 {"ctf/web/network_in_web/network_in_web.md": {"created": "2025-10-31T17:25:42.091495+11:00"}}
+{"ctf/web/vulnerabilities/file_upload/file_upload.md": {"created": "2026-03-13T12:43:48.672990+08:00"}}
+{"ctf/web/vulnerabilities/sqlinj/sql.md": {"created": "2026-03-13T12:43:48.672990+08:00"}}
+{"ctf/web/vulnerabilities/xss/xss.md": {"created": "2026-03-13T12:43:48.672990+08:00"}}
 {"ctf/web/web.md": {"created": "2025-10-28T02:07:09+11:00"}}
 {"index.md": {"created": "2025-10-27T00:29:08+08:00"}}
 {"training/lab.md": {"created": "2025-10-28T02:07:09+11:00"}}
