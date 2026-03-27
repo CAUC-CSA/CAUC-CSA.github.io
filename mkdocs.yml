@@ -118,6 +118,13 @@ plugins:
       time_format: '%H:%M:%S'   # 时间格式化字符串（仅在 type=datetime 时有效）
       show_author: false        # 作者显示模式: true(头像) text(文本) false(隐藏)
 
+markdown_extensions:
+  - pymdownx.arithmatex:
+      generic: true  # 启用 LaTeX 数学公式支持
+
+extra_javascript:
+  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js  # MathJax 渲染引擎
+
 # 导航栏配置
 nav:
   - 首页: index.md
@@ -142,6 +149,9 @@ nav:
           - 文件包含 : ctf/web/vulnerabilities/include/include.md
       - Crypto:
         - xxx: ctf/crypto/crypto.md
+        - 密码学补完计划 · 开篇: ctf/crypto/crypto1.0_start.md
+        - 密码学补完计划 · 编码: ctf/crypto/crypto2.0_encoding.md
+        - 密码学补完计划 · 古典密码: ctf/crypto/crypto3.0_classic.md
       - Pwn:
         - xxx: ctf/pwn/pwn.md
         - 如何优雅地配置pwn环境: ctf/pwn/environment/pwn_environment.md
