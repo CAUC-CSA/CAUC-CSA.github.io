@@ -139,6 +139,7 @@ nav:
           - 文件上传---能传就能打？: ctf/web/vulnerabilities/file_upload/file_upload.md
           - 文件上传 .htaccess文件篇 : ctf/web/vulnerabilities/file_upload/文件上传-.hraccess.md
           - XSS---如何让别人的浏览器执行你的代码: ctf/web/vulnerabilities/xss/xss.md
+          - 文件包含 : ctf/web/vulnerabilities/include/include.md
       - Crypto:
         - xxx: ctf/crypto/crypto.md
       - Pwn:
@@ -147,6 +148,7 @@ nav:
         - 栈溢出:
           - '[Ret2csu]为什么是神？': ctf/pwn/Ret2csu/Ret2csu.md
           - '[Ret2dlresolve]迈出阅读Glibc源码的第一步': ctf/pwn/Ret2dlresolve/Ret2dlresolve.md
+          - '[Ret2gets]不靠pop rdi; ret也能控制rdi': ctf/pwn/Ret2gets/Ret2gets.md
       - Reverse:
         - xxx: ctf/reverse/reverse.md
       - Misc:
