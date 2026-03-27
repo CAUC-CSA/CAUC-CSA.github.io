@@ -12,28 +12,28 @@
         <meta name="author" content="中国民航大学网络安全协会">
       
       
-        <link rel="canonical" href="https://wiki.cauc-csa.org.cn/ctf/web/network_in_web/network_in_web/">
+        <link rel="canonical" href="https://wiki.cauc-csa.org.cn/ctf/crypto/crypto1.0_start/">
       
       
-        <link rel="prev" href="../../web/">
+        <link rel="prev" href="../crypto/">
       
       
-        <link rel="next" href="../../vulnerabilities/sqlinj/sql/">
+        <link rel="next" href="../crypto2.0_encoding/">
       
       
-      <link rel="icon" href="../../../../images/csa_logo.png">
+      <link rel="icon" href="../../../images/csa_logo.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.22">
     
     
       
-        <title>Web中你需要知道的计网知识 - CSA_Wiki</title>
+        <title>密码学补完计划 · 开篇 - CSA_Wiki</title>
       
     
     
-      <link rel="stylesheet" href="../../../../assets/stylesheets/main.84d31ad4.min.css">
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.84d31ad4.min.css">
       
         
-        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -52,25 +52,25 @@
       
     
     
-      <link rel="stylesheet" href="../../../../assets/document_dates/fonts/material-icons.css">
+      <link rel="stylesheet" href="../../../assets/document_dates/fonts/material-icons.css">
     
-      <link rel="stylesheet" href="../../../../assets/document_dates/tippy/tippy.css">
+      <link rel="stylesheet" href="../../../assets/document_dates/tippy/tippy.css">
     
-      <link rel="stylesheet" href="../../../../assets/document_dates/tippy/scale.css">
+      <link rel="stylesheet" href="../../../assets/document_dates/tippy/scale.css">
     
-      <link rel="stylesheet" href="../../../../assets/document_dates/tippy/material.css">
+      <link rel="stylesheet" href="../../../assets/document_dates/tippy/material.css">
     
-      <link rel="stylesheet" href="../../../../assets/document_dates/tippy/shift-away.css">
+      <link rel="stylesheet" href="../../../assets/document_dates/tippy/shift-away.css">
     
-      <link rel="stylesheet" href="../../../../assets/document_dates/tippy/light.css">
+      <link rel="stylesheet" href="../../../assets/document_dates/tippy/light.css">
     
-      <link rel="stylesheet" href="../../../../assets/document_dates/tippy/backdrop.css">
+      <link rel="stylesheet" href="../../../assets/document_dates/tippy/backdrop.css">
     
-      <link rel="stylesheet" href="../../../../assets/document_dates/core/core.css">
+      <link rel="stylesheet" href="../../../assets/document_dates/core/core.css">
     
-      <link rel="stylesheet" href="../../../../assets/document_dates/user.config.css">
+      <link rel="stylesheet" href="../../../assets/document_dates/user.config.css">
     
-    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -96,7 +96,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#01-ip" class="md-skip">
+        <a href="#_1" class="md-skip">
           跳转至
         </a>
       
@@ -112,9 +112,9 @@
 
 <header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="页眉">
-    <a href="../../../.." title="CSA_Wiki" class="md-header__button md-logo" aria-label="CSA_Wiki" data-md-component="logo">
+    <a href="../../.." title="CSA_Wiki" class="md-header__button md-logo" aria-label="CSA_Wiki" data-md-component="logo">
       
-  <img src="../../../../images/csa_logo.png" alt="logo">
+  <img src="../../../images/csa_logo.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -131,7 +131,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Web中你需要知道的计网知识
+              密码学补完计划 · 开篇
             
           </span>
         </div>
@@ -243,7 +243,7 @@
   
   
     <li class="md-tabs__item">
-      <a href="../../../.." class="md-tabs__link">
+      <a href="../../.." class="md-tabs__link">
         
   
   
@@ -264,7 +264,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../training/what-is-ctf/" class="md-tabs__link">
+        <a href="../../../training/what-is-ctf/" class="md-tabs__link">
           
   
   
@@ -286,7 +286,7 @@
     
     
       <li class="md-tabs__item md-tabs__item--active">
-        <a href="../../../ctf_index/" class="md-tabs__link">
+        <a href="../../ctf_index/" class="md-tabs__link">
           
   
   
@@ -306,7 +306,7 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../../../contributing/contributing/" class="md-tabs__link">
+        <a href="../../../contributing/contributing/" class="md-tabs__link">
           
   
   
@@ -346,9 +346,9 @@
 
 <nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../../../.." title="CSA_Wiki" class="md-nav__button md-logo" aria-label="CSA_Wiki" data-md-component="logo">
+    <a href="../../.." title="CSA_Wiki" class="md-nav__button md-logo" aria-label="CSA_Wiki" data-md-component="logo">
       
-  <img src="../../../../images/csa_logo.png" alt="logo">
+  <img src="../../../images/csa_logo.png" alt="logo">
 
     </a>
     CSA_Wiki
@@ -375,7 +375,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../.." class="md-nav__link">
+      <a href="../../.." class="md-nav__link">
         
   
   
@@ -438,7 +438,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../training/what-is-ctf/" class="md-nav__link">
+      <a href="../../../training/what-is-ctf/" class="md-nav__link">
         
   
   
@@ -502,7 +502,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../training/tools/vmware/" class="md-nav__link">
+      <a href="../../../training/tools/vmware/" class="md-nav__link">
         
   
   
@@ -525,7 +525,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../training/tools/Linux/Linux/" class="md-nav__link">
+      <a href="../../../training/tools/Linux/Linux/" class="md-nav__link">
         
   
   
@@ -548,7 +548,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../training/tools/docker/docker/" class="md-nav__link">
+      <a href="../../../training/tools/docker/docker/" class="md-nav__link">
         
   
   
@@ -571,7 +571,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../training/tools/python/python/" class="md-nav__link">
+      <a href="../../../training/tools/python/python/" class="md-nav__link">
         
   
   
@@ -602,7 +602,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../training/lab/" class="md-nav__link">
+      <a href="../../../training/lab/" class="md-nav__link">
         
   
   
@@ -678,7 +678,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../ctf_index/" class="md-nav__link">
+      <a href="../../ctf_index/" class="md-nav__link">
         
   
   
@@ -698,8 +698,6 @@
                 
   
   
-    
-  
   
   
     
@@ -710,11 +708,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
         
           
           <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
@@ -730,7 +728,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3_2">
             <span class="md-nav__icon md-icon"></span>
             Web
@@ -744,7 +742,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../web/" class="md-nav__link">
+      <a href="../../web/web/" class="md-nav__link">
         
   
   
@@ -764,30 +762,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    Web中你需要知道的计网知识
-    
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../web/network_in_web/network_in_web/" class="md-nav__link">
         
   
   
@@ -798,102 +776,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="目录">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      目录
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#01-ip" class="md-nav__link">
-    <span class="md-ellipsis">
-      01 IP 地址 — 是什么、为什么、怎么查
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#02-port" class="md-nav__link">
-    <span class="md-ellipsis">
-      02 端口（Port）
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="02 端口（Port）">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
-    <span class="md-ellipsis">
-      常见端口和协议
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#03-domain-name-dns" class="md-nav__link">
-    <span class="md-ellipsis">
-      03 域名（Domain Name）与 DNS
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#04-ip" class="md-nav__link">
-    <span class="md-ellipsis">
-      04 IP、端口、域名之间的关系
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#05-http" class="md-nav__link">
-    <span class="md-ellipsis">
-      05 HTTP协议（基础）
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#06-burp-suite-http" class="md-nav__link">
-    <span class="md-ellipsis">
-      06 在 Burp Suite 中分析 HTTP
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#07" class="md-nav__link">
-    <span class="md-ellipsis">
-      07 小总结
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -947,7 +829,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../vulnerabilities/sqlinj/sql/" class="md-nav__link">
+      <a href="../../web/vulnerabilities/sqlinj/sql/" class="md-nav__link">
         
   
   
@@ -970,7 +852,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../vulnerabilities/file_upload/file_upload/" class="md-nav__link">
+      <a href="../../web/vulnerabilities/file_upload/file_upload/" class="md-nav__link">
         
   
   
@@ -993,7 +875,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../vulnerabilities/file_upload/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0-.hraccess/" class="md-nav__link">
+      <a href="../../web/vulnerabilities/file_upload/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0-.hraccess/" class="md-nav__link">
         
   
   
@@ -1016,7 +898,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../vulnerabilities/xss/xss/" class="md-nav__link">
+      <a href="../../web/vulnerabilities/xss/xss/" class="md-nav__link">
         
   
   
@@ -1039,7 +921,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../vulnerabilities/include/include/" class="md-nav__link">
+      <a href="../../web/vulnerabilities/include/include/" class="md-nav__link">
         
   
   
@@ -1075,6 +957,8 @@
                 
   
   
+    
+  
   
   
     
@@ -1085,11 +969,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" checked>
         
           
           <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
@@ -1105,7 +989,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3_3">
             <span class="md-nav__icon md-icon"></span>
             Crypto
@@ -1119,7 +1003,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../crypto/crypto/" class="md-nav__link">
+      <a href="../crypto/" class="md-nav__link">
         
   
   
@@ -1139,10 +1023,32 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="../../../crypto/crypto1.0_start/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    密码学补完计划 · 开篇
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
@@ -1153,6 +1059,155 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 为什么要学密码学？
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 什么是密码学
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 密码学的两大分支
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 密码学的两大分支">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.1 古典密码学 —— 隐藏与欺骗的艺术
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 现代密码学 —— 数学与计算的博弈
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 信息安全的核心目标
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. 攻击者模型
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. 系列路线图
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. 学习资源推荐
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 学习资源推荐">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.1 在线文档(入门介绍)
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#72" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.2 书籍
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.3 视频课程
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. 写在前面的话
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -1165,7 +1220,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../crypto/crypto2.0_encoding/" class="md-nav__link">
+      <a href="../crypto2.0_encoding/" class="md-nav__link">
         
   
   
@@ -1188,7 +1243,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../crypto/crypto3.0_classic/" class="md-nav__link">
+      <a href="../crypto3.0_classic/" class="md-nav__link">
         
   
   
@@ -1260,7 +1315,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/pwn/" class="md-nav__link">
+      <a href="../../pwn/pwn/" class="md-nav__link">
         
   
   
@@ -1283,7 +1338,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/environment/pwn_environment/" class="md-nav__link">
+      <a href="../../pwn/environment/pwn_environment/" class="md-nav__link">
         
   
   
@@ -1347,7 +1402,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/Ret2csu/Ret2csu/" class="md-nav__link">
+      <a href="../../pwn/Ret2csu/Ret2csu/" class="md-nav__link">
         
   
   
@@ -1370,7 +1425,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/Ret2dlresolve/Ret2dlresolve/" class="md-nav__link">
+      <a href="../../pwn/Ret2dlresolve/Ret2dlresolve/" class="md-nav__link">
         
   
   
@@ -1393,7 +1448,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../pwn/Ret2gets/Ret2gets/" class="md-nav__link">
+      <a href="../../pwn/Ret2gets/Ret2gets/" class="md-nav__link">
         
   
   
@@ -1473,7 +1528,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../reverse/reverse/" class="md-nav__link">
+      <a href="../../reverse/reverse/" class="md-nav__link">
         
   
   
@@ -1545,7 +1600,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../misc/misc/" class="md-nav__link">
+      <a href="../../misc/misc/" class="md-nav__link">
         
   
   
@@ -1624,7 +1679,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../contributing/contributing/" class="md-nav__link">
+      <a href="../../../contributing/contributing/" class="md-nav__link">
         
   
   
@@ -1647,7 +1702,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../../contributing/writing/" class="md-nav__link">
+      <a href="../../../contributing/writing/" class="md-nav__link">
         
   
   
@@ -1687,6 +1742,8 @@
   
   
   
+    
+  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -1695,28 +1752,46 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#01-ip" class="md-nav__link">
+  <a href="#1" class="md-nav__link">
     <span class="md-ellipsis">
-      01 IP 地址 — 是什么、为什么、怎么查
+      1. 为什么要学密码学？
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#02-port" class="md-nav__link">
+  <a href="#2" class="md-nav__link">
     <span class="md-ellipsis">
-      02 端口（Port）
+      2. 什么是密码学
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="02 端口（Port）">
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 密码学的两大分支
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 密码学的两大分支">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
+  <a href="#31" class="md-nav__link">
     <span class="md-ellipsis">
-      常见端口和协议
+      3.1 古典密码学 —— 隐藏与欺骗的艺术
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      3.2 现代密码学 —— 数学与计算的博弈
     </span>
   </a>
   
@@ -1728,45 +1803,78 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#03-domain-name-dns" class="md-nav__link">
+  <a href="#4" class="md-nav__link">
     <span class="md-ellipsis">
-      03 域名（Domain Name）与 DNS
+      4. 信息安全的核心目标
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#04-ip" class="md-nav__link">
+  <a href="#5" class="md-nav__link">
     <span class="md-ellipsis">
-      04 IP、端口、域名之间的关系
+      5. 攻击者模型
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#05-http" class="md-nav__link">
+  <a href="#6" class="md-nav__link">
     <span class="md-ellipsis">
-      05 HTTP协议（基础）
+      6. 系列路线图
     </span>
   </a>
   
 </li>
       
         <li class="md-nav__item">
-  <a href="#06-burp-suite-http" class="md-nav__link">
+  <a href="#7" class="md-nav__link">
     <span class="md-ellipsis">
-      06 在 Burp Suite 中分析 HTTP
+      7. 学习资源推荐
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 学习资源推荐">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#71" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.1 在线文档(入门介绍)
     </span>
   </a>
   
 </li>
+        
+          <li class="md-nav__item">
+  <a href="#72" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.2 书籍
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#73" class="md-nav__link">
+    <span class="md-ellipsis">
+      7.3 视频课程
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
       
         <li class="md-nav__item">
-  <a href="#07" class="md-nav__link">
+  <a href="#8" class="md-nav__link">
     <span class="md-ellipsis">
-      07 小总结
+      8. 写在前面的话
     </span>
   </a>
   
@@ -1791,156 +1899,203 @@
   
 
 
-  <h1>Web中你需要知道的计网知识</h1>
-
+<h1 id="_1">密码学补完计划 · 开篇</h1>
 <blockquote>
-<p>Author: YoSheep （网络空间安全协会老狗）</p>
+<p>本文档为社团内部学习资料，系统讲解密码学相关内容。</p>
 </blockquote>
-<h3 id="01-ip">01 IP 地址 — 是什么、为什么、怎么查</h3>
-<p><strong>定义</strong>：IP 地址（Internet Protocol Address）是网络中设备的唯一标识，用于定位设备并实现通信，类似“门牌号”。</p>
-<p><strong>常见类型</strong></p>
+<hr />
+<h2 id="1">1. 为什么要学密码学？</h2>
+<p>无论是 CTF 比赛中的解谜，还是理解 HTTPS、数字证书、电子支付这些日常技术，背后都是密码学的影子。密码学不是数学家的专利，它是连接理论与现实攻防的桥梁。</p>
+<p>本系列将从零开始，带你从古典密码，一路走到现代密码的数学根基，最终在 CTF 实战中能够独立分析、拆解各类密码学问题。</p>
+<hr />
+<h2 id="2">2. 什么是密码学</h2>
+<p><strong>密码学</strong>（英语：Cryptography）可分为古典密码学和现代密码学。在西方语文中，密码学一词源于希腊语 <em>kryptós</em>“隐藏的”，和 <em>gráphein</em>“书写”。古典密码学主要关注资讯的保密书写和传递，以及与其相对应的破译方法。而现代密码学不只关注资讯保密问题，还同时涉及资讯完整性验证（消息验证码）、资讯发布的不可抵赖性（数码签名）、以及在分布式计算中产生的来源于内部和外部的攻击的所有信息安全问题。</p>
+<p>—— <a href="https://zh.wikipedia.org/zh-sg/密码学">维基 · 密码学</a></p>
+<hr />
+<h2 id="3">3. 密码学的两大分支</h2>
+<h3 id="31">3.1 古典密码学 —— 隐藏与欺骗的艺术</h3>
+<p>古典密码学作为一种实用性艺术存在，其编码和破译通常依赖于设计者和敌手的创造力与技巧，并没有对密码学原件进行清晰的定义。古典密码学主要包含以下几个方面：</p>
 <ul>
-<li><strong>IPv4</strong>：32 位，点分十进制，如 192.168.0.1。</li>
-<li><strong>IPv6</strong>：128 位，冒号分段，如 2001:0db8::1。</li>
+<li><strong>单表替换加密</strong>：如凯撒密码、仿射密码，一个明文字母固定替换为另一个密文字母</li>
+<li><strong>多表替换加密</strong>：如维吉尼亚密码，使用多个替换表轮换加密，抵抗频率分析</li>
+<li><strong>奇奇怪怪的加密方式</strong>：如猪圈密码、舞动的小人、键盘布局密码等</li>
 </ul>
-<p><strong>公网IP vs 私网IP</strong></p>
-<ul>
-<li><strong>公网 IP</strong>：可被互联网直接访问（ISP 分配），除了内网IP以外的其他IP段。</li>
-<li><strong>私有 IP</strong>：局域网内部使用，无法在公网直接路由。常见范围：</li>
-<li>A 类：10.0.0.0/8</li>
-<li>B 类：172.16.0.0/12</li>
-<li>C 类：192.168.0.0/16</li>
-</ul>
-<p><strong>如何查看本机 IP</strong></p>
-<ul>
-<li>Windows: ipconfig</li>
-<li>macOS / Linux: ifconfig 或 ip addr show</li>
-</ul>
-<h3 id="02-port">02 端口（Port）</h3>
-<p><strong>定义</strong>：端口用来区分同一台主机上的不同网络服务。IP + 端口 组合（IP:Port）唯一标识一个网络服务实例，例如 192.168.1.100:80。</p>
-<p><strong>端口范围</strong>：端口号范围为0到65535，其中：</p>
-<ul>
-<li><strong>知名端口（0-1023）</strong>：用于常见协议和服务，较为固定。例如HTTP为80，HTTPS为443，FTP为21。</li>
-<li><strong>注册端口（1024-49151）</strong>：为特定应用注册，通常由开发者使用。</li>
-<li><strong>动态/私有端口（49152-65535）</strong>：为临时连接分配，通常由操作系统动态使用。</li>
-</ul>
-<h4 id="_1"><strong>常见端口和协议</strong></h4>
-<ul>
-<li><strong>HTTP（80）和HTTPS（443）</strong>：网页浏览服务，HTTP不加密，HTTPS加密。</li>
-<li><strong>FTP（21）</strong>：文件传输协议，用于文件上传和下载。</li>
-<li><strong>SSH（22）</strong>：安全外壳协议，远程安全登录。</li>
-<li><strong>SMTP（25）</strong>：简单邮件传输协议，用于发送邮件。</li>
-<li><strong>DNS（53）</strong>：域名系统协议，负责将域名解析为IP地址。</li>
-</ul>
-<h3 id="03-domain-name-dns">03 域名（Domain Name）与 DNS</h3>
-<p><strong>域名定义</strong>：域名（Domain Name）是互联网中易于记忆的地址，代表一个IP地址，用户通过域名访问网络资源。域名是IP地址的别名，使人类无需记忆复杂的数字串。例如学校的域名：cauc.edu.cn</p>
-<p><strong>结构</strong>：域名由多个层次组成，分级由点号（.）分隔，如www.example.com。</p>
-<ul>
-<li><strong>顶级域名（TLD）</strong>：域名的最右部分，代表域的类型或所属国家，如.com、.org、.cn、.edu等。</li>
-<li><strong>二级域名</strong>：紧靠顶级域名左侧部分，通常为注册者的名称，例如example。</li>
-<li><strong>三级域名</strong>：更靠左侧的部分，通常为服务名，如www(万维网)，也可以自定义其他名称，如blog.example.com。</li>
-</ul>
-<p><strong>DNS（域名解析）</strong></p>
-<ul>
-<li>工作流程：浏览器访问域名 → 本地/递归 DNS 服务器 → 根/顶级/权威 DNS → 返回 IP。</li>
-<li>最终把域名解析成 IP，浏览器用这个 IP 建立连接。</li>
-</ul>
-<h3 id="04-ip">04 IP、端口、域名之间的关系</h3>
-<p>用户访问 https://www.example.com:443 的过程：</p>
-<ol>
-<li>DNS 将 www.example.com 解析为某个 IP（例如 93.184.216.34）。</li>
-<li>浏览器与 93.184.216.34 的端口 443 建立 TCP（并进行 TLS）连接。</li>
-<li>请求通过该 IP 与端口到达服务器，服务器处理并返回响应。</li>
-</ol>
-<h3 id="05-http">05 HTTP协议（基础）</h3>
-<p><strong>基础概念</strong>：<strong>HTTP（超文本传输协议）</strong>是客户端与服务器之间进行通信的协议，基于请求-响应模型。</p>
-<p><strong>特点</strong></p>
-<ul>
-<li>基于请求—响应模型，通常运行在 TCP协议（HTTP/HTTPS）之上。</li>
-<li><strong>无状态</strong>：每个请求独立，服务器默认不保存请求间状态（因此需要 Cookie / Session 等机制）。</li>
-</ul>
-<p><strong>HTTP 请求结构（示例）</strong></p>
-<pre><code class="language-http">GET /index.html HTTP/1.1
-Host: www.example.com
-User-Agent: Mozilla/5.0
-Accept: text/html
-</code></pre>
-<pre><code class="language-http">POST /login HTTP/1.1
-Host: www.example.com
-User-Agent: Mozilla/5.0
-Accept: application/json
-Content-Type: application/json
-Content-Length: 40
-
-{&quot;username&quot;:&quot;alice&quot;,&quot;password&quot;:&quot;s3cr3t&quot;}
-</code></pre>
-<ul>
-<li>
-<p><strong>请求行</strong>：请求方法（GET/POST/PUT/DELETE 等） + 资源路径（此处为<code>index.html</code>） + HTTP 版本（此处为1.1）。</p>
-</li>
-<li>
-<p><strong>请求头</strong>：传递元数据（Host、User-Agent、Cookie、Content-Type 等）。</p>
-</li>
-<li><strong>请求体</strong>：仅在需要时包含数据（如 POST 的表单或 JSON），例如上示例中的<code>{"username":"alice","password":"s3cr3t"}</code>。</li>
-</ul>
-<p><strong>HTTP 响应结构（示例）</strong></p>
-<pre><code class="language-http">HTTP/1.1 200 OK
-Content-Type: text/html; charset=UTF-8
-Content-Length: 1024
-Set-Cookie: sessionId=abc123
-
-&lt;HTML&gt;...页面内容...&lt;/HTML&gt;
-</code></pre>
-<ul>
-<li><strong>状态行</strong>：版本 + 状态码（200/404/500 等）。</li>
-<li><strong>响应头</strong>：元数据（Content-Type、Set-Cookie、Content-Length 等）。</li>
-<li><strong>响应体</strong>：实际资源（HTML、JSON、图片等）。</li>
-</ul>
-<p><strong>常见状态码分类</strong></p>
-<ul>
-<li><strong>2xx</strong>：成功（200 OK）</li>
-<li><strong>3xx</strong>：重定向（301/302）</li>
-<li><strong>4xx</strong>：客户端错误（404/403）</li>
-<li><strong>5xx</strong>：服务器错误（500）</li>
-</ul>
-<h3 id="06-burp-suite-http">06 在 Burp Suite 中分析 HTTP</h3>
-<p>Burp Suite 是一个常用的中间人代理，用来拦截、修改和重发 HTTP 请求。把浏览器的代理设置为 Burp 后，你可以在它里看到并操作请求/响应的各部分。</p>
-<p>下面用访问百度（www.baidu.com）的过程做一个演示：</p>
-<ol>
-<li>
-<p>配置好Burp后，在 Burp 中启用拦截：</p>
-<p><img alt="image-20251030014725823" src="https://mac-pic-1314279731.cos.ap-nanjing.myqcloud.com/image-20251030014725823.png" /></p>
-</li>
-<li>
-<p>在浏览器配置好代理后，访问百度</p>
-<p><img alt="image-20251030014917708" src="https://mac-pic-1314279731.cos.ap-nanjing.myqcloud.com/image-20251030014917708.png" /></p>
-</li>
-<li>
-<p>查看请求（不同版本burp显示可能不同）</p>
-<p><img alt="image-20251030015034917" src="https://mac-pic-1314279731.cos.ap-nanjing.myqcloud.com/image-20251030015034917.png" /></p>
-<p>在其中可以看到，我们发起了一个GET请求，访问了www.baidu.com这个域名的根目录</p>
-</li>
-<li>
-<p>查看返回</p>
-<p>在burp中有两种最常用的方法来查看响应包</p>
-<p>（1）在proxy模块的intercept中：鼠标右键-&gt;Do intercept-&gt;Response to this request</p>
-<p><img alt="image-20251030023015093" src="https://mac-pic-1314279731.cos.ap-nanjing.myqcloud.com/image-20251030023015093.png" /></p>
-<p>获得响应包，但这种方式只能单次查看，只要放掉这个包，无法再查看</p>
-<p><img alt="image-20251030023234326" src="https://mac-pic-1314279731.cos.ap-nanjing.myqcloud.com/image-20251030023234326.png" /></p>
-<p>（2）把请求包发送到repeater模块</p>
-<p><img alt="image-20251030024605849" src="https://mac-pic-1314279731.cos.ap-nanjing.myqcloud.com/image-20251030024605849.png" /></p>
-<p>然后在repeater模块中，可以多次改数据包查看不同的相应包</p>
-<p><img alt="image-20251030024645116" src="https://mac-pic-1314279731.cos.ap-nanjing.myqcloud.com/image-20251030024645116.png" /></p>
-</li>
-</ol>
-<h3 id="07">07 小总结</h3>
+<p>古典密码的核心思想至今仍在某些场景沿用，但面对现代计算能力，几乎全部可以被暴力或统计方法攻破。</p>
+<h3 id="32">3.2 现代密码学 —— 数学与计算的博弈</h3>
+<p>现代密码学起源于 20 世纪中后期出现的大量相关理论。<strong>1949 年香农（C. E. Shannon）发表了题为《保密系统的通信理论》的经典论文</strong>，标志着现代密码学的开始。现代密码学主要包含以下几个方面：</p>
+<table>
+<thead>
+<tr>
+<th>分类</th>
+<th>代表算法</th>
+<th>核心用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>对称加密</td>
+<td>DES、AES、RC4</td>
+<td>高效加密大量数据</td>
+</tr>
+<tr>
+<td>非对称加密</td>
+<td>RSA、ElGamal、ECC</td>
+<td>密钥协商、数字签名</td>
+</tr>
+<tr>
+<td>哈希函数</td>
+<td>MD5、SHA-1、SHA-256</td>
+<td>完整性校验、口令存储</td>
+</tr>
+<tr>
+<td>数字签名</td>
+<td>RSA签名、DSA、ECDSA</td>
+<td>不可否认性、身份认证</td>
+</tr>
+</tbody>
+</table>
+<p>其中，对称加密体制主要分为两种方式：
+- <strong>分组密码（Block Cipher）</strong>：将数据分块加密，如 AES
+- <strong>序列密码（Stream Cipher）</strong>：逐字节/逐位加密，如 RC4</p>
+<hr />
+<h2 id="4">4. 信息安全的核心目标</h2>
+<p>密码设计者的根本目标是保障信息及信息系统的以下特性。前三者被称为 <strong>CIA 三要素</strong>，是所有安全体系的基石。</p>
+<table>
+<thead>
+<tr>
+<th>目标</th>
+<th>含义</th>
+<th>现实场景举例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>机密性</strong></td>
+<td>信息不被未授权者获取</td>
+<td>微信“端到端加密”聊天、HTTPS 传输</td>
+</tr>
+<tr>
+<td><strong>完整性</strong></td>
+<td>信息未被篡改</td>
+<td>软件下载页提供 SHA256 校验值</td>
+</tr>
+<tr>
+<td><strong>可用性</strong></td>
+<td>系统与服务可正常访问</td>
+<td>防止 DDoS 攻击导致网站瘫痪</td>
+</tr>
+<tr>
+<td><strong>认证性</strong></td>
+<td>确认通信双方的身份</td>
+<td>登录时验证用户名与密码</td>
+</tr>
+<tr>
+<td><strong>不可否认性</strong></td>
+<td>操作者无法否认自己的行为</td>
+<td>电子合同、数字签名</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="5">5. 攻击者模型</h2>
+<p>在密码学中，我们通常假设<strong>攻击者已知待破解的密码体制</strong>（柯克霍夫原则），只不知道密钥。攻击类型通常分为以下四种，难度依次降低：</p>
+<table>
+<thead>
+<tr>
+<th>攻击类型</th>
+<th>攻击者掌握的信息</th>
+<th>难度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>唯密文攻击</strong></td>
+<td>仅拥有若干密文</td>
+<td>最难，现实中较少单独出现</td>
+</tr>
+<tr>
+<td><strong>已知明文攻击</strong></td>
+<td>拥有若干“明文-密文对”</td>
+<td>较难，如部分已知文件格式的加密数据</td>
+</tr>
+<tr>
+<td><strong>选择明文攻击</strong></td>
+<td>可对任意明文加密获得密文</td>
+<td>中等，如可控制输入的加密API</td>
+</tr>
+<tr>
+<td><strong>选择密文攻击</strong></td>
+<td>可对任意密文解密获得明文</td>
+<td>攻击能力最强，常见于侧信道或协议漏洞</td>
+</tr>
+</tbody>
+</table>
 <blockquote>
-<p>本页内容只是 Web 安全中与计网相关知识的一小部分，帮助大家建立最基础的概念认知。在真实的渗透测试和 CTF 场景中，你会遇到更多协议细节、更复杂的网络结构，以及大量需要灵活判断的情况。比如抓包分析、代理、内网穿透、端口转发、协议特性漏洞利用等等。</p>
-<p>后续大家遇到一些不懂的内容和知识，及时自己不断的查漏补缺，继续拓展知识体系，例如深入理解 TCP/IP 分层模型，HTTPS加密机制等等。</p>
-<p>如果你想更轻松地入门网络原理，强烈推荐阅读 <strong>崔鸿老师的《白话计算机网络》</strong> ，非常适合作为学习配套材料。</p>
-<p>对于本篇讲的内容，再多都只是纸上谈兵，自己打开burp，抓几次包，观察几次请求与响应的变化。</p>
+<p>在 CTF 密码学题目中，常需要根据题目提供的接口判断攻击类型，并选择合适的攻击手段。</p>
 </blockquote>
-<div class='document-dates-plugin-wrapper document-dates-bottom'><div class='document-dates-plugin' locale=''><span data-tippy-content data-tippy-raw='2025-10-31'><span class='material-icons' data-icon='doc_created'></span><time datetime='2025-10-31T17:25:42.091495+11:00'>2025-10-31 17:25:42</time></span><span data-tippy-content data-tippy-raw='2025-10-31'><span class='material-icons' data-icon='doc_modified'></span><time datetime='2025-10-31T14:18:12+08:00'>2025-10-31 14:18:12</time></span></div></div>
+<hr />
+<h2 id="6">6. 系列路线图</h2>
+<p>本系列将按照以下路线展开，逐步深入：</p>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>核心内容</th>
+<th>目标</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>第一阶段：古典密码</strong></td>
+<td>替换、置换、编码及典型攻击方法（频率分析、爆破）</td>
+<td>掌握手工分析能力，理解密码设计思想</td>
+</tr>
+<tr>
+<td><strong>第二阶段：数学基础</strong></td>
+<td>数论（模运算、欧拉定理）、有限域、概率论</td>
+<td>为现代密码算法打底</td>
+</tr>
+<tr>
+<td><strong>第三阶段：对称密码</strong></td>
+<td>AES、DES、RC4 原理，分组密码模式（ECB/CBC等）</td>
+<td>理解加解密流程与常见误区</td>
+</tr>
+<tr>
+<td><strong>第四阶段：非对称密码</strong></td>
+<td>RSA、ECC、ElGamal 原理与参数安全性</td>
+<td>掌握密钥生成、加解密、签名逻辑</td>
+</tr>
+<tr>
+<td><strong>第五阶段：后量子密码</strong></td>
+<td>格密码等更高难度的类型</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="7">7. 学习资源推荐</h2>
+<h3 id="71">7.1 在线文档(入门介绍)</h3>
+<ul>
+<li><a href="https://ctf-wiki.org/crypto/introduction/">CTF-Wiki 密码学板块</a> —— 中文 CTF 知识库，体系完整</li>
+<li><a href="https://hello-ctf.com/hc-crypto/">Hello-CTF 密码学篇</a> —— 面向新手的入门教程，例题丰富</li>
+<li><a href="http://www.practicalcryptography.com/">Practical Cryptography</a> —— 英文站，古典密码工具与经典算法实现很全</li>
+</ul>
+<h3 id="72">7.2 书籍</h3>
+<ul>
+<li><strong>《初等数论》</strong> —— 离散数学是现代密码学的理论基础，各类现代密码算法都离不开数论的支持</li>
+<li><strong>《Understanding Cryptography》</strong> —— 这是大二应用密码学课程的教材<strong>（纯英）</strong></li>
+<li><strong>《离散数学》</strong>——就是你们现在手里的教材就可以</li>
+</ul>
+<h3 id="73">7.3 视频课程</h3>
+<ul>
+<li>B站《密码学补完计划》，适合有一定了解后再去review，我为数不多不敢开倍速的视频</li>
+<li>英语好的去YouTube上去搜搜看吧，感觉国内一堆臭卖课的还讲不好（哭泣）</li>
+</ul>
+<hr />
+<h2 id="8">8. 写在前面的话</h2>
+<p>密码学是一门<strong>既古老又年轻</strong>的学科。从凯撒的军令到比特币的私钥，从恩尼格玛的破解到量子安全的挑战，每一次技术的跃迁都在重塑我们对“秘密”的认知。</p>
+<p>这个系列不会要求你成为数学家，但会带你读懂数学的语言；不会让你背诵所有算法，但会帮你建立分析问题的框架。每篇文章都会尽量配合 CTF 例题或用例场景，让你“用完即走，走完还能回来翻”。</p>
+<div class='document-dates-plugin-wrapper document-dates-bottom'><div class='document-dates-plugin' locale=''><span data-tippy-content data-tippy-raw='2026-03-27'><span class='material-icons' data-icon='doc_created'></span><time datetime='2026-03-27T17:08:35.721757+08:00'>2026-03-27 17:08:35</time></span><span data-tippy-content data-tippy-raw='2026-03-27'><span class='material-icons' data-icon='doc_modified'></span><time datetime='2026-03-27T18:02:23+08:00'>2026-03-27 18:02:23</time></span></div></div>
 
 
 
@@ -1979,7 +2134,7 @@ Set-Cookie: sessionId=abc123
       <nav class="md-footer__inner md-grid" aria-label="页脚" >
         
           
-          <a href="../../web/" class="md-footer__link md-footer__link--prev" aria-label="上一页: Introduction">
+          <a href="../crypto/" class="md-footer__link md-footer__link--prev" aria-label="上一页: xxx">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -1989,20 +2144,20 @@ Set-Cookie: sessionId=abc123
                 上一页
               </span>
               <div class="md-ellipsis">
-                Introduction
+                xxx
               </div>
             </div>
           </a>
         
         
           
-          <a href="../../vulnerabilities/sqlinj/sql/" class="md-footer__link md-footer__link--next" aria-label="下一页: SQL注入---是谁脱了我的库子？">
+          <a href="../crypto2.0_encoding/" class="md-footer__link md-footer__link--next" aria-label="下一页: 密码学补完计划 · 编码">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 下一页
               </span>
               <div class="md-ellipsis">
-                SQL注入---是谁脱了我的库子？
+                密码学补完计划 · 编码
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -2044,24 +2199,24 @@ Set-Cookie: sessionId=abc123
     
     
       
-      <script id="__config" type="application/json">{"base": "../../../..", "features": ["content.code.annotate", "content.code.copy", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.tabs", "navigation.tabs.sticky", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.annotate", "content.code.copy", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.tabs", "navigation.tabs.sticky", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
     
     
-      <script src="../../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      <script src="../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
         <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
       
-        <script src="../../../../assets/document_dates/tippy/popper.min.js"></script>
+        <script src="../../../assets/document_dates/tippy/popper.min.js"></script>
       
-        <script src="../../../../assets/document_dates/tippy/tippy.umd.min.js"></script>
+        <script src="../../../assets/document_dates/tippy/tippy.umd.min.js"></script>
       
-        <script src="../../../../assets/document_dates/core/default.config.js"></script>
+        <script src="../../../assets/document_dates/core/default.config.js"></script>
       
-        <script src="../../../../assets/document_dates/user.config.js"></script>
+        <script src="../../../assets/document_dates/user.config.js"></script>
       
-        <script src="../../../../assets/document_dates/core/utils.js"></script>
+        <script src="../../../assets/document_dates/core/utils.js"></script>
       
-        <script src="../../../../assets/document_dates/core/core.js"></script>
+        <script src="../../../assets/document_dates/core/core.js"></script>
       
     
   </body>
