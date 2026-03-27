@@ -195,7 +195,7 @@ require_once(string $filename): mixed
 这里只展示linux的，windows的出现很少
 
 ```
-/etc/password //账户信息
+/etc/passwd //账户信息
 /etc/shadow //账户密码信息
 /usr/local/app/apache2/conf/httpd.conf //Apache2默认配置文件
 /usr/local/app/apache2/conf/extra/httpd-vhost.conf //虚拟网站配置
