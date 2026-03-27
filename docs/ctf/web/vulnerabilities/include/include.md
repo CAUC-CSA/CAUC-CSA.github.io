@@ -192,7 +192,7 @@ require_once(string $filename): mixed
 
 ### 2.3 常见敏感目录信息
 
-这里只展示liunx的，windows的出现很少
+这里只展示linux的，windows的出现很少
 
 ```
 /etc/password //账户信息
