@@ -11,6 +11,12 @@ edit_uri: edit/master/docs/
 extra_javascript:
   - https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.js
   - assets/javascripts/pangu-init.js
+  - https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js
+  - https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js
+  - assets/javascripts/katex-init.js
+
+extra_css:
+  - https://cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css
 
 theme:
   name: material
@@ -100,7 +106,9 @@ markdown_extensions:
   - pymdownx.tasklist:
       custom_checkbox: true
       clickable_checkbox: true
-
+  - pymdownx.arithmatex:   # 启用 LaTeX 数学公式支持
+      generic: true
+      
 # 插件配置
 plugins:
   - search:
@@ -117,13 +125,6 @@ plugins:
       date_format: '%Y-%m-%d'   # 日期格式化字符串（例如：%Y年%m月%d日、%b %d, %Y）
       time_format: '%H:%M:%S'   # 时间格式化字符串（仅在 type=datetime 时有效）
       show_author: false        # 作者显示模式: true(头像) text(文本) false(隐藏)
-
-markdown_extensions:
-  - pymdownx.arithmatex:
-      generic: true  # 启用 LaTeX 数学公式支持
-
-extra_javascript:
-  - https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js  # MathJax 渲染引擎
 
 # 导航栏配置
 nav:
@@ -166,3 +167,4 @@ nav:
   - Wiki建设:
       - 提交规范: contributing/contributing.md
       - 撰写规范: contributing/writing.md
+
