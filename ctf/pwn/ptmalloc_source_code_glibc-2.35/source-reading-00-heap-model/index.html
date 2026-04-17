@@ -1,0 +1,3743 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="驯海隔壁白帽子">
+      
+      
+        <meta name="author" content="中国民航大学网络安全协会">
+      
+      
+        <link rel="canonical" href="https://wiki.cauc-csa.org.cn/ctf/pwn/ptmalloc_source_code_glibc-2.35/source-reading-00-heap-model/">
+      
+      
+        <link rel="prev" href="../source-reading-index/">
+      
+      
+        <link rel="next" href="../source-reading-01-malloc-init/">
+      
+      
+      <link rel="icon" href="../../../../images/csa_logo.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.22">
+    
+    
+      
+        <title>入门：先建立 ptmalloc 的整体模型 - CSA_Wiki</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../../assets/stylesheets/main.84d31ad4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css">
+    
+      <link rel="stylesheet" href="../../../../assets/document_dates/fonts/material-icons.css">
+    
+      <link rel="stylesheet" href="../../../../assets/document_dates/tippy/material.css">
+    
+      <link rel="stylesheet" href="../../../../assets/document_dates/tippy/shift-away.css">
+    
+      <link rel="stylesheet" href="../../../../assets/document_dates/tippy/tippy.css">
+    
+      <link rel="stylesheet" href="../../../../assets/document_dates/tippy/scale.css">
+    
+      <link rel="stylesheet" href="../../../../assets/document_dates/tippy/light.css">
+    
+      <link rel="stylesheet" href="../../../../assets/document_dates/tippy/backdrop.css">
+    
+      <link rel="stylesheet" href="../../../../assets/document_dates/core/core.css">
+    
+      <link rel="stylesheet" href="../../../../assets/document_dates/user.config.css">
+    
+    <script>__md_scope=new URL("../../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#ptmalloc" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../../../.." title="CSA_Wiki" class="md-header__button md-logo" aria-label="CSA_Wiki" data-md-component="logo">
+      
+  <img src="../../../../images/csa_logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            CSA_Wiki
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              入门：先建立 ptmalloc 的整体模型
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/CAUC-CSA/CAUC-CSA.github.io" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    CAUC-CSA/CAUC-CSA.github.io
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="标签" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../../.." class="md-tabs__link">
+        
+  
+  
+    
+  
+  首页
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../training/what-is-ctf/" class="md-tabs__link">
+          
+  
+  
+  培训资料&&教程集合
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../../ctf_index/" class="md-tabs__link">
+          
+  
+  
+  CTF技能树
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../../../contributing/contributing/" class="md-tabs__link">
+          
+  
+  
+  Wiki建设
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../../.." title="CSA_Wiki" class="md-nav__button md-logo" aria-label="CSA_Wiki" data-md-component="logo">
+      
+  <img src="../../../../images/csa_logo.png" alt="logo">
+
+    </a>
+    CSA_Wiki
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/CAUC-CSA/CAUC-CSA.github.io" title="前往仓库" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M173.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M252.8 8C114.1 8 8 113.3 8 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C436.2 457.8 504 362.9 504 252 504 113.3 391.5 8 252.8 8M105.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+  </div>
+  <div class="md-source__repository">
+    CAUC-CSA/CAUC-CSA.github.io
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    首页
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    培训资料&&教程集合
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            培训资料&&教程集合
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../training/what-is-ctf/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CTF是什么
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    环境与工具准备
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            环境与工具准备
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../training/tools/vmware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    01_VMWare虚拟机的安装
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../training/tools/Linux/Linux/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    02_Linux指令入门
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../training/tools/docker/docker/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    03_Docker超绝入门指南
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../training/tools/python/python/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    04_Python安装与基础配置
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../training/lab/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    靶场推荐
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    CTF技能树
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            CTF技能树
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../ctf_index/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introduction
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Web
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            Web
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../web/web/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Introduction
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../web/network_in_web/network_in_web/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Web中你需要知道的计网知识
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2_3" id="__nav_3_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    基础漏洞原理与演示
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            基础漏洞原理与演示
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../web/vulnerabilities/sqlinj/sql/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    SQL注入---是谁脱了我的库子？
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../web/vulnerabilities/file_upload/file_upload/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    文件上传---能传就能打？
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../web/vulnerabilities/file_upload/%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0-.hraccess/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    文件上传 .htaccess文件篇
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../web/vulnerabilities/xss/xss/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    XSS---如何让别人的浏览器执行你的代码
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../web/vulnerabilities/include/include/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    文件包含
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Crypto
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            Crypto
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../crypto/crypto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    xxx
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../crypto/crypto1.0_start/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    密码学补完计划 · 开篇
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../crypto/crypto2.0_encoding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    密码学补完计划 · 编码
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../crypto/crypto3.0_classic/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    密码学补完计划 · 古典密码
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Pwn
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            Pwn
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../pwn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    目录
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../environment/pwn_environment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    如何优雅地配置pwn环境
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4_3" id="__nav_3_4_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    栈溢出
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_4_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4_3">
+            <span class="md-nav__icon md-icon"></span>
+            栈溢出
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Ret2csu/Ret2csu/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    [Ret2csu]为什么是神？
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Ret2dlresolve/Ret2dlresolve/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    [Ret2dlresolve]迈出阅读Glibc源码的第一步
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../Ret2gets/Ret2gets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    [Ret2gets]不靠pop rdi; ret也能控制rdi
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_4_4" id="__nav_3_4_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    堆与 ptmalloc
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_4_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            堆与 ptmalloc
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../source-reading-index/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ptmalloc 源码阅读笔记（目录）
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    入门：先建立 ptmalloc 的整体模型
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    入门：先建立 ptmalloc 的整体模型
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      总览
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      先回答最基础的问题：什么是堆
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ptmalloc_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      再换一个角度：ptmalloc 本身就是一套“多级缓存”
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chunk" class="md-nav__link">
+    <span class="md-ellipsis">
+      第一层模型：什么是 chunk
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chunk_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      第二层模型：一个 chunk 在“使用中”和“空闲”时长得不一样
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第二层模型：一个 chunk 在“使用中”和“空闲”时长得不一样">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-chunk" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 使用中的 chunk
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-chunk" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 空闲后的 chunk
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      第三层模型：先认识几个最重要的角色
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arenaheapchunk" class="md-nav__link">
+    <span class="md-ellipsis">
+      arena、heap、chunk 到底是什么关系
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="arena、heap、chunk 到底是什么关系">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      对主线程和其他线程，再粗分一次
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      各空闲结构的大致定位
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      从“仓库”视角看分配
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="从“仓库”视角看分配">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      第一步：先“规格化”请求
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      第二步：优先复用最近释放过的块
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      按请求规模和命中情况拆开后，常见路径可以归纳为四类
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="按请求规模和命中情况拆开后，常见路径可以归纳为四类">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      路径 1：小块，而且刚好在线程本地缓存里
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2tcache" class="md-nav__link">
+    <span class="md-ellipsis">
+      路径 2：小块，tcache 没命中，但仓库里有现成货
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      路径 3：仓库没有现成货，但堆顶还有原料
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-top-chunk" class="md-nav__link">
+    <span class="md-ellipsis">
+      路径 4：连 top chunk 都不够
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#top-chunk" class="md-nav__link">
+    <span class="md-ellipsis">
+      第三步：仓库都没有，就从 top chunk 现切
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#top-chunk_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      第四步：top chunk 也不够，就向系统申请
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chunk_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      两个特殊 chunk
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="两个特殊 chunk">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-top-chunk" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. top chunk
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-mmap-chunk" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. mmap chunk
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#free" class="md-nav__link">
+    <span class="md-ellipsis">
+      从“仓库”视角看 free
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="从“仓库”视角看 free">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#free_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      按来源和大小拆开后，free 的典型路径可以归纳为四类
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="按来源和大小拆开后，free 的典型路径可以归纳为四类">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-tcache" class="md-nav__link">
+    <span class="md-ellipsis">
+      路径 1：小块，先回 tcache
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-fastbin" class="md-nav__link">
+    <span class="md-ellipsis">
+      路径 2：再往下一层，先回 fastbin
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      路径 3：普通块，走合并与整理
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      路径 4：本来就是大块单独映射
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      一张图把分配和释放串起来
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chunk_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      再加一张“单个 chunk 的生命周期图”
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chunk_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      不同类型 chunk 的典型命运
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      几个容易混淆的问题
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="几个容易混淆的问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-free" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 为什么 free 不等于“立刻还给系统”？
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-free" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 为什么有的 free 会合并，有的不会？
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-unsorted-bin-smallbin-largebin" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 为什么会先有 unsorted bin，再有 smallbin / largebin？
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-chunk" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 为什么读源码时总觉得一个 chunk 一会儿是数据，一会儿又变成链表节点？
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      读源码时，怎么把这个模型对上函数
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      归纳
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      下一步怎么读
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../source-reading-01-malloc-init/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    精读 1：malloc 入口、初始化与 tcache 建立
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../source-reading-02-int-malloc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    精读 2：_int_malloc 主分配路径
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../source-reading-03-free-trim/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    精读 3：free、合并与 trim 路径
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Reverse
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            Reverse
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../reverse/reverse/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    xxx
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Misc
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            Misc
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../misc/misc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    xxx
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Wiki建设
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            Wiki建设
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../contributing/contributing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    提交规范
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../../contributing/writing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    撰写规范
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      总览
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      先回答最基础的问题：什么是堆
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ptmalloc_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      再换一个角度：ptmalloc 本身就是一套“多级缓存”
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chunk" class="md-nav__link">
+    <span class="md-ellipsis">
+      第一层模型：什么是 chunk
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chunk_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      第二层模型：一个 chunk 在“使用中”和“空闲”时长得不一样
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="第二层模型：一个 chunk 在“使用中”和“空闲”时长得不一样">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-chunk" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 使用中的 chunk
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-chunk" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 空闲后的 chunk
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      第三层模型：先认识几个最重要的角色
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arenaheapchunk" class="md-nav__link">
+    <span class="md-ellipsis">
+      arena、heap、chunk 到底是什么关系
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="arena、heap、chunk 到底是什么关系">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      对主线程和其他线程，再粗分一次
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      各空闲结构的大致定位
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      从“仓库”视角看分配
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="从“仓库”视角看分配">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      第一步：先“规格化”请求
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      第二步：优先复用最近释放过的块
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      按请求规模和命中情况拆开后，常见路径可以归纳为四类
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="按请求规模和命中情况拆开后，常见路径可以归纳为四类">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      路径 1：小块，而且刚好在线程本地缓存里
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2tcache" class="md-nav__link">
+    <span class="md-ellipsis">
+      路径 2：小块，tcache 没命中，但仓库里有现成货
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      路径 3：仓库没有现成货，但堆顶还有原料
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-top-chunk" class="md-nav__link">
+    <span class="md-ellipsis">
+      路径 4：连 top chunk 都不够
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#top-chunk" class="md-nav__link">
+    <span class="md-ellipsis">
+      第三步：仓库都没有，就从 top chunk 现切
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#top-chunk_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      第四步：top chunk 也不够，就向系统申请
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chunk_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      两个特殊 chunk
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="两个特殊 chunk">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-top-chunk" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. top chunk
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-mmap-chunk" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. mmap chunk
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#free" class="md-nav__link">
+    <span class="md-ellipsis">
+      从“仓库”视角看 free
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="从“仓库”视角看 free">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#free_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      按来源和大小拆开后，free 的典型路径可以归纳为四类
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="按来源和大小拆开后，free 的典型路径可以归纳为四类">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-tcache" class="md-nav__link">
+    <span class="md-ellipsis">
+      路径 1：小块，先回 tcache
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-fastbin" class="md-nav__link">
+    <span class="md-ellipsis">
+      路径 2：再往下一层，先回 fastbin
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      路径 3：普通块，走合并与整理
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      路径 4：本来就是大块单独映射
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      一张图把分配和释放串起来
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chunk_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      再加一张“单个 chunk 的生命周期图”
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chunk_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      不同类型 chunk 的典型命运
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      几个容易混淆的问题
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="几个容易混淆的问题">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-free" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. 为什么 free 不等于“立刻还给系统”？
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-free" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. 为什么有的 free 会合并，有的不会？
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-unsorted-bin-smallbin-largebin" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. 为什么会先有 unsorted bin，再有 smallbin / largebin？
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-chunk" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. 为什么读源码时总觉得一个 chunk 一会儿是数据，一会儿又变成链表节点？
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      读源码时，怎么把这个模型对上函数
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      归纳
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      下一步怎么读
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="ptmalloc">入门：先建立 ptmalloc 的整体模型<a class="headerlink" href="#ptmalloc" title="Permanent link">&para;</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>这页的目标不是展开源码细节，而是先建立一套稳定的整体模型：</p>
+<ol>
+<li>什么是堆</li>
+<li>什么是 <code>chunk</code></li>
+<li><code>malloc</code> 时一块内存大概会怎么被找到</li>
+<li><code>free</code> 时一块内存大概会去哪里</li>
+<li>后面读源码时，应该把哪些函数当成哪一步来看</li>
+</ol>
+</div>
+<h2 id="_1">总览<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>ptmalloc 本质上只做两件事：</p>
+<ol>
+<li>尽量复用已经存在的空闲 <code>chunk</code></li>
+<li>如果现有空间不够，再向系统要新的内存</li>
+</ol>
+<p>所以后面看到一堆 <code>tcache</code>、<code>fastbin</code>、<code>smallbin</code>、<code>largebin</code>、<code>top chunk</code>、<code>mmap chunk</code>，不要先被名字吓住。<br />
+它们本质上都只是这两个目标下的不同“存放方式”和“处理策略”。</p>
+<h2 id="_2">先回答最基础的问题：什么是堆<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>从程序运行的角度看，进程拿到的是一整片虚拟地址空间。<br />
+这片空间里会放很多东西，例如：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a>低地址
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2"></a>+----------------------+
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3"></a>| 代码段 / 只读数据     |
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4"></a>+----------------------+
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5"></a>| 全局数据 / 静态数据   |
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6"></a>+----------------------+
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7"></a>|         堆           |
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8"></a>+----------------------+
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9"></a>|         ...          |
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10"></a>+----------------------+
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11"></a>|         栈           |
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12"></a>+----------------------+
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13"></a>高地址
+</span></code></pre></div></td></tr></table></div>
+<p>这里先只关心两个最常见的区域：</p>
+<ul>
+<li>栈：函数调用时自动管理，通常随着函数进入和返回自动增长、回退</li>
+<li>堆：程序主动申请、主动释放，用来放生命周期更灵活的数据</li>
+</ul>
+<p>例如：</p>
+<ul>
+<li>局部变量通常更接近“放在栈上”</li>
+<li><code>malloc</code> 出来的内存通常更接近“放在堆上”</li>
+</ul>
+<p>堆最重要的特点不是“大”，而是：</p>
+<ul>
+<li>它的使用时机不固定</li>
+<li>它的大小需求不固定</li>
+<li>谁先申请、谁后释放也不固定</li>
+</ul>
+<p>这就带来一个问题：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span>
+<span class="normal"><a href="#__codelineno-1-4">4</a></span>
+<span class="normal"><a href="#__codelineno-1-5">5</a></span>
+<span class="normal"><a href="#__codelineno-1-6">6</a></span>
+<span class="normal"><a href="#__codelineno-1-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1"></a>程序不断 malloc / free
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2"></a>    |
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3"></a>    v
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4"></a>堆里会出现很多大小不同、状态不同的内存块
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5"></a>    |
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6"></a>    v
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7"></a>必须有人负责管理这些块
+</span></code></pre></div></td></tr></table></div>
+<p>ptmalloc 做的就是这件事。<br />
+它并不是“堆本身”，而是“管理堆中这些内存块的一套分配器”。</p>
+<p>所以后面读到 <code>tcache</code>、<code>bin</code>、<code>top chunk</code> 这些名词时，可以先把它们理解成：</p>
+<ul>
+<li>堆并不是一整块无差别的空间</li>
+<li>分配器会把堆里的空闲块分门别类地管理起来</li>
+<li><code>malloc</code> / <code>free</code> 就是在这些分类结构之间搬运和复用内存块</li>
+</ul>
+<h2 id="ptmalloc_1">再换一个角度：ptmalloc 本身就是一套“多级缓存”<a class="headerlink" href="#ptmalloc_1" title="Permanent link">&para;</a></h2>
+<p>你可以把 ptmalloc 理解成一套分层缓存系统，而不是“每次都临时去系统要内存”的分配器。</p>
+<p>它大概像这样：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-2-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-2-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-2-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-2-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-2-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-2-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-2-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-2-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-2-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1"></a>离用户最近、最快
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2"></a>    |
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3"></a>    +--&gt; tcache
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4"></a>    +--&gt; fastbin
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5"></a>    +--&gt; unsorted bin
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6"></a>    +--&gt; smallbin / largebin
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7"></a>    +--&gt; top chunk
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8"></a>    +--&gt; 系统调用（sbrk / mmap）
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9"></a>    |
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10"></a>离系统最近、最慢
+</span></code></pre></div></td></tr></table></div>
+<p>这张图要表达的不是严格执行顺序，而是一个核心思想：</p>
+<ul>
+<li>越靠上，越像“已经准备好、希望立刻复用的缓存”</li>
+<li>越靠下，越像“必须付出更大成本才能拿到的新内存”</li>
+</ul>
+<p>把这个视角记住之后，很多设计都会突然顺起来：</p>
+<ul>
+<li>为什么 <code>free</code> 不急着把普通 chunk 还给系统</li>
+<li>为什么 <code>tcache</code> / <code>fastbin</code> 这种“先挂起来再说”的结构会存在</li>
+<li>为什么 <code>unsorted bin</code> 不急着一开始就做最细分类</li>
+<li>为什么 <code>top chunk</code> 会被当成“最后的现成库存”</li>
+</ul>
+<p>这套结构的核心可以概括成一句话：</p>
+<p>ptmalloc 尽量把后续可能继续使用的 <code>chunk</code> 留在用户态维护的缓存和空闲结构里，而不是频繁重新进入系统调用。</p>
+<h2 id="chunk">第一层模型：什么是 chunk<a class="headerlink" href="#chunk" title="Permanent link">&para;</a></h2>
+<p>我们平时写：</p>
+<div class="language-c highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">C</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">malloc</span><span class="p">(</span><span class="mh">0x20</span><span class="p">);</span>
+</span></code></pre></div></td></tr></table></div>
+<p>你以为自己拿到的是“20h 字节内存”，但 ptmalloc 真正管理的是一个更大的对象，叫 <code>chunk</code>。</p>
+<p>可以先把它想成这样：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span>
+<span class="normal"><a href="#__codelineno-4-3">3</a></span>
+<span class="normal"><a href="#__codelineno-4-4">4</a></span>
+<span class="normal"><a href="#__codelineno-4-5">5</a></span>
+<span class="normal"><a href="#__codelineno-4-6">6</a></span>
+<span class="normal"><a href="#__codelineno-4-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1"></a>低地址
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2"></a>+----------------------+--------------------------+
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3"></a>| chunk 头部信息        | 用户真正能用的数据区      |
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4"></a>+----------------------+--------------------------+
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5"></a>                        ^
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6"></a>                        malloc 返回给程序的是这里
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7"></a>高地址
+</span></code></pre></div></td></tr></table></div>
+<p>也就是说：</p>
+<ul>
+<li>ptmalloc 管理的是整个 <code>chunk</code></li>
+<li>程序真正拿到的只是 <code>chunk</code> 里“用户数据区”的起点</li>
+<li><code>free(p)</code> 时，ptmalloc 会把这个用户指针再换算回所属的 <code>chunk</code></li>
+</ul>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>后面读源码时一定要时刻分清两件事：</p>
+<ul>
+<li><code>chunk</code> 指针：分配器内部视角</li>
+<li>用户指针：程序拿到的 <code>malloc</code> 返回值</li>
+</ul>
+</div>
+<h2 id="chunk_1">第二层模型：一个 chunk 在“使用中”和“空闲”时长得不一样<a class="headerlink" href="#chunk_1" title="Permanent link">&para;</a></h2>
+<h3 id="1-chunk">1. 使用中的 chunk<a class="headerlink" href="#1-chunk" title="Permanent link">&para;</a></h3>
+<p>可以先粗暴地理解成：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
+<span class="normal"><a href="#__codelineno-5-2">2</a></span>
+<span class="normal"><a href="#__codelineno-5-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1"></a>+----------------------+--------------------------+
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2"></a>| size / flag 等元数据  | 你的数据                  |
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3"></a>+----------------------+--------------------------+
+</span></code></pre></div></td></tr></table></div>
+<p>这时 ptmalloc 只需要知道：</p>
+<ul>
+<li>这块多大</li>
+<li>前一块/当前块的一些状态信息</li>
+<li>这块现在是给用户用的，还是已经空闲</li>
+</ul>
+<h3 id="2-chunk">2. 空闲后的 chunk<a class="headerlink" href="#2-chunk" title="Permanent link">&para;</a></h3>
+<p>一旦这块被 <code>free</code>，用户数据区就不再属于你了，ptmalloc 会把其中一部分拿来串链表、做缓存、记录下一个空闲块是谁。</p>
+<p>可以把它理解成：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
+<span class="normal"><a href="#__codelineno-6-2">2</a></span>
+<span class="normal"><a href="#__codelineno-6-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1"></a>+----------------------+--------------------------------------+
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2"></a>| chunk 头部信息        | 不再是“你的数据”，而是分配器的工作区    |
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3"></a>+----------------------+--------------------------------------+
+</span></code></pre></div></td></tr></table></div>
+<p>这里通常会产生两个直接的问题：</p>
+<ul>
+<li>为什么 <code>free</code> 之后原来的内容会被“破坏”</li>
+<li>为什么利用里总说“free 后用户区会被写入指针”</li>
+</ul>
+<p>原因很简单：<br />
+这块内存在 <code>free</code> 之后，已经从“你的缓冲区”变回了“分配器要管理的空闲块”。</p>
+<h2 id="_3">第三层模型：先认识几个最重要的角色<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p>读 ptmalloc，最先要认识的不是代码，而是“角色分工”。</p>
+<table>
+<thead>
+<tr>
+<th>名词</th>
+<th>先把它想成什么</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>arena</code></td>
+<td>一个分配现场 / 一个管理区域</td>
+<td>管着一批 heap 和 bin</td>
+</tr>
+<tr>
+<td><code>chunk</code></td>
+<td>一块被 ptmalloc 管理的内存单元</td>
+<td>分配和释放的基本对象</td>
+</tr>
+<tr>
+<td><code>tcache</code></td>
+<td>线程本地的小缓存</td>
+<td>为了更快地复用小块</td>
+</tr>
+<tr>
+<td><code>fastbin</code></td>
+<td>一组只追求快的小块空闲链</td>
+<td><code>free</code> 后先挂进去，通常不立刻合并</td>
+</tr>
+<tr>
+<td><code>unsorted bin</code></td>
+<td>普通空闲块的“中转站”</td>
+<td>刚释放/合并后的块先来这里</td>
+</tr>
+<tr>
+<td><code>smallbin</code></td>
+<td>固定大小的小块仓库</td>
+<td>同尺寸块放一起</td>
+</tr>
+<tr>
+<td><code>largebin</code></td>
+<td>较大块仓库</td>
+<td>按大小组织，便于找合适块</td>
+</tr>
+<tr>
+<td><code>top chunk</code></td>
+<td>堆顶还没切出去的那一大块</td>
+<td>现成仓库不够时，直接从这里切</td>
+</tr>
+<tr>
+<td><code>mmap chunk</code></td>
+<td>单独向系统映射的大块</td>
+<td>通常不走普通 bin 体系</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>从整体上看，最重要的不是先背出每个 bin 的精确定义，而是先区分它们各自承担的角色：</p>
+<ul>
+<li><code>tcache</code> / <code>fastbin</code>：偏“快”</li>
+<li><code>unsorted bin</code>：偏“中转”</li>
+<li><code>smallbin</code> / <code>largebin</code>：偏“正规仓库”</li>
+<li><code>top chunk</code>：偏“还没分出去的原料”</li>
+<li><code>mmap chunk</code>：偏“单独订单”</li>
+</ul>
+</div>
+<h2 id="arenaheapchunk"><code>arena</code>、<code>heap</code>、<code>chunk</code> 到底是什么关系<a class="headerlink" href="#arenaheapchunk" title="Permanent link">&para;</a></h2>
+<p>这三个词特别容易混。</p>
+<p>可以先把它们拆成三层：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">2</a></span>
+<span class="normal"><a href="#__codelineno-7-3">3</a></span>
+<span class="normal"><a href="#__codelineno-7-4">4</a></span>
+<span class="normal"><a href="#__codelineno-7-5">5</a></span>
+<span class="normal"><a href="#__codelineno-7-6">6</a></span>
+<span class="normal"><a href="#__codelineno-7-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1"></a>进程
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2"></a>  |
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3"></a>  +--&gt; arena：管理者，负责维护 bins、top、状态信息
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4"></a>          |
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5"></a>          +--&gt; heap：arena 管着的一片或几片实际内存区域
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6"></a>                  |
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7"></a>                  +--&gt; chunk：heap 里被切出来的一块块管理单元
+</span></code></pre></div></td></tr></table></div>
+<p>如果要更口语一点：</p>
+<ul>
+<li><code>arena</code> 更像“仓库管理员”</li>
+<li><code>heap</code> 更像“仓库的场地”</li>
+<li><code>chunk</code> 更像“场地上被切出来的一件件货物”</li>
+</ul>
+<h3 id="_4">对主线程和其他线程，再粗分一次<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>按常见情况粗分，可以先写成：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span>
+<span class="normal"><a href="#__codelineno-8-3">3</a></span>
+<span class="normal"><a href="#__codelineno-8-4">4</a></span>
+<span class="normal"><a href="#__codelineno-8-5">5</a></span>
+<span class="normal"><a href="#__codelineno-8-6">6</a></span>
+<span class="normal"><a href="#__codelineno-8-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1"></a>主线程常见：
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2"></a>main arena
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3"></a>  -&gt; 更常和传统 brk/sbrk 那套堆空间打交道
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4"></a>
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5"></a>其他线程常见：
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6"></a>non-main arena
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7"></a>  -&gt; 更常通过 mmap 拿到自己的 heap 区域
+</span></code></pre></div></td></tr></table></div>
+<p>这不是说主线程绝不会碰 <code>mmap</code>，也不是说其他线程完全不碰普通 chunk。<br />
+它只是先给出一个整体上的方向区分：</p>
+<ul>
+<li><code>main arena</code>：更像“主仓库”</li>
+<li><code>non-main arena</code>：更像“分仓”</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>后面读源码时会反复看到两个判断：</p>
+<ul>
+<li>当前是不是 <code>main_arena</code></li>
+<li>当前这块 chunk 是不是 <code>NON_MAIN_ARENA</code></li>
+</ul>
+<p>它背后其实就是在问：这块内存来自主仓库，还是分仓。</p>
+</div>
+<h2 id="_5">各空闲结构的大致定位<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p>这几类结构不需要一开始就分别背细。<br />
+先知道它们各自负责什么，模型就已经够用了。</p>
+<table>
+<thead>
+<tr>
+<th>结构</th>
+<th>可以先理解成什么</th>
+<th>整体特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tcache</code></td>
+<td>线程本地的小缓存</td>
+<td>最近释放的小块，优先快速复用</td>
+</tr>
+<tr>
+<td><code>fastbin</code></td>
+<td>分配器内部的小块快缓存</td>
+<td>很快，但通常不立刻合并</td>
+</tr>
+<tr>
+<td><code>unsorted bin</code></td>
+<td>普通空闲块的中转站</td>
+<td>先放这里，再看是否直接复用或继续分类</td>
+</tr>
+<tr>
+<td><code>smallbin</code></td>
+<td>小块正式仓库</td>
+<td>同尺寸块集中管理</td>
+</tr>
+<tr>
+<td><code>largebin</code></td>
+<td>大块正式仓库</td>
+<td>更强调按大小找合适块</td>
+</tr>
+<tr>
+<td><code>top chunk</code></td>
+<td>堆顶剩余原料</td>
+<td>仓库不够时直接从这里切</td>
+</tr>
+</tbody>
+</table>
+<p>如果只看顺序感，可以先记住下面这几个点：</p>
+<ul>
+<li><code>tcache</code>、<code>fastbin</code> 更偏向“最近释放的先拿出来”，也就是更接近 <code>LIFO</code></li>
+<li><code>smallbin</code> 更偏向稳定复用，同尺寸块整体更接近 <code>FIFO/LRU</code></li>
+<li><code>largebin</code> 更关注“大小合不合适”</li>
+<li><code>unsorted bin</code> 不是最终归宿，而是一次过渡和再利用机会</li>
+</ul>
+<h2 id="_6">从“仓库”视角看分配<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<p>可以把 ptmalloc 想成一个仓库管理员。<br />
+你来要一块空间，它会按下面这个大方向去找：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-9-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-9-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-9-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-9-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-9-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-9-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-9-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-9-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-9-10">10</a></span>
+<span class="normal"><a href="#__codelineno-9-11">11</a></span>
+<span class="normal"><a href="#__codelineno-9-12">12</a></span>
+<span class="normal"><a href="#__codelineno-9-13">13</a></span>
+<span class="normal"><a href="#__codelineno-9-14">14</a></span>
+<span class="normal"><a href="#__codelineno-9-15">15</a></span>
+<span class="normal"><a href="#__codelineno-9-16">16</a></span>
+<span class="normal"><a href="#__codelineno-9-17">17</a></span>
+<span class="normal"><a href="#__codelineno-9-18">18</a></span>
+<span class="normal"><a href="#__codelineno-9-19">19</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1"></a>malloc(request)
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2"></a>    |
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3"></a>    v
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4"></a>先把请求变成合适的 chunk 大小
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5"></a>    |
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6"></a>    v
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7"></a>先看看能不能直接复用现成空闲块
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8"></a>    |
+</span><span id="__span-9-9"><a id="__codelineno-9-9" name="__codelineno-9-9"></a>    +--&gt; tcache
+</span><span id="__span-9-10"><a id="__codelineno-9-10" name="__codelineno-9-10"></a>    +--&gt; fastbin / smallbin / unsorted bin / largebin
+</span><span id="__span-9-11"><a id="__codelineno-9-11" name="__codelineno-9-11"></a>    |
+</span><span id="__span-9-12"><a id="__codelineno-9-12" name="__codelineno-9-12"></a>    v
+</span><span id="__span-9-13"><a id="__codelineno-9-13" name="__codelineno-9-13"></a>如果都不合适，再看看 top chunk 能不能直接切
+</span><span id="__span-9-14"><a id="__codelineno-9-14" name="__codelineno-9-14"></a>    |
+</span><span id="__span-9-15"><a id="__codelineno-9-15" name="__codelineno-9-15"></a>    v
+</span><span id="__span-9-16"><a id="__codelineno-9-16" name="__codelineno-9-16"></a>如果 top chunk 也不够，再向系统申请更多内存
+</span><span id="__span-9-17"><a id="__codelineno-9-17" name="__codelineno-9-17"></a>    |
+</span><span id="__span-9-18"><a id="__codelineno-9-18" name="__codelineno-9-18"></a>    +--&gt; 扩堆（main arena 常见）
+</span><span id="__span-9-19"><a id="__codelineno-9-19" name="__codelineno-9-19"></a>    +--&gt; mmap（大块常见）
+</span></code></pre></div></td></tr></table></div>
+<h3 id="_7">第一步：先“规格化”请求<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<p>用户写的是：</p>
+<div class="language-c highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">C</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="n">malloc</span><span class="p">(</span><span class="mh">0x23</span><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
+<p>但 ptmalloc 不会真的按 <code>0x23</code> 这么离散的大小去管理。<br />
+它会先做几件事：</p>
+<ol>
+<li>加上管理开销</li>
+<li>按对齐规则向上取整</li>
+<li>得到真正要处理的 <code>chunk size</code></li>
+</ol>
+<p>所以你申请 <code>0x23</code>、<code>0x24</code>、<code>0x25</code>，最后很可能都落到同一个大小档里。</p>
+<p>这一步很重要，因为后面很多分支判断看的都不是“原始请求大小”，而是“规格化之后的 chunk 大小”。</p>
+<h3 id="_8">第二步：优先复用最近释放过的块<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<p>如果有现成空闲块，最便宜的办法当然不是去问系统再要，而是直接复用。</p>
+<p>最先被看的通常是这些地方：</p>
+<ol>
+<li><code>tcache</code></li>
+<li><code>fastbin</code></li>
+<li><code>smallbin</code></li>
+<li><code>unsorted bin</code></li>
+<li><code>largebin</code></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>这里描述的是全局路径，不是说每一次 <code>malloc</code> 都会把这几站完整走一遍。<br />
+实际源码会根据请求大小、当前缓存状态、bin 命中情况走不同分支。</p>
+</div>
+<p>不要把它理解成“五个平等的容器”，更好的理解是：</p>
+<ul>
+<li><code>tcache</code>：离线程最近，拿起来最顺手</li>
+<li><code>fastbin</code>：很快，但管理比较粗糙</li>
+<li><code>unsorted bin</code>：刚回收的大多数普通块会先在这里停一下</li>
+<li><code>smallbin</code> / <code>largebin</code>：更正式、更稳定的仓库</li>
+</ul>
+<h3 id="_9">按请求规模和命中情况拆开后，常见路径可以归纳为四类<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<h4 id="1">路径 1：小块，而且刚好在线程本地缓存里<a class="headerlink" href="#1" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span>
+<span class="normal"><a href="#__codelineno-11-2">2</a></span>
+<span class="normal"><a href="#__codelineno-11-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1"></a>malloc(small)
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2"></a>    -&gt; tcache 命中
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3"></a>    -&gt; 直接返回
+</span></code></pre></div></td></tr></table></div>
+<p>这是最轻、最快、最适合高频小申请的一条路。</p>
+<h4 id="2tcache">路径 2：小块，tcache 没命中，但仓库里有现成货<a class="headerlink" href="#2tcache" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span>
+<span class="normal"><a href="#__codelineno-12-2">2</a></span>
+<span class="normal"><a href="#__codelineno-12-3">3</a></span>
+<span class="normal"><a href="#__codelineno-12-4">4</a></span>
+<span class="normal"><a href="#__codelineno-12-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1"></a>malloc(small/medium)
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2"></a>    -&gt; tcache miss
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3"></a>    -&gt; fastbin / smallbin / unsorted / largebin 里找到合适 chunk
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4"></a>    -&gt; 必要时切割
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5"></a>    -&gt; 返回
+</span></code></pre></div></td></tr></table></div>
+<p>这条路的关键词是“复用库存”。</p>
+<h4 id="3">路径 3：仓库没有现成货，但堆顶还有原料<a class="headerlink" href="#3" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span>
+<span class="normal"><a href="#__codelineno-13-2">2</a></span>
+<span class="normal"><a href="#__codelineno-13-3">3</a></span>
+<span class="normal"><a href="#__codelineno-13-4">4</a></span>
+<span class="normal"><a href="#__codelineno-13-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1"></a>malloc(...)
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2"></a>    -&gt; bins 里不合适
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3"></a>    -&gt; top chunk 足够大
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4"></a>    -&gt; 从 top 切一块
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5"></a>    -&gt; 返回
+</span></code></pre></div></td></tr></table></div>
+<p>这条路的关键词是“现切”。</p>
+<h4 id="4-top-chunk">路径 4：连 top chunk 都不够<a class="headerlink" href="#4-top-chunk" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span>
+<span class="normal"><a href="#__codelineno-14-2">2</a></span>
+<span class="normal"><a href="#__codelineno-14-3">3</a></span>
+<span class="normal"><a href="#__codelineno-14-4">4</a></span>
+<span class="normal"><a href="#__codelineno-14-5">5</a></span>
+<span class="normal"><a href="#__codelineno-14-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1"></a>malloc(...)
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2"></a>    -&gt; 现成块不够
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3"></a>    -&gt; top chunk 也不够
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4"></a>    -&gt; sysmalloc
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5"></a>    -&gt; 扩堆 / 新 heap / mmap
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6"></a>    -&gt; 返回
+</span></code></pre></div></td></tr></table></div>
+<p>这条路的关键词是“进货”。</p>
+<h3 id="top-chunk">第三步：仓库都没有，就从 top chunk 现切<a class="headerlink" href="#top-chunk" title="Permanent link">&para;</a></h3>
+<p>如果现成的空闲块都不合适，ptmalloc 还会看 <code>top chunk</code>。</p>
+<p>你可以把它想成：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span>
+<span class="normal"><a href="#__codelineno-15-2">2</a></span>
+<span class="normal"><a href="#__codelineno-15-3">3</a></span>
+<span class="normal"><a href="#__codelineno-15-4">4</a></span>
+<span class="normal"><a href="#__codelineno-15-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1"></a>堆顶未切分区域
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2"></a>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3"></a>+--------------------------------------------------+
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4"></a>|                    top chunk                     |
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5"></a>+--------------------------------------------------+
+</span></code></pre></div></td></tr></table></div>
+<p>当请求到来时，如果 <code>top chunk</code> 足够大，就直接从前面切一块出去：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span>
+<span class="normal"><a href="#__codelineno-16-2">2</a></span>
+<span class="normal"><a href="#__codelineno-16-3">3</a></span>
+<span class="normal"><a href="#__codelineno-16-4">4</a></span>
+<span class="normal"><a href="#__codelineno-16-5">5</a></span>
+<span class="normal"><a href="#__codelineno-16-6">6</a></span>
+<span class="normal"><a href="#__codelineno-16-7">7</a></span>
+<span class="normal"><a href="#__codelineno-16-8">8</a></span>
+<span class="normal"><a href="#__codelineno-16-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1"></a>切分前
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2"></a>+--------------------------------------------------+
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3"></a>|                    top chunk                     |
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4"></a>+--------------------------------------------------+
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5"></a>
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6"></a>切分后
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7"></a>+----------------------+---------------------------+
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8"></a>| 分给用户的 chunk      | 新的 top chunk            |
+</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9"></a>+----------------------+---------------------------+
+</span></code></pre></div></td></tr></table></div>
+<p>这一步非常关键，因为它解释了很多源码里的核心判断：</p>
+<ul>
+<li>“有没有现成 free chunk”</li>
+<li>“没有的话 top chunk 够不够”</li>
+<li>“还不够才去 <code>sysmalloc</code>”</li>
+</ul>
+<h3 id="top-chunk_1">第四步：top chunk 也不够，就向系统申请<a class="headerlink" href="#top-chunk_1" title="Permanent link">&para;</a></h3>
+<p>这时才轮到真正的“进货”。</p>
+<p>大方向可以先理解成两种：</p>
+<ol>
+<li>给普通堆继续扩空间</li>
+<li>直接为某个大请求单独做一块映射</li>
+</ol>
+<p>也就是：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1">1</a></span>
+<span class="normal"><a href="#__codelineno-17-2">2</a></span>
+<span class="normal"><a href="#__codelineno-17-3">3</a></span>
+<span class="normal"><a href="#__codelineno-17-4">4</a></span>
+<span class="normal"><a href="#__codelineno-17-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1"></a>系统申请内存
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2"></a>    |
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3"></a>    +--&gt; 扩大现有堆（后续继续作为普通 chunk 使用）
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4"></a>    |
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5"></a>    +--&gt; 直接 mmap 一块大区域（常见于较大申请）
+</span></code></pre></div></td></tr></table></div>
+<h3 id="chunk_2">两个特殊 chunk<a class="headerlink" href="#chunk_2" title="Permanent link">&para;</a></h3>
+<p>ptmalloc 里有几类块并不属于普通 bin 的稳定流转体系，其中最重要的是下面两个：</p>
+<h4 id="1-top-chunk">1. <code>top chunk</code><a class="headerlink" href="#1-top-chunk" title="Permanent link">&para;</a></h4>
+<p>它不是 bin 里的空闲块，而是“堆顶剩下的那一整块原料”。</p>
+<p>你可以把它理解成：</p>
+<ul>
+<li>还没有正式放进 bin 分类体系</li>
+<li>但分配器知道它在这儿</li>
+<li>只要足够大，就可以直接切</li>
+</ul>
+<h4 id="2-mmap-chunk">2. <code>mmap chunk</code><a class="headerlink" href="#2-mmap-chunk" title="Permanent link">&para;</a></h4>
+<p>它也不是 bin 体系里的一员。<br />
+它更像“专门为某次较大需求单独开的一单”。</p>
+<p>所以它的典型命运是：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-18-1">1</a></span>
+<span class="normal"><a href="#__codelineno-18-2">2</a></span>
+<span class="normal"><a href="#__codelineno-18-3">3</a></span>
+<span class="normal"><a href="#__codelineno-18-4">4</a></span>
+<span class="normal"><a href="#__codelineno-18-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1"></a>malloc(很大)
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2"></a>    -&gt; 直接 mmap
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3"></a>
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4"></a>free(这个大块)
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5"></a>    -&gt; 直接 munmap
+</span></code></pre></div></td></tr></table></div>
+<p>这也是为什么这里要单独把它提出来：</p>
+<ul>
+<li><code>mmap chunk</code> 通常不进入普通 bin</li>
+<li><code>free</code> 它时更像“直接退货给系统”</li>
+</ul>
+<h2 id="free">从“仓库”视角看 free<a class="headerlink" href="#free" title="Permanent link">&para;</a></h2>
+<p><code>free</code> 不是“把内存直接还给操作系统”。<br />
+更准确地说，<code>free</code> 做的是：</p>
+<ol>
+<li>先把这块内存交还给 ptmalloc</li>
+<li>看它应该先进缓存、先进 bin、还是直接释放给系统</li>
+</ol>
+<p>它的大方向可以先记成下面这张图：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-19-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-19-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-19-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-19-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-19-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-19-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-19-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-19-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-19-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-19-10">10</a></span>
+<span class="normal"><a href="#__codelineno-19-11">11</a></span>
+<span class="normal"><a href="#__codelineno-19-12">12</a></span>
+<span class="normal"><a href="#__codelineno-19-13">13</a></span>
+<span class="normal"><a href="#__codelineno-19-14">14</a></span>
+<span class="normal"><a href="#__codelineno-19-15">15</a></span>
+<span class="normal"><a href="#__codelineno-19-16">16</a></span>
+<span class="normal"><a href="#__codelineno-19-17">17</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1"></a>free(ptr)
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2"></a>    |
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3"></a>    +--&gt; 如果本来就是 mmap chunk
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4"></a>    |        |
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5"></a>    |        +--&gt; 直接 munmap
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6"></a>    |
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7"></a>    +--&gt; 如果是普通 chunk
+</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8"></a>            |
+</span><span id="__span-19-9"><a id="__codelineno-19-9" name="__codelineno-19-9"></a>            +--&gt; tcache 还能放？先放 tcache
+</span><span id="__span-19-10"><a id="__codelineno-19-10" name="__codelineno-19-10"></a>            |
+</span><span id="__span-19-11"><a id="__codelineno-19-11" name="__codelineno-19-11"></a>            +--&gt; 否则如果属于 fastbin 范围？先放 fastbin
+</span><span id="__span-19-12"><a id="__codelineno-19-12" name="__codelineno-19-12"></a>            |
+</span><span id="__span-19-13"><a id="__codelineno-19-13" name="__codelineno-19-13"></a>            +--&gt; 否则走普通 free 逻辑：
+</span><span id="__span-19-14"><a id="__codelineno-19-14" name="__codelineno-19-14"></a>                     和前后空闲块尝试合并
+</span><span id="__span-19-15"><a id="__codelineno-19-15" name="__codelineno-19-15"></a>                     -&gt; 放入 unsorted bin
+</span><span id="__span-19-16"><a id="__codelineno-19-16" name="__codelineno-19-16"></a>                     -&gt; 后续再转 smallbin / largebin
+</span><span id="__span-19-17"><a id="__codelineno-19-17" name="__codelineno-19-17"></a>                     -&gt; 如果顶端太大，可能 trim
+</span></code></pre></div></td></tr></table></div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>这同样是一条抽象主线。真实执行时，某些块会很早就在 <code>tcache</code> 或 <code>fastbin</code> 停住，某些块则会直接落入合并与 <code>unsorted bin</code> 逻辑，不是每次都把所有步骤走完。</p>
+</div>
+<h3 id="free_1">按来源和大小拆开后，free 的典型路径可以归纳为四类<a class="headerlink" href="#free_1" title="Permanent link">&para;</a></h3>
+<h4 id="1-tcache">路径 1：小块，先回 <code>tcache</code><a class="headerlink" href="#1-tcache" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-20-1">1</a></span>
+<span class="normal"><a href="#__codelineno-20-2">2</a></span>
+<span class="normal"><a href="#__codelineno-20-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1"></a>free(small)
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2"></a>    -&gt; tcache 还有空位
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3"></a>    -&gt; 先进 tcache
+</span></code></pre></div></td></tr></table></div>
+<p>这条路径的重点是线程局部缓存优先。</p>
+<h4 id="2-fastbin">路径 2：再往下一层，先回 <code>fastbin</code><a class="headerlink" href="#2-fastbin" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-21-1">1</a></span>
+<span class="normal"><a href="#__codelineno-21-2">2</a></span>
+<span class="normal"><a href="#__codelineno-21-3">3</a></span>
+<span class="normal"><a href="#__codelineno-21-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1"></a>free(small)
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2"></a>    -&gt; tcache 不走 / 放不下
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3"></a>    -&gt; 属于 fastbin 范围
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4"></a>    -&gt; 先挂 fastbin
+</span></code></pre></div></td></tr></table></div>
+<p>这条路径仍然偏向“先快速挂起”，而不是立刻彻底整理。</p>
+<h4 id="3_1">路径 3：普通块，走合并与整理<a class="headerlink" href="#3_1" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-22-1">1</a></span>
+<span class="normal"><a href="#__codelineno-22-2">2</a></span>
+<span class="normal"><a href="#__codelineno-22-3">3</a></span>
+<span class="normal"><a href="#__codelineno-22-4">4</a></span>
+<span class="normal"><a href="#__codelineno-22-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1"></a>free(normal)
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2"></a>    -&gt; 看前后相邻 chunk
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3"></a>    -&gt; 能合并就合并
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4"></a>    -&gt; 先挂 unsorted bin
+</span><span id="__span-22-5"><a id="__codelineno-22-5" name="__codelineno-22-5"></a>    -&gt; 之后再分流到 smallbin / largebin
+</span></code></pre></div></td></tr></table></div>
+<p>这条路径会进入更完整的空闲管理流程。</p>
+<h4 id="4">路径 4：本来就是大块单独映射<a class="headerlink" href="#4" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-23-1">1</a></span>
+<span class="normal"><a href="#__codelineno-23-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1"></a>free(mmapped chunk)
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2"></a>    -&gt; 直接 munmap
+</span></code></pre></div></td></tr></table></div>
+<p>这条路径不进入普通 bin 体系。</p>
+<p>普通 <code>free</code> 的主线其实只要先把下面三件事想清楚就够了：</p>
+<ol>
+<li>小块可能先进入 <code>tcache</code> 或 <code>fastbin</code></li>
+<li>普通块通常会看能不能和前后空闲块合并</li>
+<li>合并后的块常先去 <code>unsorted bin</code>，再决定是否继续分类；如果一路并到顶端，还可能触发 <code>trim</code></li>
+</ol>
+<p>这三件事基本就覆盖了后面源码里大多数关键判断的出发点。</p>
+<h2 id="_10">一张图把分配和释放串起来<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
+<p>把分配和释放放在同一张总图里，可以更容易看出它们之间的闭环关系：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-24-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-24-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-24-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-24-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-24-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-24-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-24-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-24-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-24-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-24-10">10</a></span>
+<span class="normal"><a href="#__codelineno-24-11">11</a></span>
+<span class="normal"><a href="#__codelineno-24-12">12</a></span>
+<span class="normal"><a href="#__codelineno-24-13">13</a></span>
+<span class="normal"><a href="#__codelineno-24-14">14</a></span>
+<span class="normal"><a href="#__codelineno-24-15">15</a></span>
+<span class="normal"><a href="#__codelineno-24-16">16</a></span>
+<span class="normal"><a href="#__codelineno-24-17">17</a></span>
+<span class="normal"><a href="#__codelineno-24-18">18</a></span>
+<span class="normal"><a href="#__codelineno-24-19">19</a></span>
+<span class="normal"><a href="#__codelineno-24-20">20</a></span>
+<span class="normal"><a href="#__codelineno-24-21">21</a></span>
+<span class="normal"><a href="#__codelineno-24-22">22</a></span>
+<span class="normal"><a href="#__codelineno-24-23">23</a></span>
+<span class="normal"><a href="#__codelineno-24-24">24</a></span>
+<span class="normal"><a href="#__codelineno-24-25">25</a></span>
+<span class="normal"><a href="#__codelineno-24-26">26</a></span>
+<span class="normal"><a href="#__codelineno-24-27">27</a></span>
+<span class="normal"><a href="#__codelineno-24-28">28</a></span>
+<span class="normal"><a href="#__codelineno-24-29">29</a></span>
+<span class="normal"><a href="#__codelineno-24-30">30</a></span>
+<span class="normal"><a href="#__codelineno-24-31">31</a></span>
+<span class="normal"><a href="#__codelineno-24-32">32</a></span>
+<span class="normal"><a href="#__codelineno-24-33">33</a></span>
+<span class="normal"><a href="#__codelineno-24-34">34</a></span>
+<span class="normal"><a href="#__codelineno-24-35">35</a></span>
+<span class="normal"><a href="#__codelineno-24-36">36</a></span>
+<span class="normal"><a href="#__codelineno-24-37">37</a></span>
+<span class="normal"><a href="#__codelineno-24-38">38</a></span>
+<span class="normal"><a href="#__codelineno-24-39">39</a></span>
+<span class="normal"><a href="#__codelineno-24-40">40</a></span>
+<span class="normal"><a href="#__codelineno-24-41">41</a></span>
+<span class="normal"><a href="#__codelineno-24-42">42</a></span>
+<span class="normal"><a href="#__codelineno-24-43">43</a></span>
+<span class="normal"><a href="#__codelineno-24-44">44</a></span>
+<span class="normal"><a href="#__codelineno-24-45">45</a></span>
+<span class="normal"><a href="#__codelineno-24-46">46</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1"></a>                 +----------------------+
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2"></a>                 |    用户调用 malloc    |
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3"></a>                 +----------+-----------+
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4"></a>                            |
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5"></a>                            v
+</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6"></a>                  [ 规格化请求大小 ]
+</span><span id="__span-24-7"><a id="__codelineno-24-7" name="__codelineno-24-7"></a>                            |
+</span><span id="__span-24-8"><a id="__codelineno-24-8" name="__codelineno-24-8"></a>                            v
+</span><span id="__span-24-9"><a id="__codelineno-24-9" name="__codelineno-24-9"></a>         +------------------+------------------+
+</span><span id="__span-24-10"><a id="__codelineno-24-10" name="__codelineno-24-10"></a>         |                                     |
+</span><span id="__span-24-11"><a id="__codelineno-24-11" name="__codelineno-24-11"></a>         v                                     v
+</span><span id="__span-24-12"><a id="__codelineno-24-12" name="__codelineno-24-12"></a> [ 复用现成空闲块 ]                      [ 现成块不够 ]
+</span><span id="__span-24-13"><a id="__codelineno-24-13" name="__codelineno-24-13"></a>         |                                     |
+</span><span id="__span-24-14"><a id="__codelineno-24-14" name="__codelineno-24-14"></a>         |                         +-----------+-----------+
+</span><span id="__span-24-15"><a id="__codelineno-24-15" name="__codelineno-24-15"></a>         |                         |                       |
+</span><span id="__span-24-16"><a id="__codelineno-24-16" name="__codelineno-24-16"></a>         v                         v                       v
+</span><span id="__span-24-17"><a id="__codelineno-24-17" name="__codelineno-24-17"></a> tcache / fastbin / bins      top chunk 切分         sysmalloc 向系统申请
+</span><span id="__span-24-18"><a id="__codelineno-24-18" name="__codelineno-24-18"></a>                                                         |
+</span><span id="__span-24-19"><a id="__codelineno-24-19" name="__codelineno-24-19"></a>                                            +------------+------------+
+</span><span id="__span-24-20"><a id="__codelineno-24-20" name="__codelineno-24-20"></a>                                            |                         |
+</span><span id="__span-24-21"><a id="__codelineno-24-21" name="__codelineno-24-21"></a>                                            v                         v
+</span><span id="__span-24-22"><a id="__codelineno-24-22" name="__codelineno-24-22"></a>                                        扩堆 / 新 heap             mmap 大块
+</span><span id="__span-24-23"><a id="__codelineno-24-23" name="__codelineno-24-23"></a>
+</span><span id="__span-24-24"><a id="__codelineno-24-24" name="__codelineno-24-24"></a>
+</span><span id="__span-24-25"><a id="__codelineno-24-25" name="__codelineno-24-25"></a>                 +----------------------+
+</span><span id="__span-24-26"><a id="__codelineno-24-26" name="__codelineno-24-26"></a>                 |    用户调用 free      |
+</span><span id="__span-24-27"><a id="__codelineno-24-27" name="__codelineno-24-27"></a>                 +----------+-----------+
+</span><span id="__span-24-28"><a id="__codelineno-24-28" name="__codelineno-24-28"></a>                            |
+</span><span id="__span-24-29"><a id="__codelineno-24-29" name="__codelineno-24-29"></a>                            v
+</span><span id="__span-24-30"><a id="__codelineno-24-30" name="__codelineno-24-30"></a>                   [ 找回所属的 chunk ]
+</span><span id="__span-24-31"><a id="__codelineno-24-31" name="__codelineno-24-31"></a>                            |
+</span><span id="__span-24-32"><a id="__codelineno-24-32" name="__codelineno-24-32"></a>          +-----------------+------------------+
+</span><span id="__span-24-33"><a id="__codelineno-24-33" name="__codelineno-24-33"></a>          |                                    |
+</span><span id="__span-24-34"><a id="__codelineno-24-34" name="__codelineno-24-34"></a>          v                                    v
+</span><span id="__span-24-35"><a id="__codelineno-24-35" name="__codelineno-24-35"></a>    [ mmap chunk ]                        [ 普通 chunk ]
+</span><span id="__span-24-36"><a id="__codelineno-24-36" name="__codelineno-24-36"></a>          |                                    |
+</span><span id="__span-24-37"><a id="__codelineno-24-37" name="__codelineno-24-37"></a>          v                                    v
+</span><span id="__span-24-38"><a id="__codelineno-24-38" name="__codelineno-24-38"></a>      munmap                        tcache / fastbin / 合并
+</span><span id="__span-24-39"><a id="__codelineno-24-39" name="__codelineno-24-39"></a>                                                     |
+</span><span id="__span-24-40"><a id="__codelineno-24-40" name="__codelineno-24-40"></a>                                                     v
+</span><span id="__span-24-41"><a id="__codelineno-24-41" name="__codelineno-24-41"></a>                                                unsorted bin
+</span><span id="__span-24-42"><a id="__codelineno-24-42" name="__codelineno-24-42"></a>                                                     |
+</span><span id="__span-24-43"><a id="__codelineno-24-43" name="__codelineno-24-43"></a>                                +--------------------+--------------------+
+</span><span id="__span-24-44"><a id="__codelineno-24-44" name="__codelineno-24-44"></a>                                |                                         |
+</span><span id="__span-24-45"><a id="__codelineno-24-45" name="__codelineno-24-45"></a>                                v                                         v
+</span><span id="__span-24-46"><a id="__codelineno-24-46" name="__codelineno-24-46"></a>                           smallbin / largebin                       top chunk / trim
+</span></code></pre></div></td></tr></table></div>
+<h2 id="chunk_3">再加一张“单个 chunk 的生命周期图”<a class="headerlink" href="#chunk_3" title="Permanent link">&para;</a></h2>
+<p>如果上面那张是“整个仓库视角”，这张可以帮助你从“单个 chunk 的命运”去理解。</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-25-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-25-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-25-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-25-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-25-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-25-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-25-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-25-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-25-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-25-10">10</a></span>
+<span class="normal"><a href="#__codelineno-25-11">11</a></span>
+<span class="normal"><a href="#__codelineno-25-12">12</a></span>
+<span class="normal"><a href="#__codelineno-25-13">13</a></span>
+<span class="normal"><a href="#__codelineno-25-14">14</a></span>
+<span class="normal"><a href="#__codelineno-25-15">15</a></span>
+<span class="normal"><a href="#__codelineno-25-16">16</a></span>
+<span class="normal"><a href="#__codelineno-25-17">17</a></span>
+<span class="normal"><a href="#__codelineno-25-18">18</a></span>
+<span class="normal"><a href="#__codelineno-25-19">19</a></span>
+<span class="normal"><a href="#__codelineno-25-20">20</a></span>
+<span class="normal"><a href="#__codelineno-25-21">21</a></span>
+<span class="normal"><a href="#__codelineno-25-22">22</a></span>
+<span class="normal"><a href="#__codelineno-25-23">23</a></span>
+<span class="normal"><a href="#__codelineno-25-24">24</a></span>
+<span class="normal"><a href="#__codelineno-25-25">25</a></span>
+<span class="normal"><a href="#__codelineno-25-26">26</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1"></a>向系统申请到一大片内存
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2"></a>        |
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3"></a>        v
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4"></a>    形成可管理区域
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5"></a>        |
+</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6"></a>        v
+</span><span id="__span-25-7"><a id="__codelineno-25-7" name="__codelineno-25-7"></a>    某一块被切成 chunk
+</span><span id="__span-25-8"><a id="__codelineno-25-8" name="__codelineno-25-8"></a>        |
+</span><span id="__span-25-9"><a id="__codelineno-25-9" name="__codelineno-25-9"></a>        v
+</span><span id="__span-25-10"><a id="__codelineno-25-10" name="__codelineno-25-10"></a>    malloc 返回给用户
+</span><span id="__span-25-11"><a id="__codelineno-25-11" name="__codelineno-25-11"></a>        |
+</span><span id="__span-25-12"><a id="__codelineno-25-12" name="__codelineno-25-12"></a>        v
+</span><span id="__span-25-13"><a id="__codelineno-25-13" name="__codelineno-25-13"></a>    用户使用中
+</span><span id="__span-25-14"><a id="__codelineno-25-14" name="__codelineno-25-14"></a>        |
+</span><span id="__span-25-15"><a id="__codelineno-25-15" name="__codelineno-25-15"></a>        v
+</span><span id="__span-25-16"><a id="__codelineno-25-16" name="__codelineno-25-16"></a>      free
+</span><span id="__span-25-17"><a id="__codelineno-25-17" name="__codelineno-25-17"></a>        |
+</span><span id="__span-25-18"><a id="__codelineno-25-18" name="__codelineno-25-18"></a>    +----+----+----------------------+------------------+
+</span><span id="__span-25-19"><a id="__codelineno-25-19" name="__codelineno-25-19"></a>    |         |                      |                  |
+</span><span id="__span-25-20"><a id="__codelineno-25-20" name="__codelineno-25-20"></a>    v         v                      v                  v
+</span><span id="__span-25-21"><a id="__codelineno-25-21" name="__codelineno-25-21"></a> tcache   fastbin             unsorted/bin         munmap
+</span><span id="__span-25-22"><a id="__codelineno-25-22" name="__codelineno-25-22"></a>    |         |                      |
+</span><span id="__span-25-23"><a id="__codelineno-25-23" name="__codelineno-25-23"></a>    +---------+----------+-----------+
+</span><span id="__span-25-24"><a id="__codelineno-25-24" name="__codelineno-25-24"></a>                        |
+</span><span id="__span-25-25"><a id="__codelineno-25-25" name="__codelineno-25-25"></a>                        v
+</span><span id="__span-25-26"><a id="__codelineno-25-26" name="__codelineno-25-26"></a>                   再次被 malloc 复用
+</span></code></pre></div></td></tr></table></div>
+<p>这张图最想表达的是：</p>
+<ul>
+<li><code>chunk</code> 的命运不是“一次性”的</li>
+<li>一块 chunk 可能在“使用中”和“空闲体系”之间来回流转很多次</li>
+<li>ptmalloc 的工作重点就是让这种流转尽量高效</li>
+</ul>
+<h2 id="chunk_4">不同类型 chunk 的典型命运<a class="headerlink" href="#chunk_4" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>分配时怎么来</th>
+<th>free 后通常去哪里</th>
+<th>整体定位</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>tcache chunk</code></td>
+<td>常从线程本地缓存直接拿</td>
+<td>优先回线程本地缓存</td>
+<td>最近刚用过的小块</td>
+</tr>
+<tr>
+<td><code>fastbin chunk</code></td>
+<td>快速复用小块</td>
+<td>先进 <code>fastbin</code>，稍后再整理</td>
+<td>为了快，先不急着合并</td>
+</tr>
+<tr>
+<td><code>smallbin chunk</code></td>
+<td>从固定大小仓库里拿</td>
+<td>合适时会进入 smallbin</td>
+<td>同尺寸块整齐摆放</td>
+</tr>
+<tr>
+<td><code>largebin chunk</code></td>
+<td>从较大空闲块里找</td>
+<td>合适时会进入 largebin</td>
+<td>需要按大小挑选</td>
+</tr>
+<tr>
+<td><code>unsorted chunk</code></td>
+<td>常作为中转被重新利用</td>
+<td>普通 free/合并后先到这里</td>
+<td>临时中转站</td>
+</tr>
+<tr>
+<td><code>top chunk</code></td>
+<td>不够时直接从堆顶切</td>
+<td>和顶端合并后可能变大</td>
+<td>还没分出去的原料</td>
+</tr>
+<tr>
+<td><code>mmap chunk</code></td>
+<td>对较大申请单独映射</td>
+<td>通常直接 <code>munmap</code></td>
+<td>不走普通 bin 体系</td>
+</tr>
+</tbody>
+</table>
+<h2 id="_11">几个容易混淆的问题<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
+<h3 id="1-free">1. 为什么 <code>free</code> 不等于“立刻还给系统”？<a class="headerlink" href="#1-free" title="Permanent link">&para;</a></h3>
+<p>因为 ptmalloc 更希望复用。<br />
+频繁“还给系统再重新申请”通常更慢，碎片控制也未必更好。</p>
+<h3 id="2-free">2. 为什么有的 free 会合并，有的不会？<a class="headerlink" href="#2-free" title="Permanent link">&para;</a></h3>
+<p>因为不同路径目标不同：</p>
+<ul>
+<li><code>tcache</code> / <code>fastbin</code> 更偏“快”</li>
+<li>普通 free 更偏“整理与合并”</li>
+</ul>
+<h3 id="3-unsorted-bin-smallbin-largebin">3. 为什么会先有 <code>unsorted bin</code>，再有 <code>smallbin</code> / <code>largebin</code>？<a class="headerlink" href="#3-unsorted-bin-smallbin-largebin" title="Permanent link">&para;</a></h3>
+<p>因为 ptmalloc 想先给这些新回收的块一个“快速被再次利用”的机会，而不是一上来就做最重的分类工作。</p>
+<h3 id="4-chunk">4. 为什么读源码时总觉得一个 chunk 一会儿是数据，一会儿又变成链表节点？<a class="headerlink" href="#4-chunk" title="Permanent link">&para;</a></h3>
+<p>因为“用户数据区”在 <code>free</code> 之后已经不再是用户数据区，而是分配器拿来管理空闲块的工作空间。</p>
+<h2 id="_12">读源码时，怎么把这个模型对上函数<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h2>
+<p>下面这张表可以作为后续精读时的“函数地图”：</p>
+<table>
+<thead>
+<tr>
+<th>你脑子里的步骤</th>
+<th>源码里常看到的函数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>进入 <code>malloc</code></td>
+<td><code>__libc_malloc</code></td>
+</tr>
+<tr>
+<td>真正的主分配流程</td>
+<td><code>_int_malloc</code></td>
+</tr>
+<tr>
+<td>现有空间不够，向系统申请</td>
+<td><code>sysmalloc</code></td>
+</tr>
+<tr>
+<td>直接走大块 <code>mmap</code> 分配</td>
+<td><code>sysmalloc_mmap</code></td>
+</tr>
+<tr>
+<td>进入 <code>free</code></td>
+<td><code>__libc_free</code></td>
+</tr>
+<tr>
+<td>普通释放主流程</td>
+<td><code>_int_free</code></td>
+</tr>
+<tr>
+<td>fastbin 后续统一整理</td>
+<td><code>malloc_consolidate</code></td>
+</tr>
+<tr>
+<td>释放 <code>mmap</code> 大块</td>
+<td><code>munmap_chunk</code></td>
+</tr>
+<tr>
+<td>main arena 尝试缩堆</td>
+<td><code>systrim</code></td>
+</tr>
+<tr>
+<td>线程 heap 尝试收缩</td>
+<td><code>heap_trim</code></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition tip">
+<p class="admonition-title">Tip</p>
+<p>后面读源码时，不要要求自己“每个分支第一次就全懂”。<br />
+更有效的方法是：</p>
+<ol>
+<li>先判断当前在做的是“分配”还是“释放”</li>
+<li>再判断它是在“复用空闲块”还是“向系统申请/归还”</li>
+<li>最后再看这一条具体落在了 <code>tcache</code>、<code>fastbin</code>、<code>unsorted</code>、<code>top chunk</code> 还是 <code>mmap</code></li>
+</ol>
+</div>
+<h2 id="_13">归纳<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h2>
+<ol>
+<li>ptmalloc 不是直接管理“用户指针”，而是管理 <code>chunk</code>。</li>
+<li><code>malloc</code> 的核心是“先复用，不够再申请”。</li>
+<li><code>free</code> 的核心是“先交还给分配器，再决定缓存、合并还是归还系统”。</li>
+<li><code>tcache</code> / <code>fastbin</code> 偏快，<code>unsorted</code> 偏中转，<code>smallbin</code> / <code>largebin</code> 偏正式管理。</li>
+<li><code>top chunk</code> 是还没切出去的堆顶原料，<code>mmap chunk</code> 是单独订单。</li>
+<li>读源码时，先认清“这块 chunk 现在处于哪一种命运里”，很多分支就不会乱。</li>
+</ol>
+<h2 id="_14">下一步怎么读<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h2>
+<p>如果这页已经看顺了，接下来比较自然的顺序是：</p>
+<ol>
+<li>先看 <a href="../source-reading-01-malloc-init/">精读 1：<code>malloc</code> 入口、初始化与 tcache 建立</a></li>
+<li>再看 <a href="../source-reading-02-int-malloc/">精读 2：<code>_int_malloc</code> 主分配路径</a></li>
+<li>最后看 <a href="../source-reading-03-free-trim/">精读 3：<code>free</code>、合并与 trim 路径</a></li>
+</ol>
+<p>这样读时，你会更容易知道每一段代码在整个模型里的位置，而不是一开始就陷在宏、结构体和分支里。</p>
+<div class='document-dates-plugin-wrapper document-dates-bottom'><div class='document-dates-plugin' locale=''><span data-tippy-content data-tippy-raw='2026-04-17'><span class='material-icons' data-icon='doc_created'></span><time datetime='2026-04-17T17:56:13.648509+08:00'>2026-04-17 17:56:13</time></span><span data-tippy-content data-tippy-raw='2026-04-17'><span class='material-icons' data-icon='doc_modified'></span><time datetime='2026-04-17T18:06:34+08:00'>2026-04-17 18:06:34</time></span></div></div>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../source-reading-index/" class="md-footer__link md-footer__link--prev" aria-label="上一页: ptmalloc 源码阅读笔记（目录）">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                ptmalloc 源码阅读笔记（目录）
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../source-reading-01-malloc-init/" class="md-footer__link md-footer__link--next" aria-label="下一页: 精读 1：malloc 入口、初始化与 tcache 建立">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                精读 1：malloc 入口、初始化与 tcache 建立
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2023 - 2025 中国民航大学网络安全协会
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+      <div class="md-progress" data-md-component="progress" role="progressbar"></div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../../..", "features": ["content.code.annotate", "content.code.copy", "navigation.footer", "navigation.instant", "navigation.instant.progress", "navigation.tabs", "navigation.tabs.sticky", "navigation.top", "navigation.tracking", "search.highlight", "search.share", "search.suggest", "toc.follow"], "search": "../../../../assets/javascripts/workers/search.973d3a69.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.js"></script>
+      
+        <script src="../../../../assets/javascripts/pangu-init.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js"></script>
+      
+        <script src="../../../../assets/javascripts/katex-init.js"></script>
+      
+        <script src="../../../../assets/document_dates/tippy/popper.min.js"></script>
+      
+        <script src="../../../../assets/document_dates/tippy/tippy.umd.min.js"></script>
+      
+        <script src="../../../../assets/document_dates/core/default.config.js"></script>
+      
+        <script src="../../../../assets/document_dates/user.config.js"></script>
+      
+        <script src="../../../../assets/document_dates/core/utils.js"></script>
+      
+        <script src="../../../../assets/document_dates/core/core.js"></script>
+      
+    
+  </body>
+</html>

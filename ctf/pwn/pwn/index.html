@@ -26,7 +26,7 @@
     
     
       
-        <title>xxx - CSA_Wiki</title>
+        <title>目录 - CSA_Wiki</title>
       
     
     
@@ -97,6 +97,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#pwn" class="md-skip">
+          跳转至
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -128,7 +133,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              xxx
+              目录
             
           </span>
         </div>
@@ -1147,18 +1152,94 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    目录
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
         
   
   
   <span class="md-ellipsis">
-    xxx
+    目录
     
   </span>
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      目录
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="目录">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      环境准备
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      栈溢出
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptmalloc" class="md-nav__link">
+    <span class="md-ellipsis">
+      堆与 ptmalloc
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -1288,6 +1369,170 @@
   
   <span class="md-ellipsis">
     [Ret2gets]不靠pop rdi; ret也能控制rdi
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4_4" id="__nav_3_4_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    堆与 ptmalloc
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_3_4_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4_4">
+            <span class="md-nav__icon md-icon"></span>
+            堆与 ptmalloc
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ptmalloc_source_code_glibc-2.35/source-reading-index/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    ptmalloc 源码阅读笔记（目录）
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ptmalloc_source_code_glibc-2.35/source-reading-00-heap-model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    入门：先建立 ptmalloc 的整体模型
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ptmalloc_source_code_glibc-2.35/source-reading-01-malloc-init/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    精读 1：malloc 入口、初始化与 tcache 建立
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ptmalloc_source_code_glibc-2.35/source-reading-02-int-malloc/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    精读 2：_int_malloc 主分配路径
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ptmalloc_source_code_glibc-2.35/source-reading-03-free-trim/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    精读 3：free、合并与 trim 路径
     
   </span>
   
@@ -1576,6 +1821,58 @@
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      目录
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="目录">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      环境准备
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      栈溢出
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ptmalloc" class="md-nav__link">
+    <span class="md-ellipsis">
+      堆与 ptmalloc
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -1594,9 +1891,28 @@
   
 
 
-  <h1>xxx</h1>
-
-<div class='document-dates-plugin-wrapper document-dates-bottom'><div class='document-dates-plugin' locale=''><span data-tippy-content data-tippy-raw='2025-10-28'><span class='material-icons' data-icon='doc_created'></span><time datetime='2025-10-28T02:07:09+11:00'>2025-10-28 02:07:09</time></span><span data-tippy-content data-tippy-raw='2025-10-27'><span class='material-icons' data-icon='doc_modified'></span><time datetime='2025-10-27T23:07:09+08:00'>2025-10-27 23:07:09</time></span></div></div>
+<h1 id="pwn">Pwn<a class="headerlink" href="#pwn" title="Permanent link">&para;</a></h1>
+<p>Pwn 方向通常围绕二进制程序的分析、利用与防护展开，常见主题包括栈溢出、堆利用、程序装载与链接机制、保护机制绕过等。</p>
+<h2 id="_1">目录<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<h3 id="_2">环境准备<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="../environment/pwn_environment/">如何优雅地配置 pwn 环境</a></li>
+</ul>
+<h3 id="_3">栈溢出<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="../Ret2csu/Ret2csu/">[Ret2csu]为什么是神？</a></li>
+<li><a href="../Ret2dlresolve/Ret2dlresolve/">[Ret2dlresolve]迈出阅读 Glibc 源码的第一步</a></li>
+<li><a href="../Ret2gets/Ret2gets/">[Ret2gets]不靠 <code>pop rdi; ret</code> 也能控制 <code>rdi</code></a></li>
+</ul>
+<h3 id="ptmalloc">堆与 ptmalloc<a class="headerlink" href="#ptmalloc" title="Permanent link">&para;</a></h3>
+<ul>
+<li><a href="../ptmalloc_source_code_glibc-2.35/source-reading-index/">ptmalloc 源码阅读笔记（目录）</a></li>
+<li><a href="../ptmalloc_source_code_glibc-2.35/source-reading-00-heap-model/">入门：先建立 ptmalloc 的整体模型</a></li>
+<li><a href="../ptmalloc_source_code_glibc-2.35/source-reading-01-malloc-init/">精读 1：<code>malloc</code> 入口、初始化与 tcache 建立</a></li>
+<li><a href="../ptmalloc_source_code_glibc-2.35/source-reading-02-int-malloc/">精读 2：<code>_int_malloc</code> 主分配路径</a></li>
+<li><a href="../ptmalloc_source_code_glibc-2.35/source-reading-03-free-trim/">精读 3：<code>free</code>、合并与 trim 路径</a></li>
+</ul>
+<div class='document-dates-plugin-wrapper document-dates-bottom'><div class='document-dates-plugin' locale=''><span data-tippy-content data-tippy-raw='2025-10-28'><span class='material-icons' data-icon='doc_created'></span><time datetime='2025-10-28T02:07:09+11:00'>2025-10-28 02:07:09</time></span><span data-tippy-content data-tippy-raw='2026-04-17'><span class='material-icons' data-icon='doc_modified'></span><time datetime='2026-04-17T18:06:34+08:00'>2026-04-17 18:06:34</time></span></div></div>
 
 
 

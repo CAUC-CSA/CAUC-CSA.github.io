@@ -57,6 +57,26 @@
          <lastmod>2026-04-17</lastmod>
     </url>
     <url>
+         <loc>https://wiki.cauc-csa.org.cn/ctf/pwn/ptmalloc_source_code_glibc-2.35/source-reading-00-heap-model/</loc>
+         <lastmod>2026-04-17</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.cauc-csa.org.cn/ctf/pwn/ptmalloc_source_code_glibc-2.35/source-reading-01-malloc-init/</loc>
+         <lastmod>2026-04-17</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.cauc-csa.org.cn/ctf/pwn/ptmalloc_source_code_glibc-2.35/source-reading-02-int-malloc/</loc>
+         <lastmod>2026-04-17</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.cauc-csa.org.cn/ctf/pwn/ptmalloc_source_code_glibc-2.35/source-reading-03-free-trim/</loc>
+         <lastmod>2026-04-17</lastmod>
+    </url>
+    <url>
+         <loc>https://wiki.cauc-csa.org.cn/ctf/pwn/ptmalloc_source_code_glibc-2.35/source-reading-index/</loc>
+         <lastmod>2026-04-17</lastmod>
+    </url>
+    <url>
          <loc>https://wiki.cauc-csa.org.cn/ctf/reverse/reverse/</loc>
          <lastmod>2026-04-17</lastmod>
     </url>
