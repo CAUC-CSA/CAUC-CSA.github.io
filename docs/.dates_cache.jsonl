@@ -10,6 +10,11 @@
 {"ctf/pwn/Ret2dlresolve/Ret2dlresolve.md": {"created": "2026-03-13T12:43:48.672990+08:00"}}
 {"ctf/pwn/Ret2gets/Ret2gets.md": {"created": "2026-03-20T17:13:16.622848+08:00"}}
 {"ctf/pwn/environment/pwn_environment.md": {"created": "2025-11-13T17:02:30.292920+08:00"}}
+{"ctf/pwn/ptmalloc_source_code_glibc-2.35/source-reading-00-heap-model.md": {"created": "2026-04-17T17:56:13.648509+08:00"}}
+{"ctf/pwn/ptmalloc_source_code_glibc-2.35/source-reading-01-malloc-init.md": {"created": "2026-04-17T17:56:13.648999+08:00"}}
+{"ctf/pwn/ptmalloc_source_code_glibc-2.35/source-reading-02-int-malloc.md": {"created": "2026-04-17T17:56:13.649371+08:00"}}
+{"ctf/pwn/ptmalloc_source_code_glibc-2.35/source-reading-03-free-trim.md": {"created": "2026-04-17T17:56:13.649759+08:00"}}
+{"ctf/pwn/ptmalloc_source_code_glibc-2.35/source-reading-index.md": {"created": "2026-04-17T17:56:13.650136+08:00"}}
 {"ctf/pwn/pwn.md": {"created": "2025-10-28T02:07:09+11:00"}}
 {"ctf/reverse/reverse.md": {"created": "2025-10-28T02:07:09+11:00"}}
 {"ctf/web/network_in_web/network_in_web.md": {"created": "2025-10-31T17:25:42.091495+11:00"}}

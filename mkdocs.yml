@@ -154,12 +154,18 @@ nav:
         - 密码学补完计划 · 编码: ctf/crypto/crypto2.0_encoding.md
         - 密码学补完计划 · 古典密码: ctf/crypto/crypto3.0_classic.md
       - Pwn:
-        - xxx: ctf/pwn/pwn.md
+        - 目录: ctf/pwn/pwn.md
         - 如何优雅地配置pwn环境: ctf/pwn/environment/pwn_environment.md
         - 栈溢出:
           - '[Ret2csu]为什么是神？': ctf/pwn/Ret2csu/Ret2csu.md
           - '[Ret2dlresolve]迈出阅读Glibc源码的第一步': ctf/pwn/Ret2dlresolve/Ret2dlresolve.md
           - '[Ret2gets]不靠pop rdi; ret也能控制rdi': ctf/pwn/Ret2gets/Ret2gets.md
+        - 堆与 ptmalloc:
+          - ptmalloc 源码阅读笔记（目录）: ctf/pwn/ptmalloc_source_code_glibc-2.35/source-reading-index.md
+          - 入门：先建立 ptmalloc 的整体模型: ctf/pwn/ptmalloc_source_code_glibc-2.35/source-reading-00-heap-model.md
+          - 精读 1：malloc 入口、初始化与 tcache 建立: ctf/pwn/ptmalloc_source_code_glibc-2.35/source-reading-01-malloc-init.md
+          - 精读 2：_int_malloc 主分配路径: ctf/pwn/ptmalloc_source_code_glibc-2.35/source-reading-02-int-malloc.md
+          - 精读 3：free、合并与 trim 路径: ctf/pwn/ptmalloc_source_code_glibc-2.35/source-reading-03-free-trim.md
       - Reverse:
         - xxx: ctf/reverse/reverse.md
       - Misc:
