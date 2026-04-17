@@ -52,15 +52,17 @@
       
     
     
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css">
+    
       <link rel="stylesheet" href="../../../../assets/document_dates/fonts/material-icons.css">
-    
-      <link rel="stylesheet" href="../../../../assets/document_dates/tippy/tippy.css">
-    
-      <link rel="stylesheet" href="../../../../assets/document_dates/tippy/scale.css">
     
       <link rel="stylesheet" href="../../../../assets/document_dates/tippy/material.css">
     
       <link rel="stylesheet" href="../../../../assets/document_dates/tippy/shift-away.css">
+    
+      <link rel="stylesheet" href="../../../../assets/document_dates/tippy/tippy.css">
+    
+      <link rel="stylesheet" href="../../../../assets/document_dates/tippy/scale.css">
     
       <link rel="stylesheet" href="../../../../assets/document_dates/tippy/light.css">
     
@@ -1796,7 +1798,7 @@
 <blockquote>
 <p>Author: YoSheep （网络空间安全协会老狗）</p>
 </blockquote>
-<h3 id="01-ip">01 IP 地址 — 是什么、为什么、怎么查</h3>
+<h3 id="01-ip">01 IP 地址 — 是什么、为什么、怎么查<a class="headerlink" href="#01-ip" title="Permanent link">&para;</a></h3>
 <p><strong>定义</strong>：IP 地址（Internet Protocol Address）是网络中设备的唯一标识，用于定位设备并实现通信，类似“门牌号”。</p>
 <p><strong>常见类型</strong></p>
 <ul>
@@ -1816,7 +1818,7 @@
 <li>Windows: ipconfig</li>
 <li>macOS / Linux: ifconfig 或 ip addr show</li>
 </ul>
-<h3 id="02-port">02 端口（Port）</h3>
+<h3 id="02-port">02 端口（Port）<a class="headerlink" href="#02-port" title="Permanent link">&para;</a></h3>
 <p><strong>定义</strong>：端口用来区分同一台主机上的不同网络服务。IP + 端口 组合（IP:Port）唯一标识一个网络服务实例，例如 192.168.1.100:80。</p>
 <p><strong>端口范围</strong>：端口号范围为0到65535，其中：</p>
 <ul>
@@ -1824,7 +1826,7 @@
 <li><strong>注册端口（1024-49151）</strong>：为特定应用注册，通常由开发者使用。</li>
 <li><strong>动态/私有端口（49152-65535）</strong>：为临时连接分配，通常由操作系统动态使用。</li>
 </ul>
-<h4 id="_1"><strong>常见端口和协议</strong></h4>
+<h4 id="_1"><strong>常见端口和协议</strong><a class="headerlink" href="#_1" title="Permanent link">&para;</a></h4>
 <ul>
 <li><strong>HTTP（80）和HTTPS（443）</strong>：网页浏览服务，HTTP不加密，HTTPS加密。</li>
 <li><strong>FTP（21）</strong>：文件传输协议，用于文件上传和下载。</li>
@@ -1832,7 +1834,7 @@
 <li><strong>SMTP（25）</strong>：简单邮件传输协议，用于发送邮件。</li>
 <li><strong>DNS（53）</strong>：域名系统协议，负责将域名解析为IP地址。</li>
 </ul>
-<h3 id="03-domain-name-dns">03 域名（Domain Name）与 DNS</h3>
+<h3 id="03-domain-name-dns">03 域名（Domain Name）与 DNS<a class="headerlink" href="#03-domain-name-dns" title="Permanent link">&para;</a></h3>
 <p><strong>域名定义</strong>：域名（Domain Name）是互联网中易于记忆的地址，代表一个IP地址，用户通过域名访问网络资源。域名是IP地址的别名，使人类无需记忆复杂的数字串。例如学校的域名：cauc.edu.cn</p>
 <p><strong>结构</strong>：域名由多个层次组成，分级由点号（.）分隔，如www.example.com。</p>
 <ul>
@@ -1845,14 +1847,14 @@
 <li>工作流程：浏览器访问域名 → 本地/递归 DNS 服务器 → 根/顶级/权威 DNS → 返回 IP。</li>
 <li>最终把域名解析成 IP，浏览器用这个 IP 建立连接。</li>
 </ul>
-<h3 id="04-ip">04 IP、端口、域名之间的关系</h3>
+<h3 id="04-ip">04 IP、端口、域名之间的关系<a class="headerlink" href="#04-ip" title="Permanent link">&para;</a></h3>
 <p>用户访问 https://www.example.com:443 的过程：</p>
 <ol>
 <li>DNS 将 www.example.com 解析为某个 IP（例如 93.184.216.34）。</li>
 <li>浏览器与 93.184.216.34 的端口 443 建立 TCP（并进行 TLS）连接。</li>
 <li>请求通过该 IP 与端口到达服务器，服务器处理并返回响应。</li>
 </ol>
-<h3 id="05-http">05 HTTP协议（基础）</h3>
+<h3 id="05-http">05 HTTP协议（基础）<a class="headerlink" href="#05-http" title="Permanent link">&para;</a></h3>
 <p><strong>基础概念</strong>：<strong>HTTP（超文本传输协议）</strong>是客户端与服务器之间进行通信的协议，基于请求-响应模型。</p>
 <p><strong>特点</strong></p>
 <ul>
@@ -1860,20 +1862,30 @@
 <li><strong>无状态</strong>：每个请求独立，服务器默认不保存请求间状态（因此需要 Cookie / Session 等机制）。</li>
 </ul>
 <p><strong>HTTP 请求结构（示例）</strong></p>
-<pre><code class="language-http">GET /index.html HTTP/1.1
-Host: www.example.com
-User-Agent: Mozilla/5.0
-Accept: text/html
-</code></pre>
-<pre><code class="language-http">POST /login HTTP/1.1
-Host: www.example.com
-User-Agent: Mozilla/5.0
-Accept: application/json
-Content-Type: application/json
-Content-Length: 40
-
-{&quot;username&quot;:&quot;alice&quot;,&quot;password&quot;:&quot;s3cr3t&quot;}
-</code></pre>
+<div class="language-http highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">HTTP</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="nf">GET</span> <span class="nn">/index.html</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="na">Host</span><span class="o">:</span> <span class="l">www.example.com</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3"></a><span class="na">User-Agent</span><span class="o">:</span> <span class="l">Mozilla/5.0</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="na">Accept</span><span class="o">:</span> <span class="l">text/html</span>
+</span></code></pre></div></td></tr></table></div>
+<div class="language-http highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">HTTP</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span>
+<span class="normal"><a href="#__codelineno-1-4">4</a></span>
+<span class="normal"><a href="#__codelineno-1-5">5</a></span>
+<span class="normal"><a href="#__codelineno-1-6">6</a></span>
+<span class="normal"><a href="#__codelineno-1-7">7</a></span>
+<span class="normal"><a href="#__codelineno-1-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="nf">POST</span> <span class="nn">/login</span> <span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2"></a><span class="na">Host</span><span class="o">:</span> <span class="l">www.example.com</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="na">User-Agent</span><span class="o">:</span> <span class="l">Mozilla/5.0</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4"></a><span class="na">Accept</span><span class="o">:</span> <span class="l">application/json</span>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5"></a><span class="na">Content-Type</span><span class="o">:</span> <span class="l">application/json</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6"></a><span class="na">Content-Length</span><span class="o">:</span> <span class="l">40</span>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7"></a>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8"></a><span class="p">{</span><span class="nt">&quot;username&quot;</span><span class="p">:</span><span class="s2">&quot;alice&quot;</span><span class="p">,</span><span class="nt">&quot;password&quot;</span><span class="p">:</span><span class="s2">&quot;s3cr3t&quot;</span><span class="p">}</span>
+</span></code></pre></div></td></tr></table></div>
 <ul>
 <li>
 <p><strong>请求行</strong>：请求方法（GET/POST/PUT/DELETE 等） + 资源路径（此处为<code>index.html</code>） + HTTP 版本（此处为1.1）。</p>
@@ -1884,13 +1896,18 @@ Content-Length: 40
 <li><strong>请求体</strong>：仅在需要时包含数据（如 POST 的表单或 JSON），例如上示例中的<code>{"username":"alice","password":"s3cr3t"}</code>。</li>
 </ul>
 <p><strong>HTTP 响应结构（示例）</strong></p>
-<pre><code class="language-http">HTTP/1.1 200 OK
-Content-Type: text/html; charset=UTF-8
-Content-Length: 1024
-Set-Cookie: sessionId=abc123
-
-&lt;HTML&gt;...页面内容...&lt;/HTML&gt;
-</code></pre>
+<div class="language-http highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">HTTP</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span>
+<span class="normal"><a href="#__codelineno-2-4">4</a></span>
+<span class="normal"><a href="#__codelineno-2-5">5</a></span>
+<span class="normal"><a href="#__codelineno-2-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="kr">HTTP</span><span class="o">/</span><span class="m">1.1</span> <span class="m">200</span> <span class="ne">OK</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2"></a><span class="na">Content-Type</span><span class="o">:</span> <span class="l">text/html; charset=UTF-8</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3"></a><span class="na">Content-Length</span><span class="o">:</span> <span class="l">1024</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4"></a><span class="na">Set-Cookie</span><span class="o">:</span> <span class="l">sessionId=abc123</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5"></a>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6"></a><span class="p">&lt;</span><span class="nt">HTML</span><span class="p">&gt;</span>...页面内容...<span class="p">&lt;/</span><span class="nt">HTML</span><span class="p">&gt;</span>
+</span></code></pre></div></td></tr></table></div>
 <ul>
 <li><strong>状态行</strong>：版本 + 状态码（200/404/500 等）。</li>
 <li><strong>响应头</strong>：元数据（Content-Type、Set-Cookie、Content-Length 等）。</li>
@@ -1903,7 +1920,7 @@ Set-Cookie: sessionId=abc123
 <li><strong>4xx</strong>：客户端错误（404/403）</li>
 <li><strong>5xx</strong>：服务器错误（500）</li>
 </ul>
-<h3 id="06-burp-suite-http">06 在 Burp Suite 中分析 HTTP</h3>
+<h3 id="06-burp-suite-http">06 在 Burp Suite 中分析 HTTP<a class="headerlink" href="#06-burp-suite-http" title="Permanent link">&para;</a></h3>
 <p>Burp Suite 是一个常用的中间人代理，用来拦截、修改和重发 HTTP 请求。把浏览器的代理设置为 Burp 后，你可以在它里看到并操作请求/响应的各部分。</p>
 <p>下面用访问百度（www.baidu.com）的过程做一个演示：</p>
 <ol>
@@ -1933,7 +1950,7 @@ Set-Cookie: sessionId=abc123
 <p><img alt="image-20251030024645116" src="https://mac-pic-1314279731.cos.ap-nanjing.myqcloud.com/image-20251030024645116.png" /></p>
 </li>
 </ol>
-<h3 id="07">07 小总结</h3>
+<h3 id="07">07 小总结<a class="headerlink" href="#07" title="Permanent link">&para;</a></h3>
 <blockquote>
 <p>本页内容只是 Web 安全中与计网相关知识的一小部分，帮助大家建立最基础的概念认知。在真实的渗透测试和 CTF 场景中，你会遇到更多协议细节、更复杂的网络结构，以及大量需要灵活判断的情况。比如抓包分析、代理、内网穿透、端口转发、协议特性漏洞利用等等。</p>
 <p>后续大家遇到一些不懂的内容和知识，及时自己不断的查漏补缺，继续拓展知识体系，例如深入理解 TCP/IP 分层模型，HTTPS加密机制等等。</p>
@@ -2049,7 +2066,15 @@ Set-Cookie: sessionId=abc123
     
       <script src="../../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
-        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.js"></script>
+      
+        <script src="../../../../assets/javascripts/pangu-init.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js"></script>
+      
+        <script src="../../../../assets/javascripts/katex-init.js"></script>
       
         <script src="../../../../assets/document_dates/tippy/popper.min.js"></script>
       

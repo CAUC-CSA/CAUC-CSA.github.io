@@ -52,15 +52,17 @@
       
     
     
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css">
+    
       <link rel="stylesheet" href="../../../assets/document_dates/fonts/material-icons.css">
-    
-      <link rel="stylesheet" href="../../../assets/document_dates/tippy/tippy.css">
-    
-      <link rel="stylesheet" href="../../../assets/document_dates/tippy/scale.css">
     
       <link rel="stylesheet" href="../../../assets/document_dates/tippy/material.css">
     
       <link rel="stylesheet" href="../../../assets/document_dates/tippy/shift-away.css">
+    
+      <link rel="stylesheet" href="../../../assets/document_dates/tippy/tippy.css">
+    
+      <link rel="stylesheet" href="../../../assets/document_dates/tippy/scale.css">
     
       <link rel="stylesheet" href="../../../assets/document_dates/tippy/light.css">
     
@@ -4047,17 +4049,17 @@
   
 
 
-<h1 id="_1">密码学补完计划 · 古典密码篇</h1>
+<h1 id="_1">密码学补完计划 · 古典密码篇<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
 <blockquote>
 <p>本文档为社团内部学习资料，系统讲解密码学相关内容。</p>
 </blockquote>
 <hr />
-<h2 id="1">1. 古典密码概述</h2>
-<h3 id="11">1.1 定义</h3>
+<h2 id="1">1. 古典密码概述<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<h3 id="11">1.1 定义<a class="headerlink" href="#11" title="Permanent link">&para;</a></h3>
 <p>古典密码是指计算机出现之前使用的密码技术，主要分为两大类：
 - <strong>替代密码</strong>：将明文中的字符替换为其他字符
 - <strong>换位密码</strong>：重新排列明文中的字符顺序</p>
-<h3 id="12">1.2 发展历程</h3>
+<h3 id="12">1.2 发展历程<a class="headerlink" href="#12" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -4094,7 +4096,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="13-vs">1.3 古典密码 vs 现代密码</h3>
+<h3 id="13-vs">1.3 古典密码 vs 现代密码<a class="headerlink" href="#13-vs" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -4127,33 +4129,37 @@
 </tbody>
 </table>
 <hr />
-<h2 id="2">2. 单表替代密码</h2>
+<h2 id="2">2. 单表替代密码<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
 <p>单表替代密码是指使用固定的映射关系将明文字母替换为密文字母。</p>
-<h3 id="21">2.1 凯撒密码</h3>
-<h4 id="_2">原理</h4>
+<h3 id="21">2.1 凯撒密码<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
+<h4 id="_2">原理<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h4>
 <ul>
 <li>将字母表循环移位固定位数</li>
 <li>密钥：移位量k（1-25）</li>
 </ul>
-<h4 id="_3">加密公式</h4>
-<pre><code>C = (P + k) mod 26
-</code></pre>
-<p>其中P为明文数字（A=0），C为密文数字</p>
-<h4 id="_4">解密公式</h4>
-<pre><code>P = (C - k) mod 26
-</code></pre>
-<h4 id="_5">示例</h4>
-<pre><code>明文: HELLO
-移位3: KHOOR
-移位13: URYYB (ROT13)
-</code></pre>
-<h4 id="_6">识别特征</h4>
+<h4 id="_3">加密公式<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h4>
+<p>$$
+C = (P + k)\pmod{26}
+$$
+其中P为明文数字（A=0），C为密文数字</p>
+<h4 id="_4">解密公式<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h4>
+<div class="arithmatex">\[
+P = (C - k)\pmod{26}
+\]</div>
+<h4 id="_5">示例<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a>明文: HELLO
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2"></a>移位3: KHOOR
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3"></a>移位13: URYYB (ROT13)
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_6">识别特征<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h4>
 <ul>
 <li>密文保持字母结构（单词长度不变）</li>
 <li>词频分布与英文相同，只是整体偏移</li>
 <li>暴力破解只需尝试25次</li>
 </ul>
-<h4 id="rot">变种：ROT家族</h4>
+<h4 id="rot">变种：ROT家族<a class="headerlink" href="#rot" title="Permanent link">&para;</a></h4>
 <table>
 <thead>
 <tr>
@@ -4185,57 +4191,63 @@
 </tr>
 </tbody>
 </table>
-<h4 id="rot13">ROT13示例</h4>
-<pre><code>原文: HELLO
-ROT13: URYYB
-再次ROT13: HELLO
-</code></pre>
-<h3 id="22-atbash">2.2 Atbash密码</h3>
-<h4 id="_7">原理</h4>
+<h4 id="rot13">ROT13示例<a class="headerlink" href="#rot13" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1"></a>原文: HELLO
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2"></a>ROT13: URYYB
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3"></a>再次ROT13: HELLO
+</span></code></pre></div></td></tr></table></div>
+<h3 id="22-atbash">2.2 Atbash密码<a class="headerlink" href="#22-atbash" title="Permanent link">&para;</a></h3>
+<h4 id="_7">原理<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h4>
 <ul>
 <li>字母表对称映射：A↔Z, B↔Y, C↔X, ...</li>
 <li>公式：<code>C = 25 - P</code>（A=0, Z=25）</li>
 </ul>
-<h4 id="_8">映射表</h4>
-<pre><code>A B C D E F G H I J K L M
-Z Y X W V U T S R Q P O N
-</code></pre>
-<h4 id="_9">示例</h4>
-<pre><code>明文: HELLO
-映射: H(7) ↔ S(18), E(4) ↔ V(21), L(11) ↔ O(14)
-结果: SVOOL
-</code></pre>
-<h4 id="_10">识别特征</h4>
+<h4 id="_8">映射表<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1"></a>A B C D E F G H I J K L M
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2"></a>Z Y X W V U T S R Q P O N
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_9">示例<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">2</a></span>
+<span class="normal"><a href="#__codelineno-3-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1"></a>明文: HELLO
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2"></a>映射: H(7) ↔ S(18), E(4) ↔ V(21), L(11) ↔ O(14)
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3"></a>结果: SVOOL
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_10">识别特征<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h4>
 <ul>
 <li>字母映射是对称的</li>
 <li>解密方法同加密方法</li>
 <li>常见于简单谜题和CTF签到题</li>
 </ul>
-<h3 id="23">2.3 简单替换密码</h3>
-<h4 id="_11">原理</h4>
+<h3 id="23">2.3 简单替换密码<a class="headerlink" href="#23" title="Permanent link">&para;</a></h3>
+<h4 id="_11">原理<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h4>
 <ul>
 <li>建立字母表的一对一随机映射</li>
 <li>密钥空间：26! ≈ 2^88（约288位）</li>
 </ul>
-<h4 id="_12">示例</h4>
-<pre><code>明文字母: A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
-密文字母: Q W E R T Y U I O P A S D F G H J K L Z X C V B N M
-</code></pre>
-<p>明文"HELLO" → 密文"I T P P A"（根据映射）</p>
-<h4 id="_13">识别特征</h4>
+<h4 id="_12">示例<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h4>
+<p><div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1"></a>明文字母: A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2"></a>密文字母: Q W E R T Y U I O P A S D F G H J K L Z X C V B N M
+</span></code></pre></div></td></tr></table></div>
+明文"HELLO" → 密文"I T P P A"（根据映射）</p>
+<h4 id="_13">识别特征<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h4>
 <ul>
 <li>密文字母频率分布与英文相同，但字母对应关系改变</li>
 <li>单词长度模式保留</li>
 <li>可通过频率分析破解</li>
 </ul>
-<h4 id="_14">破解方法</h4>
+<h4 id="_14">破解方法<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h4>
 <ol>
 <li><strong>频率分析</strong>：英文中E、T、A出现频率最高</li>
 <li><strong>常见单词</strong>：寻找"the"、"and"等常见词</li>
 <li><strong>字母组合</strong>：分析常见双字母组（th、he、in等）</li>
 </ol>
-<h3 id="24">2.4 仿射密码</h3>
-<h4 id="_15">原理</h4>
+<h3 id="24">2.4 仿射密码<a class="headerlink" href="#24" title="Permanent link">&para;</a></h3>
+<h4 id="_15">原理<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h4>
 <ul>
 <li>
 <p>凯撒密码的扩展，使用线性变换</p>
@@ -4244,86 +4256,110 @@ Z Y X W V U T S R Q P O N
 <p>加密公式：</p>
 </li>
 </ul>
-<p><span class="arithmatex">\(C = (a \times P + b) \pmod{26}\)</span></p>
+<p>$$
+  C = (a \times P + b) \pmod{26}
+  $$</p>
 <ul>
 <li>解密公式：</li>
 </ul>
-<p><span class="arithmatex">\(P = a^{-1} \times (C - b) \pmod{26}\)</span></p>
-<h4 id="_16">参数要求</h4>
+<p>$$
+  P = a^{-1} \times (C - b) \pmod{26}
+  $$</p>
+<h4 id="_16">参数要求<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h4>
 <ul>
-<li>a 与 26 互质 <span class="arithmatex">\(\gcd(a, 26) = 1\)</span></li>
+<li>a 与 26 互质 
+  $$
+  \gcd(a, 26) = 1
+  $$</li>
 <li>a 的取值：1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25（共12种）</li>
 <li>b 取值：0-25（26种）</li>
 <li>密钥空间：12 × 26 = 312</li>
 </ul>
-<h4 id="_17">示例</h4>
-<pre><code>取 a=5, b=8
-明文 A(0): (0×5+8) mod 26 = 8 → I
-明文 B(1): (1×5+8) mod 26 = 13 → N
-明文 C(2): (2×5+8) mod 26 = 18 → S
-</code></pre>
-<h4 id="_18">识别特征</h4>
+<h4 id="_17">示例<a class="headerlink" href="#_17" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
+<span class="normal"><a href="#__codelineno-5-2">2</a></span>
+<span class="normal"><a href="#__codelineno-5-3">3</a></span>
+<span class="normal"><a href="#__codelineno-5-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1"></a>取 a=5, b=8
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2"></a>明文 A(0): (0×5+8) mod 26 = 8 → I
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3"></a>明文 B(1): (1×5+8) mod 26 = 13 → N
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4"></a>明文 C(2): (2×5+8) mod 26 = 18 → S
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_18">识别特征<a class="headerlink" href="#_18" title="Permanent link">&para;</a></h4>
 <ul>
 <li>字母映射有数学规律（不是完全随机）</li>
 <li>密文字母分布可能呈现周期性</li>
 <li>可通过求解线性方程破解</li>
 </ul>
-<h4 id="_19">破解方法</h4>
+<h4 id="_19">破解方法<a class="headerlink" href="#_19" title="Permanent link">&para;</a></h4>
 <ol>
 <li>找到两个字母的对应关系，列方程求解</li>
 <li>暴力尝试所有312种组合</li>
 </ol>
-<h3 id="25">2.5 键盘布局密码</h3>
-<h4 id="_20">原理</h4>
+<h3 id="25">2.5 键盘布局密码<a class="headerlink" href="#25" title="Permanent link">&para;</a></h3>
+<h4 id="_20">原理<a class="headerlink" href="#_20" title="Permanent link">&para;</a></h4>
 <ul>
 <li>利用键盘布局进行映射</li>
 <li>常见类型：</li>
 <li><strong>QWERTY移位</strong>：每个字母替换为相邻键</li>
 <li><strong>键盘行列映射</strong>：按键盘行列重新编码</li>
 </ul>
-<h4 id="qwerty">QWERTY移位示例</h4>
-<pre><code>原键盘:
-Q W E R T Y U I O P
-A S D F G H J K L
-Z X C V B N M
-
-右移一位:
-W E R T Y U I O P [
-S D F G H J K L ;
-X C V B N M ,
-</code></pre>
-<pre><code>明文: HELLO
-H → J (右移)
-E → R
-L → ;
-L → ;
-O → P
-结果: JR;;P
-</code></pre>
-<h4 id="_21">识别特征</h4>
+<h4 id="qwerty">QWERTY移位示例<a class="headerlink" href="#qwerty" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
+<span class="normal"><a href="#__codelineno-6-2">2</a></span>
+<span class="normal"><a href="#__codelineno-6-3">3</a></span>
+<span class="normal"><a href="#__codelineno-6-4">4</a></span>
+<span class="normal"><a href="#__codelineno-6-5">5</a></span>
+<span class="normal"><a href="#__codelineno-6-6">6</a></span>
+<span class="normal"><a href="#__codelineno-6-7">7</a></span>
+<span class="normal"><a href="#__codelineno-6-8">8</a></span>
+<span class="normal"><a href="#__codelineno-6-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1"></a>原键盘:
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2"></a>Q W E R T Y U I O P
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3"></a>A S D F G H J K L
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4"></a>Z X C V B N M
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5"></a>
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6"></a>右移一位:
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7"></a>W E R T Y U I O P [
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8"></a>S D F G H J K L ;
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9"></a>X C V B N M ,
+</span></code></pre></div></td></tr></table></div>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">2</a></span>
+<span class="normal"><a href="#__codelineno-7-3">3</a></span>
+<span class="normal"><a href="#__codelineno-7-4">4</a></span>
+<span class="normal"><a href="#__codelineno-7-5">5</a></span>
+<span class="normal"><a href="#__codelineno-7-6">6</a></span>
+<span class="normal"><a href="#__codelineno-7-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1"></a>明文: HELLO
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2"></a>H → J (右移)
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3"></a>E → R
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4"></a>L → ;
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5"></a>L → ;
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6"></a>O → P
+</span><span id="__span-7-7"><a id="__codelineno-7-7" name="__codelineno-7-7"></a>结果: JR;;P
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_21">识别特征<a class="headerlink" href="#_21" title="Permanent link">&para;</a></h4>
 <ul>
 <li>密文看起来像随机字母，但实际是键盘相邻键</li>
 <li>常见于CTF简单题和趣味密码</li>
 </ul>
-<h4 id="_22">变种</h4>
+<h4 id="_22">变种<a class="headerlink" href="#_22" title="Permanent link">&para;</a></h4>
 <ul>
 <li><strong>上下移位</strong>：H→Y, E→D</li>
 <li><strong>对角线移位</strong>：Q→A, A→Z</li>
 <li><strong>键盘倒序</strong>：Q↔P, W↔O</li>
 </ul>
 <hr />
-<h2 id="3">3. 多表替代密码</h2>
+<h2 id="3">3. 多表替代密码<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
 <p>多表替代密码使用多个替换表，根据密钥选择不同的映射，抵抗频率分析。</p>
-<h3 id="31">3.1 维吉尼亚密码</h3>
-<h4 id="_23">原理</h4>
+<h3 id="31">3.1 维吉尼亚密码<a class="headerlink" href="#31" title="Permanent link">&para;</a></h3>
+<h4 id="_23">原理<a class="headerlink" href="#_23" title="Permanent link">&para;</a></h4>
 <ul>
 <li>使用关键词，每个位置使用不同的凯撒移位</li>
 <li>移位量由密钥字母决定（A=0, B=1, ..., Z=25）</li>
 </ul>
-<h4 id="_24">加密公式</h4>
+<h4 id="_24">加密公式<a class="headerlink" href="#_24" title="Permanent link">&para;</a></h4>
 <div class="arithmatex">\[C_i = (P_i + K_i) \mod{26}\]</div>
 <p>其中<span class="arithmatex">\(K_i\)</span>为密钥字母对应的数字</p>
-<h4 id="_25">维吉尼亚方阵</h4>
+<h4 id="_25">维吉尼亚方阵<a class="headerlink" href="#_25" title="Permanent link">&para;</a></h4>
 <table>
 <thead>
 <tr>
@@ -4378,41 +4414,55 @@ O → P
 </tr>
 </tbody>
 </table>
-<h4 id="_26">加密示例</h4>
-<pre><code>明文: ATTACKATDAWN
-密钥: LEMONLEMONLE
-数字转换:
-明文: 0 19 19 0 2 10 0 19 3 0 22 13
-密钥: 11 4 12 14 13 11 4 12 14 13 11 4
-密文: 11 23 5 14 15 21 4 5 17 13 7 17
-字母: L X F O P V E F R N H R
-结果: LXFO PVE FRN HR (去掉空格: LXFOPVEFRNHR)
-</code></pre>
-<h4 id="_27">解密示例</h4>
-<pre><code>密文: L X F O P V E F R N H R
-密钥: L E M O N L E M O N L E
-计算: (密文数字 - 密钥数字) mod 26
-L(11)-L(11)=0→A
-X(23)-E(4)=19→T
-F(5)-M(12)=-7 mod 26=19→T
-...
-结果: ATTACKATDAWN
-</code></pre>
-<h4 id="_28">识别特征</h4>
+<h4 id="_26">加密示例<a class="headerlink" href="#_26" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span>
+<span class="normal"><a href="#__codelineno-8-3">3</a></span>
+<span class="normal"><a href="#__codelineno-8-4">4</a></span>
+<span class="normal"><a href="#__codelineno-8-5">5</a></span>
+<span class="normal"><a href="#__codelineno-8-6">6</a></span>
+<span class="normal"><a href="#__codelineno-8-7">7</a></span>
+<span class="normal"><a href="#__codelineno-8-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1"></a>明文: ATTACKATDAWN
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2"></a>密钥: LEMONLEMONLE
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3"></a>数字转换:
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4"></a>明文: 0 19 19 0 2 10 0 19 3 0 22 13
+</span><span id="__span-8-5"><a id="__codelineno-8-5" name="__codelineno-8-5"></a>密钥: 11 4 12 14 13 11 4 12 14 13 11 4
+</span><span id="__span-8-6"><a id="__codelineno-8-6" name="__codelineno-8-6"></a>密文: 11 23 5 14 15 21 4 5 17 13 7 17
+</span><span id="__span-8-7"><a id="__codelineno-8-7" name="__codelineno-8-7"></a>字母: L X F O P V E F R N H R
+</span><span id="__span-8-8"><a id="__codelineno-8-8" name="__codelineno-8-8"></a>结果: LXFO PVE FRN HR (去掉空格: LXFOPVEFRNHR)
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_27">解密示例<a class="headerlink" href="#_27" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
+<span class="normal"><a href="#__codelineno-9-2">2</a></span>
+<span class="normal"><a href="#__codelineno-9-3">3</a></span>
+<span class="normal"><a href="#__codelineno-9-4">4</a></span>
+<span class="normal"><a href="#__codelineno-9-5">5</a></span>
+<span class="normal"><a href="#__codelineno-9-6">6</a></span>
+<span class="normal"><a href="#__codelineno-9-7">7</a></span>
+<span class="normal"><a href="#__codelineno-9-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1"></a>密文: L X F O P V E F R N H R
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2"></a>密钥: L E M O N L E M O N L E
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3"></a>计算: (密文数字 - 密钥数字) mod 26
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4"></a>L(11)-L(11)=0→A
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5"></a>X(23)-E(4)=19→T
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6"></a>F(5)-M(12)=-7 mod 26=19→T
+</span><span id="__span-9-7"><a id="__codelineno-9-7" name="__codelineno-9-7"></a>...
+</span><span id="__span-9-8"><a id="__codelineno-9-8" name="__codelineno-9-8"></a>结果: ATTACKATDAWN
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_28">识别特征<a class="headerlink" href="#_28" title="Permanent link">&para;</a></h4>
 <ul>
 <li>相同明文可能对应不同密文（消除单表替代的频率特征）</li>
 <li>密文整体字母频率分布更均匀</li>
 <li>存在周期性重复模式</li>
 </ul>
-<h4 id="_29">破解方法</h4>
+<h4 id="_29">破解方法<a class="headerlink" href="#_29" title="Permanent link">&para;</a></h4>
 <ol>
 <li><strong>Kasiski测试</strong>：寻找重复的密文片段，推测密钥长度</li>
 <li><strong>重合指数</strong>：计算不同偏移下的重合指数，找出密钥长度</li>
 <li><strong>确定密钥长度后</strong>：将密文按密钥长度分组，每组独立进行频率分析破解凯撒</li>
 </ol>
 <p><a href="https://www.guballa.de">维吉尼亚爆破网址</a></p>
-<h3 id="32">3.2 博福特密码</h3>
-<h4 id="_30">原理</h4>
+<h3 id="32">3.2 博福特密码<a class="headerlink" href="#32" title="Permanent link">&para;</a></h3>
+<h4 id="_30">原理<a class="headerlink" href="#_30" title="Permanent link">&para;</a></h4>
 <ul>
 <li>
 <p>维吉尼亚密码的变种</p>
@@ -4421,344 +4471,470 @@ F(5)-M(12)=-7 mod 26=19→T
 <p>加密公式：</p>
 </li>
 </ul>
-<p>$<span class="arithmatex">\(C_i = (K_i - P_i) \mod{26}\)</span>$</p>
+<p>$$
+  C_i = (K_i - P_i) \mod{26}
+  $$</p>
 <ul>
 <li>解密公式：（加密和解密相同）</li>
 </ul>
-<p>$<span class="arithmatex">\(P_i = (K_i - C_i) \mod{26}\)</span>$</p>
-<h4 id="_31">示例</h4>
-<pre><code>明文: ATTACKATDAWN
-密钥: LEMONLEMONLE
-计算:
-K(11)-A(0)=11→L
-K(4)-T(19)=4-19=-15 mod 26=11→L
-...
-结果: L L ... (与维吉尼亚不同)
-</code></pre>
-<h4 id="_32">特点</h4>
+<p>$$
+  P_i = (K_i - C_i) \mod{26}
+  $$</p>
+<h4 id="_31">示例<a class="headerlink" href="#_31" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
+<span class="normal"><a href="#__codelineno-10-2">2</a></span>
+<span class="normal"><a href="#__codelineno-10-3">3</a></span>
+<span class="normal"><a href="#__codelineno-10-4">4</a></span>
+<span class="normal"><a href="#__codelineno-10-5">5</a></span>
+<span class="normal"><a href="#__codelineno-10-6">6</a></span>
+<span class="normal"><a href="#__codelineno-10-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1"></a>明文: ATTACKATDAWN
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2"></a>密钥: LEMONLEMONLE
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3"></a>计算:
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4"></a>K(11)-A(0)=11→L
+</span><span id="__span-10-5"><a id="__codelineno-10-5" name="__codelineno-10-5"></a>K(4)-T(19)=4-19=-15 mod 26=11→L
+</span><span id="__span-10-6"><a id="__codelineno-10-6" name="__codelineno-10-6"></a>...
+</span><span id="__span-10-7"><a id="__codelineno-10-7" name="__codelineno-10-7"></a>结果: L L ... (与维吉尼亚不同)
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_32">特点<a class="headerlink" href="#_32" title="Permanent link">&para;</a></h4>
 <ul>
 <li>加密和解密过程相同</li>
 <li>使用与维吉尼亚相同的方阵，但查找方式不同</li>
 </ul>
-<h3 id="33">3.3 滚动密钥密码</h3>
-<h4 id="_33">原理</h4>
+<h3 id="33">3.3 滚动密钥密码<a class="headerlink" href="#33" title="Permanent link">&para;</a></h3>
+<h4 id="_33">原理<a class="headerlink" href="#_33" title="Permanent link">&para;</a></h4>
 <ul>
 <li>维吉尼亚密码的变种</li>
 <li>密钥与明文等长，通常是一段文本</li>
 </ul>
-<h4 id="_34">示例</h4>
-<pre><code>明文: ATTACKATDAWN
-密钥: THEENEMYISWATCHING (从某本书中选取)
-加密: 使用维吉尼亚规则
-</code></pre>
-<h4 id="_35">特点</h4>
+<h4 id="_34">示例<a class="headerlink" href="#_34" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span>
+<span class="normal"><a href="#__codelineno-11-2">2</a></span>
+<span class="normal"><a href="#__codelineno-11-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1"></a>明文: ATTACKATDAWN
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2"></a>密钥: THEENEMYISWATCHING (从某本书中选取)
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3"></a>加密: 使用维吉尼亚规则
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_35">特点<a class="headerlink" href="#_35" title="Permanent link">&para;</a></h4>
 <ul>
 <li>理论上更安全（无密钥重复）</li>
 <li>实际使用中密钥可能被猜测（如常见书籍）</li>
 </ul>
-<h3 id="34">3.4 自动密钥密码</h3>
-<h4 id="_36">原理</h4>
+<h3 id="34">3.4 自动密钥密码<a class="headerlink" href="#34" title="Permanent link">&para;</a></h3>
+<h4 id="_36">原理<a class="headerlink" href="#_36" title="Permanent link">&para;</a></h4>
 <ul>
 <li>维吉尼亚密码的变种</li>
 <li>密钥 = 初始密钥 + 明文本身（或密文本身）</li>
 </ul>
-<h4 id="_37">两种变体</h4>
+<h4 id="_37">两种变体<a class="headerlink" href="#_37" title="Permanent link">&para;</a></h4>
 <ol>
 <li><strong>明文字典式</strong>：密钥 = 初始密钥 + 明文</li>
 <li><strong>密文字典式</strong>：密钥 = 初始密钥 + 密文</li>
 </ol>
-<h4 id="_38">示例（明文自动密钥）</h4>
-<pre><code>明文: ATTACKATDAWN
-初始密钥: LEMON
-实际密钥: LEMONATTACKATDA (密钥=初始密钥+明文)
-加密: 使用维吉尼亚规则
-</code></pre>
+<h4 id="_38">示例（明文自动密钥）<a class="headerlink" href="#_38" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span>
+<span class="normal"><a href="#__codelineno-12-2">2</a></span>
+<span class="normal"><a href="#__codelineno-12-3">3</a></span>
+<span class="normal"><a href="#__codelineno-12-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1"></a>明文: ATTACKATDAWN
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2"></a>初始密钥: LEMON
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3"></a>实际密钥: LEMONATTACKATDA (密钥=初始密钥+明文)
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4"></a>加密: 使用维吉尼亚规则
+</span></code></pre></div></td></tr></table></div>
 <hr />
-<h2 id="4">4. 换位密码</h2>
+<h2 id="4">4. 换位密码<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
 <p>换位密码不改变字母本身，只改变字母的顺序。</p>
-<h3 id="41">4.1 栅栏密码</h3>
-<h4 id="_39">原理</h4>
+<h3 id="41">4.1 栅栏密码<a class="headerlink" href="#41" title="Permanent link">&para;</a></h3>
+<h4 id="_39">原理<a class="headerlink" href="#_39" title="Permanent link">&para;</a></h4>
 <ul>
 <li>将明文按一定宽度写成多行，再按列读取</li>
 </ul>
-<h4 id="2_1">普通栅栏（2栏）</h4>
-<pre><code>明文: HELLOWORLD
-
-2行:
-H L O O L
-E L W R D
-
-按行读取: HLOOL ELWRD
-密文: HLOOLELWRD
-</code></pre>
-<h4 id="23_1">示例2（3栏）</h4>
-<pre><code>明文: HELLOWORLD
-
-3行:
-H L O D
-E O R
-L W L
-
-按行读取: H L O D E O R L W L
-密文: WLODEORLWL
-</code></pre>
-<h4 id="w">W型栅栏（曲径密码）</h4>
+<h4 id="2_1">普通栅栏（2栏）<a class="headerlink" href="#2_1" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span>
+<span class="normal"><a href="#__codelineno-13-2">2</a></span>
+<span class="normal"><a href="#__codelineno-13-3">3</a></span>
+<span class="normal"><a href="#__codelineno-13-4">4</a></span>
+<span class="normal"><a href="#__codelineno-13-5">5</a></span>
+<span class="normal"><a href="#__codelineno-13-6">6</a></span>
+<span class="normal"><a href="#__codelineno-13-7">7</a></span>
+<span class="normal"><a href="#__codelineno-13-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1"></a>明文: HELLOWORLD
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2"></a>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3"></a>2行:
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4"></a>H L O O L
+</span><span id="__span-13-5"><a id="__codelineno-13-5" name="__codelineno-13-5"></a>E L W R D
+</span><span id="__span-13-6"><a id="__codelineno-13-6" name="__codelineno-13-6"></a>
+</span><span id="__span-13-7"><a id="__codelineno-13-7" name="__codelineno-13-7"></a>按行读取: HLOOL ELWRD
+</span><span id="__span-13-8"><a id="__codelineno-13-8" name="__codelineno-13-8"></a>密文: HLOOLELWRD
+</span></code></pre></div></td></tr></table></div>
+<h4 id="23_1">示例2（3栏）<a class="headerlink" href="#23_1" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span>
+<span class="normal"><a href="#__codelineno-14-2">2</a></span>
+<span class="normal"><a href="#__codelineno-14-3">3</a></span>
+<span class="normal"><a href="#__codelineno-14-4">4</a></span>
+<span class="normal"><a href="#__codelineno-14-5">5</a></span>
+<span class="normal"><a href="#__codelineno-14-6">6</a></span>
+<span class="normal"><a href="#__codelineno-14-7">7</a></span>
+<span class="normal"><a href="#__codelineno-14-8">8</a></span>
+<span class="normal"><a href="#__codelineno-14-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1"></a>明文: HELLOWORLD
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2"></a>
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3"></a>3行:
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4"></a>H L O D
+</span><span id="__span-14-5"><a id="__codelineno-14-5" name="__codelineno-14-5"></a>E O R
+</span><span id="__span-14-6"><a id="__codelineno-14-6" name="__codelineno-14-6"></a>L W L
+</span><span id="__span-14-7"><a id="__codelineno-14-7" name="__codelineno-14-7"></a>
+</span><span id="__span-14-8"><a id="__codelineno-14-8" name="__codelineno-14-8"></a>按行读取: H L O D E O R L W L
+</span><span id="__span-14-9"><a id="__codelineno-14-9" name="__codelineno-14-9"></a>密文: WLODEORLWL
+</span></code></pre></div></td></tr></table></div>
+<h4 id="w">W型栅栏（曲径密码）<a class="headerlink" href="#w" title="Permanent link">&para;</a></h4>
 <ul>
 <li>按波浪形写入，再按行读取</li>
 </ul>
-<pre><code>明文: HELLOWORLD
-W型排列（3行）:
-行1: H . . . O . . . L . . . (H, O, L)
-行2: . E . L . W . R . D . (E, W, R, D)
-行3: . . L . . . O . . . . (L, O)
-按行读取: H O L E W R D L O
-结果: HOL EWR DLO (HOL EWRDLO)
-</code></pre>
-<h4 id="_40">识别特征</h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span>
+<span class="normal"><a href="#__codelineno-15-2">2</a></span>
+<span class="normal"><a href="#__codelineno-15-3">3</a></span>
+<span class="normal"><a href="#__codelineno-15-4">4</a></span>
+<span class="normal"><a href="#__codelineno-15-5">5</a></span>
+<span class="normal"><a href="#__codelineno-15-6">6</a></span>
+<span class="normal"><a href="#__codelineno-15-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1"></a>明文: HELLOWORLD
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2"></a>W型排列（3行）:
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3"></a>行1: H . . . O . . . L . . . (H, O, L)
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4"></a>行2: . E . L . W . R . D . (E, W, R, D)
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5"></a>行3: . . L . . . O . . . . (L, O)
+</span><span id="__span-15-6"><a id="__codelineno-15-6" name="__codelineno-15-6"></a>按行读取: H O L E W R D L O
+</span><span id="__span-15-7"><a id="__codelineno-15-7" name="__codelineno-15-7"></a>结果: HOL EWR DLO (HOL EWRDLO)
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_40">识别特征<a class="headerlink" href="#_40" title="Permanent link">&para;</a></h4>
 <ul>
 <li>字母频率与明文相同（只是顺序改变）</li>
 <li>密文长度与明文相同</li>
 <li>常见于CTF签到题</li>
 </ul>
-<h4 id="_41">破解方法</h4>
+<h4 id="_41">破解方法<a class="headerlink" href="#_41" title="Permanent link">&para;</a></h4>
 <ul>
 <li>暴力尝试所有可能的栏数和排列方式</li>
 </ul>
-<h3 id="42">4.2 列换位密码</h3>
-<h4 id="_42">原理</h4>
+<h3 id="42">4.2 列换位密码<a class="headerlink" href="#42" title="Permanent link">&para;</a></h3>
+<h4 id="_42">原理<a class="headerlink" href="#_42" title="Permanent link">&para;</a></h4>
 <ul>
 <li>将明文按行写入矩阵，再按列读取</li>
 <li>列的顺序由密钥决定</li>
 </ul>
-<h4 id="_43">示例</h4>
-<pre><code>明文: WE ARE DISCOVERED FLEE AT ONCE
-去除空格: WEAREDISCOVEREDFLEEATONCE
-密钥: 4 3 1 2 (表示列的顺序)
-
-写入矩阵（6行4列）:
-W E A R
-E D I S
-C O V E
-R E D F
-L E E A
-T O N C
-
-按密钥列顺序读取:
-密钥1列(第3列): A I V D E N → AIVDEN
-密钥2列(第4列): R S E F A C → RSEFAC
-密钥3列(第1列): W E C R L T → WECRLT
-密钥4列(第2列): E D O E E O → EDOEEO
-结果: AIVDENRSEFACWECRLTEDOEEO
-</code></pre>
-<h4 id="_44">识别特征</h4>
+<h4 id="_43">示例<a class="headerlink" href="#_43" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-16-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-16-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-16-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-16-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-16-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-16-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-16-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-16-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-16-10">10</a></span>
+<span class="normal"><a href="#__codelineno-16-11">11</a></span>
+<span class="normal"><a href="#__codelineno-16-12">12</a></span>
+<span class="normal"><a href="#__codelineno-16-13">13</a></span>
+<span class="normal"><a href="#__codelineno-16-14">14</a></span>
+<span class="normal"><a href="#__codelineno-16-15">15</a></span>
+<span class="normal"><a href="#__codelineno-16-16">16</a></span>
+<span class="normal"><a href="#__codelineno-16-17">17</a></span>
+<span class="normal"><a href="#__codelineno-16-18">18</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1"></a>明文: WE ARE DISCOVERED FLEE AT ONCE
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2"></a>去除空格: WEAREDISCOVEREDFLEEATONCE
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3"></a>密钥: 4 3 1 2 (表示列的顺序)
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4"></a>
+</span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5"></a>写入矩阵（6行4列）:
+</span><span id="__span-16-6"><a id="__codelineno-16-6" name="__codelineno-16-6"></a>W E A R
+</span><span id="__span-16-7"><a id="__codelineno-16-7" name="__codelineno-16-7"></a>E D I S
+</span><span id="__span-16-8"><a id="__codelineno-16-8" name="__codelineno-16-8"></a>C O V E
+</span><span id="__span-16-9"><a id="__codelineno-16-9" name="__codelineno-16-9"></a>R E D F
+</span><span id="__span-16-10"><a id="__codelineno-16-10" name="__codelineno-16-10"></a>L E E A
+</span><span id="__span-16-11"><a id="__codelineno-16-11" name="__codelineno-16-11"></a>T O N C
+</span><span id="__span-16-12"><a id="__codelineno-16-12" name="__codelineno-16-12"></a>
+</span><span id="__span-16-13"><a id="__codelineno-16-13" name="__codelineno-16-13"></a>按密钥列顺序读取:
+</span><span id="__span-16-14"><a id="__codelineno-16-14" name="__codelineno-16-14"></a>密钥1列(第3列): A I V D E N → AIVDEN
+</span><span id="__span-16-15"><a id="__codelineno-16-15" name="__codelineno-16-15"></a>密钥2列(第4列): R S E F A C → RSEFAC
+</span><span id="__span-16-16"><a id="__codelineno-16-16" name="__codelineno-16-16"></a>密钥3列(第1列): W E C R L T → WECRLT
+</span><span id="__span-16-17"><a id="__codelineno-16-17" name="__codelineno-16-17"></a>密钥4列(第2列): E D O E E O → EDOEEO
+</span><span id="__span-16-18"><a id="__codelineno-16-18" name="__codelineno-16-18"></a>结果: AIVDENRSEFACWECRLTEDOEEO
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_44">识别特征<a class="headerlink" href="#_44" title="Permanent link">&para;</a></h4>
 <ul>
 <li>密文长度与明文相同</li>
 <li>解密需要知道密钥（列的顺序）</li>
 <li>可通过分析列数猜测</li>
 </ul>
-<h3 id="43">4.3 螺旋密码</h3>
-<h4 id="_45">原理</h4>
+<h3 id="43">4.3 螺旋密码<a class="headerlink" href="#43" title="Permanent link">&para;</a></h3>
+<h4 id="_45">原理<a class="headerlink" href="#_45" title="Permanent link">&para;</a></h4>
 <ul>
 <li>将明文按螺旋顺序写入矩阵，再按行读取（或相反）</li>
 </ul>
-<h4 id="_46">示例</h4>
-<pre><code>明文: H E L L O W O R L D A B
-
-正确示例：12字母，4行3列
-明文: HELLOWORLDAB (12字母)
-矩阵: 4行 × 3列 = 12格
-
-螺旋路径（从(0,0)开始，向右 → 向下 → 向左 → 向上 → 向右...）
-
-填充顺序：
-位置1: (0,0) ← H
-位置2: (0,1) ← E
-位置3: (0,2) ← L
-位置4: (1,2) ← L
-位置5: (2,2) ← O
-位置6: (3,2) ← W
-位置7: (3,1) ← O
-位置8: (3,0) ← R
-位置9: (2,0) ← L
-位置10: (1,0) ← D
-位置11: (1,1) ← A
-位置12: (2,1) ← B
-
-填充结果矩阵：
-行0: H  E  L
-行1: D  A  L
-行2: L  B  O
-行3: R  O  W
-
-行0: H E L
-行1: D A L
-行2: L B O
-行3: R O W
-密文: HELDALLBOROW
-</code></pre>
-<h4 id="_47">识别特征</h4>
+<h4 id="_46">示例<a class="headerlink" href="#_46" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-17-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-17-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-17-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-17-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-17-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-17-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-17-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-17-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-17-10">10</a></span>
+<span class="normal"><a href="#__codelineno-17-11">11</a></span>
+<span class="normal"><a href="#__codelineno-17-12">12</a></span>
+<span class="normal"><a href="#__codelineno-17-13">13</a></span>
+<span class="normal"><a href="#__codelineno-17-14">14</a></span>
+<span class="normal"><a href="#__codelineno-17-15">15</a></span>
+<span class="normal"><a href="#__codelineno-17-16">16</a></span>
+<span class="normal"><a href="#__codelineno-17-17">17</a></span>
+<span class="normal"><a href="#__codelineno-17-18">18</a></span>
+<span class="normal"><a href="#__codelineno-17-19">19</a></span>
+<span class="normal"><a href="#__codelineno-17-20">20</a></span>
+<span class="normal"><a href="#__codelineno-17-21">21</a></span>
+<span class="normal"><a href="#__codelineno-17-22">22</a></span>
+<span class="normal"><a href="#__codelineno-17-23">23</a></span>
+<span class="normal"><a href="#__codelineno-17-24">24</a></span>
+<span class="normal"><a href="#__codelineno-17-25">25</a></span>
+<span class="normal"><a href="#__codelineno-17-26">26</a></span>
+<span class="normal"><a href="#__codelineno-17-27">27</a></span>
+<span class="normal"><a href="#__codelineno-17-28">28</a></span>
+<span class="normal"><a href="#__codelineno-17-29">29</a></span>
+<span class="normal"><a href="#__codelineno-17-30">30</a></span>
+<span class="normal"><a href="#__codelineno-17-31">31</a></span>
+<span class="normal"><a href="#__codelineno-17-32">32</a></span>
+<span class="normal"><a href="#__codelineno-17-33">33</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1"></a>明文: H E L L O W O R L D A B
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2"></a>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3"></a>正确示例：12字母，4行3列
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4"></a>明文: HELLOWORLDAB (12字母)
+</span><span id="__span-17-5"><a id="__codelineno-17-5" name="__codelineno-17-5"></a>矩阵: 4行 × 3列 = 12格
+</span><span id="__span-17-6"><a id="__codelineno-17-6" name="__codelineno-17-6"></a>
+</span><span id="__span-17-7"><a id="__codelineno-17-7" name="__codelineno-17-7"></a>螺旋路径（从(0,0)开始，向右 → 向下 → 向左 → 向上 → 向右...）
+</span><span id="__span-17-8"><a id="__codelineno-17-8" name="__codelineno-17-8"></a>
+</span><span id="__span-17-9"><a id="__codelineno-17-9" name="__codelineno-17-9"></a>填充顺序：
+</span><span id="__span-17-10"><a id="__codelineno-17-10" name="__codelineno-17-10"></a>位置1: (0,0) ← H
+</span><span id="__span-17-11"><a id="__codelineno-17-11" name="__codelineno-17-11"></a>位置2: (0,1) ← E
+</span><span id="__span-17-12"><a id="__codelineno-17-12" name="__codelineno-17-12"></a>位置3: (0,2) ← L
+</span><span id="__span-17-13"><a id="__codelineno-17-13" name="__codelineno-17-13"></a>位置4: (1,2) ← L
+</span><span id="__span-17-14"><a id="__codelineno-17-14" name="__codelineno-17-14"></a>位置5: (2,2) ← O
+</span><span id="__span-17-15"><a id="__codelineno-17-15" name="__codelineno-17-15"></a>位置6: (3,2) ← W
+</span><span id="__span-17-16"><a id="__codelineno-17-16" name="__codelineno-17-16"></a>位置7: (3,1) ← O
+</span><span id="__span-17-17"><a id="__codelineno-17-17" name="__codelineno-17-17"></a>位置8: (3,0) ← R
+</span><span id="__span-17-18"><a id="__codelineno-17-18" name="__codelineno-17-18"></a>位置9: (2,0) ← L
+</span><span id="__span-17-19"><a id="__codelineno-17-19" name="__codelineno-17-19"></a>位置10: (1,0) ← D
+</span><span id="__span-17-20"><a id="__codelineno-17-20" name="__codelineno-17-20"></a>位置11: (1,1) ← A
+</span><span id="__span-17-21"><a id="__codelineno-17-21" name="__codelineno-17-21"></a>位置12: (2,1) ← B
+</span><span id="__span-17-22"><a id="__codelineno-17-22" name="__codelineno-17-22"></a>
+</span><span id="__span-17-23"><a id="__codelineno-17-23" name="__codelineno-17-23"></a>填充结果矩阵：
+</span><span id="__span-17-24"><a id="__codelineno-17-24" name="__codelineno-17-24"></a>行0: H  E  L
+</span><span id="__span-17-25"><a id="__codelineno-17-25" name="__codelineno-17-25"></a>行1: D  A  L
+</span><span id="__span-17-26"><a id="__codelineno-17-26" name="__codelineno-17-26"></a>行2: L  B  O
+</span><span id="__span-17-27"><a id="__codelineno-17-27" name="__codelineno-17-27"></a>行3: R  O  W
+</span><span id="__span-17-28"><a id="__codelineno-17-28" name="__codelineno-17-28"></a>
+</span><span id="__span-17-29"><a id="__codelineno-17-29" name="__codelineno-17-29"></a>行0: H E L
+</span><span id="__span-17-30"><a id="__codelineno-17-30" name="__codelineno-17-30"></a>行1: D A L
+</span><span id="__span-17-31"><a id="__codelineno-17-31" name="__codelineno-17-31"></a>行2: L B O
+</span><span id="__span-17-32"><a id="__codelineno-17-32" name="__codelineno-17-32"></a>行3: R O W
+</span><span id="__span-17-33"><a id="__codelineno-17-33" name="__codelineno-17-33"></a>密文: HELDALLBOROW
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_47">识别特征<a class="headerlink" href="#_47" title="Permanent link">&para;</a></h4>
 <ul>
 <li>密文长度与明文相同</li>
 <li>需要知道矩阵大小和螺旋方向</li>
 </ul>
 <hr />
-<h2 id="5">5. 其他古典密码</h2>
-<h3 id="51">5.1 波利比乌斯方阵</h3>
-<h4 id="_48">原理</h4>
+<h2 id="5">5. 其他古典密码<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<h3 id="51">5.1 波利比乌斯方阵<a class="headerlink" href="#51" title="Permanent link">&para;</a></h3>
+<h4 id="_48">原理<a class="headerlink" href="#_48" title="Permanent link">&para;</a></h4>
 <ul>
 <li>使用5×5网格（I和J合并）</li>
 <li>每个字母用行号和列号表示（两位数字）</li>
 </ul>
-<h4 id="_49">方阵</h4>
-<pre><code>    1 2 3 4 5
-1   A B C D E
-2   F G H I/J K
-3   L M N O P
-4   Q R S T U
-5   V W X Y Z
-</code></pre>
-<h4 id="_50">示例</h4>
-<pre><code>明文: HELLO
-H: 2 3
-E: 1 5
-L: 3 1
-L: 3 1
-O: 3 4
-结果: 23 15 31 31 34
-</code></pre>
-<h4 id="_51">识别特征</h4>
+<h4 id="_49">方阵<a class="headerlink" href="#_49" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-18-1">1</a></span>
+<span class="normal"><a href="#__codelineno-18-2">2</a></span>
+<span class="normal"><a href="#__codelineno-18-3">3</a></span>
+<span class="normal"><a href="#__codelineno-18-4">4</a></span>
+<span class="normal"><a href="#__codelineno-18-5">5</a></span>
+<span class="normal"><a href="#__codelineno-18-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1"></a>    1 2 3 4 5
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2"></a>1   A B C D E
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3"></a>2   F G H I/J K
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4"></a>3   L M N O P
+</span><span id="__span-18-5"><a id="__codelineno-18-5" name="__codelineno-18-5"></a>4   Q R S T U
+</span><span id="__span-18-6"><a id="__codelineno-18-6" name="__codelineno-18-6"></a>5   V W X Y Z
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_50">示例<a class="headerlink" href="#_50" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-19-1">1</a></span>
+<span class="normal"><a href="#__codelineno-19-2">2</a></span>
+<span class="normal"><a href="#__codelineno-19-3">3</a></span>
+<span class="normal"><a href="#__codelineno-19-4">4</a></span>
+<span class="normal"><a href="#__codelineno-19-5">5</a></span>
+<span class="normal"><a href="#__codelineno-19-6">6</a></span>
+<span class="normal"><a href="#__codelineno-19-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1"></a>明文: HELLO
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2"></a>H: 2 3
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3"></a>E: 1 5
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4"></a>L: 3 1
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5"></a>L: 3 1
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6"></a>O: 3 4
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7"></a>结果: 23 15 31 31 34
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_51">识别特征<a class="headerlink" href="#_51" title="Permanent link">&para;</a></h4>
 <ul>
 <li>密文是两位数字组合</li>
 <li>数字范围1-5</li>
 <li>常见于CTF和密室逃脱</li>
 </ul>
-<h4 id="_52">变种</h4>
+<h4 id="_52">变种<a class="headerlink" href="#_52" title="Permanent link">&para;</a></h4>
 <ul>
 <li>使用6×6方阵（包含数字）</li>
 <li>使用不同顺序的字母排列</li>
 </ul>
-<h3 id="52">5.2 阿伯哈姆密码</h3>
-<h4 id="_53">原理</h4>
+<h3 id="52">5.2 阿伯哈姆密码<a class="headerlink" href="#52" title="Permanent link">&para;</a></h3>
+<h4 id="_53">原理<a class="headerlink" href="#_53" title="Permanent link">&para;</a></h4>
 <ul>
 <li>波利比乌斯方阵的变种</li>
 <li>使用特定关键词填充方阵</li>
 </ul>
-<h4 id="_54">示例</h4>
-<pre><code>关键词: CIPHER
-填充方阵（去重后按字母序排列）:
-C I P H E R A B D F G K L M N O Q S T U V W X Y Z
-排列成5×5:
-C I P H E
-R A B D F
-G K L M N
-O Q S T U
-V W X Y Z
-（I/J合并）
-</code></pre>
-<h3 id="53">5.3 跳舞的小人</h3>
-<h4 id="_55">背景</h4>
+<h4 id="_54">示例<a class="headerlink" href="#_54" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-20-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-20-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-20-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-20-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-20-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-20-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-20-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-20-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-20-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-20-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1"></a>关键词: CIPHER
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2"></a>填充方阵（去重后按字母序排列）:
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3"></a>C I P H E R A B D F G K L M N O Q S T U V W X Y Z
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4"></a>排列成5×5:
+</span><span id="__span-20-5"><a id="__codelineno-20-5" name="__codelineno-20-5"></a>C I P H E
+</span><span id="__span-20-6"><a id="__codelineno-20-6" name="__codelineno-20-6"></a>R A B D F
+</span><span id="__span-20-7"><a id="__codelineno-20-7" name="__codelineno-20-7"></a>G K L M N
+</span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8"></a>O Q S T U
+</span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9"></a>V W X Y Z
+</span><span id="__span-20-10"><a id="__codelineno-20-10" name="__codelineno-20-10"></a>（I/J合并）
+</span></code></pre></div></td></tr></table></div>
+<h3 id="53">5.3 跳舞的小人<a class="headerlink" href="#53" title="Permanent link">&para;</a></h3>
+<h4 id="_55">背景<a class="headerlink" href="#_55" title="Permanent link">&para;</a></h4>
 <ul>
 <li>柯南·道尔《福尔摩斯探案集》中的密码</li>
 <li>使用不同姿势的小人代表字母</li>
 </ul>
-<h4 id="_56">原理</h4>
+<h4 id="_56">原理<a class="headerlink" href="#_56" title="Permanent link">&para;</a></h4>
 <ul>
 <li>每个小人姿势对应一个字母</li>
 <li>旗帜表示单词结束</li>
 </ul>
-<h4 id="_57">识别特征</h4>
+<h4 id="_57">识别特征<a class="headerlink" href="#_57" title="Permanent link">&para;</a></h4>
 <ul>
 <li>图形符号，小人姿势</li>
 <li>常见于CTF图片隐写题</li>
 </ul>
 <hr />
-<h2 id="6">6. 古典密码的破解方法</h2>
-<h3 id="61">6.1 频率分析</h3>
-<h4 id="_58">英文单字母频率</h4>
-<pre><code>E: 12.7%    T: 9.1%     A: 8.2%     O: 7.5%     I: 7.0%
-N: 6.7%     S: 6.3%     H: 6.1%     R: 6.0%     D: 4.3%
-L: 4.0%     C: 2.8%     U: 2.8%     M: 2.4%     W: 2.4%
-F: 2.2%     G: 2.0%     Y: 2.0%     P: 1.9%     B: 1.5%
-V: 1.0%     K: 0.8%     J: 0.2%     X: 0.2%     Q: 0.1%
-Z: 0.1%
-</code></pre>
-<h4 id="_59">英文双字母组频率</h4>
-<pre><code>th: 3.9%    he: 3.2%    in: 2.4%    er: 2.1%    an: 1.9%
-re: 1.8%    nd: 1.8%    on: 1.7%    en: 1.6%    at: 1.5%
-</code></pre>
-<h4 id="_60">英文三字母组频率</h4>
-<pre><code>the: 5.1%   and: 2.1%   ing: 1.8%   her: 1.3%   hat: 0.9%
-</code></pre>
-<h4 id="_61">破解步骤</h4>
+<h2 id="6">6. 古典密码的破解方法<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<h3 id="61">6.1 频率分析<a class="headerlink" href="#61" title="Permanent link">&para;</a></h3>
+<h4 id="_58">英文单字母频率<a class="headerlink" href="#_58" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-21-1">1</a></span>
+<span class="normal"><a href="#__codelineno-21-2">2</a></span>
+<span class="normal"><a href="#__codelineno-21-3">3</a></span>
+<span class="normal"><a href="#__codelineno-21-4">4</a></span>
+<span class="normal"><a href="#__codelineno-21-5">5</a></span>
+<span class="normal"><a href="#__codelineno-21-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1"></a>E: 12.7%    T: 9.1%     A: 8.2%     O: 7.5%     I: 7.0%
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2"></a>N: 6.7%     S: 6.3%     H: 6.1%     R: 6.0%     D: 4.3%
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3"></a>L: 4.0%     C: 2.8%     U: 2.8%     M: 2.4%     W: 2.4%
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4"></a>F: 2.2%     G: 2.0%     Y: 2.0%     P: 1.9%     B: 1.5%
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5"></a>V: 1.0%     K: 0.8%     J: 0.2%     X: 0.2%     Q: 0.1%
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6"></a>Z: 0.1%
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_59">英文双字母组频率<a class="headerlink" href="#_59" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-22-1">1</a></span>
+<span class="normal"><a href="#__codelineno-22-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1"></a>th: 3.9%    he: 3.2%    in: 2.4%    er: 2.1%    an: 1.9%
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2"></a>re: 1.8%    nd: 1.8%    on: 1.7%    en: 1.6%    at: 1.5%
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_60">英文三字母组频率<a class="headerlink" href="#_60" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-23-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1"></a>the: 5.1%   and: 2.1%   ing: 1.8%   her: 1.3%   hat: 0.9%
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_61">破解步骤<a class="headerlink" href="#_61" title="Permanent link">&para;</a></h4>
 <ol>
 <li>统计密文字母频率</li>
 <li>与英文频率对比，猜测E、T等高频字母的对应关系</li>
 <li>寻找常见单词（如"the"），验证猜测</li>
 <li>逐步替换，形成可读文本</li>
 </ol>
-<h3 id="62">6.2 重合指数</h3>
-<h4 id="_62">定义</h4>
+<h3 id="62">6.2 重合指数<a class="headerlink" href="#62" title="Permanent link">&para;</a></h3>
+<h4 id="_62">定义<a class="headerlink" href="#_62" title="Permanent link">&para;</a></h4>
 <ul>
 <li>随机选取两个字母，它们相同的概率</li>
-<li>英文重合指数：约0.065（I = Σ(n_i(n_i-1)) / (N(N-1))）</li>
+<li>英文重合指数：约0.065
+  $$
+  I = \frac{\sum n_i (n_i - 1)}{N (N - 1)}
+  $$</li>
 </ul>
-<h4 id="_63">用途</h4>
+<h4 id="_63">用途<a class="headerlink" href="#_63" title="Permanent link">&para;</a></h4>
 <ul>
 <li>判断密文是否为英文</li>
 <li>推测维吉尼亚密码的密钥长度</li>
 </ul>
-<h4 id="_64">计算方法</h4>
-<pre><code>I = Σ [f_i × (f_i - 1)] / [N × (N - 1)]
-</code></pre>
-<p>其中f_i为字母i的频率，N为总字母数</p>
-<h4 id="_65">破解维吉尼亚的应用</h4>
+<h4 id="_64">计算方法<a class="headerlink" href="#_64" title="Permanent link">&para;</a></h4>
+<p>$$
+I = \frac{\sum n_i (n_i - 1)}{N (N - 1)}
+$$
+其中f_i为字母i的频率，N为总字母数</p>
+<h4 id="_65">破解维吉尼亚的应用<a class="headerlink" href="#_65" title="Permanent link">&para;</a></h4>
 <ol>
 <li>假设密钥长度为L</li>
 <li>将密文分成L组</li>
 <li>计算每组的重合指数</li>
 <li>如果某组重合指数接近0.065，则该分组可能是正确的</li>
 </ol>
-<h3 id="63-kasiski">6.3 Kasiski测试</h3>
-<h4 id="_66">原理</h4>
+<h3 id="63-kasiski">6.3 Kasiski测试<a class="headerlink" href="#63-kasiski" title="Permanent link">&para;</a></h3>
+<h4 id="_66">原理<a class="headerlink" href="#_66" title="Permanent link">&para;</a></h4>
 <ul>
 <li>寻找密文中重复的片段</li>
 <li>重复片段之间的距离可能是密钥长度的倍数</li>
 </ul>
-<h4 id="_67">步骤</h4>
+<h4 id="_67">步骤<a class="headerlink" href="#_67" title="Permanent link">&para;</a></h4>
 <ol>
 <li>找出所有重复的3-4字母片段</li>
 <li>记录片段之间的距离</li>
 <li>计算这些距离的最大公约数</li>
 <li>GCD很可能就是密钥长度</li>
 </ol>
-<h4 id="_68">示例</h4>
-<pre><code>密文中出现重复片段&quot;VHX&quot;：
-位置: 15, 45, 75
-距离: 30, 30
-GCD: 30
-密钥长度可能是30的因数（如15, 10, 6, 5, 3, 2, 1）
-</code></pre>
-<h3 id="64">6.4 暴力破解</h3>
-<h4 id="_69">适用范围</h4>
+<h4 id="_68">示例<a class="headerlink" href="#_68" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-24-1">1</a></span>
+<span class="normal"><a href="#__codelineno-24-2">2</a></span>
+<span class="normal"><a href="#__codelineno-24-3">3</a></span>
+<span class="normal"><a href="#__codelineno-24-4">4</a></span>
+<span class="normal"><a href="#__codelineno-24-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1"></a>密文中出现重复片段&quot;VHX&quot;：
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2"></a>位置: 15, 45, 75
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3"></a>距离: 30, 30
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4"></a>GCD: 30
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5"></a>密钥长度可能是30的因数（如15, 10, 6, 5, 3, 2, 1）
+</span></code></pre></div></td></tr></table></div>
+<h3 id="64">6.4 暴力破解<a class="headerlink" href="#64" title="Permanent link">&para;</a></h3>
+<h4 id="_69">适用范围<a class="headerlink" href="#_69" title="Permanent link">&para;</a></h4>
 <ul>
 <li>密钥空间较小的密码（凯撒、仿射、简单栅栏等）</li>
 </ul>
-<h4 id="_70">凯撒暴力破解</h4>
-<pre><code>for shift in range(1, 26):
-    decrypted = apply_shift(ciphertext, -shift)
-    if is_english(decrypted):
-        print(f&quot;Shift {shift}: {decrypted}&quot;)
-</code></pre>
-<h4 id="_71">仿射暴力破解</h4>
-<pre><code>for a in [1,3,5,7,9,11,15,17,19,21,23,25]:
-    for b in range(26):
-        decrypted = affine_decrypt(ciphertext, a, b)
-        if is_english(decrypted):
-            print(f&quot;a={a}, b={b}: {decrypted}&quot;)
-</code></pre>
+<h4 id="_70">凯撒暴力破解<a class="headerlink" href="#_70" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-25-1">1</a></span>
+<span class="normal"><a href="#__codelineno-25-2">2</a></span>
+<span class="normal"><a href="#__codelineno-25-3">3</a></span>
+<span class="normal"><a href="#__codelineno-25-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1"></a>for shift in range(1, 26):
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2"></a>    decrypted = apply_shift(ciphertext, -shift)
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3"></a>    if is_english(decrypted):
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4"></a>        print(f&quot;Shift {shift}: {decrypted}&quot;)
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_71">仿射暴力破解<a class="headerlink" href="#_71" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-26-1">1</a></span>
+<span class="normal"><a href="#__codelineno-26-2">2</a></span>
+<span class="normal"><a href="#__codelineno-26-3">3</a></span>
+<span class="normal"><a href="#__codelineno-26-4">4</a></span>
+<span class="normal"><a href="#__codelineno-26-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1"></a>for a in [1,3,5,7,9,11,15,17,19,21,23,25]:
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2"></a>    for b in range(26):
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3"></a>        decrypted = affine_decrypt(ciphertext, a, b)
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4"></a>        if is_english(decrypted):
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5"></a>            print(f&quot;a={a}, b={b}: {decrypted}&quot;)
+</span></code></pre></div></td></tr></table></div>
 <hr />
-<h2 id="7-ctf">7. CTF中的古典密码</h2>
-<h3 id="71">7.1 常见题型</h3>
+<h2 id="7-ctf">7. CTF中的古典密码<a class="headerlink" href="#7-ctf" title="Permanent link">&para;</a></h2>
+<h3 id="71">7.1 常见题型<a class="headerlink" href="#71" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -4795,7 +4971,7 @@ GCD: 30
 </tr>
 </tbody>
 </table>
-<h3 id="72">7.2 解题思路</h3>
+<h3 id="72">7.2 解题思路<a class="headerlink" href="#72" title="Permanent link">&para;</a></h3>
 <ol>
 <li><strong>识别密码类型</strong><ul>
 <li>观察密文特征（字母、数字、符号）</li>
@@ -4824,7 +5000,7 @@ GCD: 30
 </ul>
 </li>
 </ol>
-<h3 id="73">7.3 工具推荐</h3>
+<h3 id="73">7.3 工具推荐<a class="headerlink" href="#73" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -4856,93 +5032,133 @@ GCD: 30
 </tr>
 </tbody>
 </table>
-<h3 id="74-python">7.4 Python脚本示例</h3>
-<h4 id="_72">凯撒暴力破解</h4>
-<pre><code class="language-python">def caesar_bruteforce(ciphertext):
-    for shift in range(26):
-        plaintext = ''
-        for c in ciphertext:
-            if c.isalpha():
-                base = ord('A') if c.isupper() else ord('a')
-                plaintext += chr((ord(c) - base - shift) % 26 + base)
-            else:
-                plaintext += c
-        print(f&quot;Shift {shift}: {plaintext}&quot;)
-</code></pre>
-<h4 id="_73">维吉尼亚解密</h4>
-<pre><code class="language-python">def vigenere_decrypt(ciphertext, key):
-    plaintext = ''
-    key_len = len(key)
-    for i, c in enumerate(ciphertext):
-        if c.isalpha():
-            base = ord('A') if c.isupper() else ord('a')
-            shift = ord(key[i % key_len].upper()) - ord('A')
-            plaintext += chr((ord(c) - base - shift) % 26 + base)
-        else:
-            plaintext += c
-    return plaintext
-</code></pre>
-<h4 id="_74">频率分析辅助</h4>
-<pre><code class="language-python">from collections import Counter
-
-def frequency_analysis(text):
-    text = ''.join([c for c in text if c.isalpha()]).upper()
-    counter = Counter(text)
-    total = len(text)
-    freq = {c: count/total for c, count in counter.items()}
-    sorted_freq = sorted(freq.items(), key=lambda x: x[1], reverse=True)
-    return sorted_freq
-</code></pre>
+<h3 id="74-python">7.4 Python脚本示例<a class="headerlink" href="#74-python" title="Permanent link">&para;</a></h3>
+<h4 id="_72">凯撒暴力破解<a class="headerlink" href="#_72" title="Permanent link">&para;</a></h4>
+<div class="language-python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Python</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-27-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-27-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-27-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-27-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-27-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-27-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-27-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-27-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-27-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-27-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">caesar_bruteforce</span><span class="p">(</span><span class="n">ciphertext</span><span class="p">):</span>
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2"></a>    <span class="k">for</span> <span class="n">shift</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">26</span><span class="p">):</span>
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3"></a>        <span class="n">plaintext</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4"></a>        <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ciphertext</span><span class="p">:</span>
+</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5"></a>            <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">isalpha</span><span class="p">():</span>
+</span><span id="__span-27-6"><a id="__codelineno-27-6" name="__codelineno-27-6"></a>                <span class="n">base</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">isupper</span><span class="p">()</span> <span class="k">else</span> <span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+</span><span id="__span-27-7"><a id="__codelineno-27-7" name="__codelineno-27-7"></a>                <span class="n">plaintext</span> <span class="o">+=</span> <span class="nb">chr</span><span class="p">((</span><span class="nb">ord</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="o">-</span> <span class="n">base</span> <span class="o">-</span> <span class="n">shift</span><span class="p">)</span> <span class="o">%</span> <span class="mi">26</span> <span class="o">+</span> <span class="n">base</span><span class="p">)</span>
+</span><span id="__span-27-8"><a id="__codelineno-27-8" name="__codelineno-27-8"></a>            <span class="k">else</span><span class="p">:</span>
+</span><span id="__span-27-9"><a id="__codelineno-27-9" name="__codelineno-27-9"></a>                <span class="n">plaintext</span> <span class="o">+=</span> <span class="n">c</span>
+</span><span id="__span-27-10"><a id="__codelineno-27-10" name="__codelineno-27-10"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shift </span><span class="si">{</span><span class="n">shift</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">plaintext</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_73">维吉尼亚解密<a class="headerlink" href="#_73" title="Permanent link">&para;</a></h4>
+<div class="language-python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Python</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-28-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-28-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-28-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-28-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-28-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-28-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-28-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-28-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-28-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-28-10">10</a></span>
+<span class="normal"><a href="#__codelineno-28-11">11</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">vigenere_decrypt</span><span class="p">(</span><span class="n">ciphertext</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2"></a>    <span class="n">plaintext</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3"></a>    <span class="n">key_len</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4"></a>    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ciphertext</span><span class="p">):</span>
+</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5"></a>        <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">isalpha</span><span class="p">():</span>
+</span><span id="__span-28-6"><a id="__codelineno-28-6" name="__codelineno-28-6"></a>            <span class="n">base</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">isupper</span><span class="p">()</span> <span class="k">else</span> <span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+</span><span id="__span-28-7"><a id="__codelineno-28-7" name="__codelineno-28-7"></a>            <span class="n">shift</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="n">key</span><span class="p">[</span><span class="n">i</span> <span class="o">%</span> <span class="n">key_len</span><span class="p">]</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span> <span class="o">-</span> <span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">)</span>
+</span><span id="__span-28-8"><a id="__codelineno-28-8" name="__codelineno-28-8"></a>            <span class="n">plaintext</span> <span class="o">+=</span> <span class="nb">chr</span><span class="p">((</span><span class="nb">ord</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="o">-</span> <span class="n">base</span> <span class="o">-</span> <span class="n">shift</span><span class="p">)</span> <span class="o">%</span> <span class="mi">26</span> <span class="o">+</span> <span class="n">base</span><span class="p">)</span>
+</span><span id="__span-28-9"><a id="__codelineno-28-9" name="__codelineno-28-9"></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="__span-28-10"><a id="__codelineno-28-10" name="__codelineno-28-10"></a>            <span class="n">plaintext</span> <span class="o">+=</span> <span class="n">c</span>
+</span><span id="__span-28-11"><a id="__codelineno-28-11" name="__codelineno-28-11"></a>    <span class="k">return</span> <span class="n">plaintext</span>
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_74">频率分析辅助<a class="headerlink" href="#_74" title="Permanent link">&para;</a></h4>
+<div class="language-python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Python</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-29-1">1</a></span>
+<span class="normal"><a href="#__codelineno-29-2">2</a></span>
+<span class="normal"><a href="#__codelineno-29-3">3</a></span>
+<span class="normal"><a href="#__codelineno-29-4">4</a></span>
+<span class="normal"><a href="#__codelineno-29-5">5</a></span>
+<span class="normal"><a href="#__codelineno-29-6">6</a></span>
+<span class="normal"><a href="#__codelineno-29-7">7</a></span>
+<span class="normal"><a href="#__codelineno-29-8">8</a></span>
+<span class="normal"><a href="#__codelineno-29-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">Counter</span>
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2"></a>
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">frequency_analysis</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4"></a>    <span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">c</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">text</span> <span class="k">if</span> <span class="n">c</span><span class="o">.</span><span class="n">isalpha</span><span class="p">()])</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5"></a>    <span class="n">counter</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</span><span id="__span-29-6"><a id="__codelineno-29-6" name="__codelineno-29-6"></a>    <span class="n">total</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</span><span id="__span-29-7"><a id="__codelineno-29-7" name="__codelineno-29-7"></a>    <span class="n">freq</span> <span class="o">=</span> <span class="p">{</span><span class="n">c</span><span class="p">:</span> <span class="n">count</span><span class="o">/</span><span class="n">total</span> <span class="k">for</span> <span class="n">c</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">counter</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+</span><span id="__span-29-8"><a id="__codelineno-29-8" name="__codelineno-29-8"></a>    <span class="n">sorted_freq</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">freq</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-29-9"><a id="__codelineno-29-9" name="__codelineno-29-9"></a>    <span class="k">return</span> <span class="n">sorted_freq</span>
+</span></code></pre></div></td></tr></table></div>
 <hr />
-<h2 id="8">8. 练习</h2>
-<h3 id="_75">基础题</h3>
+<h2 id="8">8. 练习<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
+<h3 id="_75">基础题<a class="headerlink" href="#_75" title="Permanent link">&para;</a></h3>
 <ol>
 <li>
 <p><strong>凯撒密码</strong>
-    <code>WKH TXLFN EURZQ IRA MXPSV RYHU WKH ODCB GRJ</code></p>
+    <div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-30-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1"></a>WKH TXLFN EURZQ IRA MXPSV RYHU WKH ODCB GRJ
+</span></code></pre></div></td></tr></table></div></p>
 </li>
 <li>
 <p><strong>ROT13</strong></p>
-<p><code>GUR DHVPX OEBJA SBK WHZCF BIRE GUR YNML QBT</code></p>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-31-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1"></a>GUR DHVPX OEBJA SBK WHZCF BIRE GUR YNML QBT
+</span></code></pre></div></td></tr></table></div>
 </li>
 <li>
 <p><strong>Atbash</strong></p>
-<p><code>GSV RH Z YIRFOS GSRM ZMW SZIB</code></p>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-32-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1"></a>GSV RH Z YIRFOS GSRM ZMW SZIB
+</span></code></pre></div></td></tr></table></div>
 </li>
 <li>
 <p><strong>栅栏密码（2栏）</strong></p>
-<p><code>HLELOWRLO</code></p>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-33-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1"></a>HLELOWRLO
+</span></code></pre></div></td></tr></table></div>
 </li>
 <li>
 <p><strong>仿射密码</strong>
-    <code>已知 a=5, b=8，解密: F X O K</code></p>
+    <div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-34-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1"></a>已知 a=5, b=8，解密: F X O K
+</span></code></pre></div></td></tr></table></div></p>
 </li>
 <li>
 <p><strong>简单替换密码</strong>
-    <code>Lzw lwvwd sgd izx lwvwd bjzr
-    （提示：词频分析）</code></p>
+    <div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-35-1">1</a></span>
+<span class="normal"><a href="#__codelineno-35-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1"></a>Lzw lwvwd sgd izx lwvwd bjzr
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2"></a>（提示：词频分析）
+</span></code></pre></div></td></tr></table></div></p>
 </li>
 <li>
 <p><strong>维吉尼亚密码</strong>
-    <code>密文: Fmiv eohvi wt xivm
-    密钥: KEY</code></p>
+    <div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-36-1">1</a></span>
+<span class="normal"><a href="#__codelineno-36-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1"></a>密文: Fmiv eohvi wt xivm
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2"></a>密钥: KEY
+</span></code></pre></div></td></tr></table></div></p>
 </li>
 <li>
 <p><strong>波利比乌斯方阵</strong>
-    <code>23 15 31 31 34 15 44 15 34 53 34</code></p>
+    <div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-37-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1"></a>23 15 31 31 34 15 44 15 34 53 34
+</span></code></pre></div></td></tr></table></div></p>
 </li>
 <li>
 <p><strong>多层嵌套</strong>
-    <code>Uryyb, jbeyq! Gur xrl vf: cvcr</code>
+    <div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-38-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1"></a>Uryyb, jbeyq! Gur xrl vf: cvcr
+</span></code></pre></div></td></tr></table></div>
     提示：先ROT13，再凯撒，得到一句话</p>
 </li>
 <li>
 <p><strong>混合密码</strong></p>
-<p><code>密文：RVOL TZRI BLFI
-提示：先Atbash，再栅栏（2栏）</code></p>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-39-1">1</a></span>
+<span class="normal"><a href="#__codelineno-39-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1"></a>密文：RVOL TZRI BLFI
+</span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2"></a>提示：先Atbash，再栅栏（2栏）
+</span></code></pre></div></td></tr></table></div>
 </li>
 </ol>
-<h3 id="_76">答案</h3>
+<h3 id="_76">答案<a class="headerlink" href="#_76" title="Permanent link">&para;</a></h3>
 <ol>
 <li><code>THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG</code></li>
 <li><code>THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG</code></li>
@@ -4955,7 +5171,7 @@ def frequency_analysis(text):
 <li><code>Hello, world! The key is: pipe</code></li>
 <li><code>THIS IS A TEST</code>（示例）</li>
 </ol>
-<div class='document-dates-plugin-wrapper document-dates-bottom'><div class='document-dates-plugin' locale=''><span data-tippy-content data-tippy-raw='2026-03-27'><span class='material-icons' data-icon='doc_created'></span><time datetime='2026-03-27T17:08:35.712757+08:00'>2026-03-27 17:08:35</time></span><span data-tippy-content data-tippy-raw='2026-03-27'><span class='material-icons' data-icon='doc_modified'></span><time datetime='2026-03-27T18:02:23+08:00'>2026-03-27 18:02:23</time></span></div></div>
+<div class='document-dates-plugin-wrapper document-dates-bottom'><div class='document-dates-plugin' locale=''><span data-tippy-content data-tippy-raw='2026-03-27'><span class='material-icons' data-icon='doc_created'></span><time datetime='2026-03-27T17:08:35.712757+08:00'>2026-03-27 17:08:35</time></span><span data-tippy-content data-tippy-raw='2026-04-16'><span class='material-icons' data-icon='doc_modified'></span><time datetime='2026-04-16T00:24:41+08:00'>2026-04-16 00:24:41</time></span></div></div>
 
 
 
@@ -5064,7 +5280,15 @@ def frequency_analysis(text):
     
       <script src="../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
-        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.js"></script>
+      
+        <script src="../../../assets/javascripts/pangu-init.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js"></script>
+      
+        <script src="../../../assets/javascripts/katex-init.js"></script>
       
         <script src="../../../assets/document_dates/tippy/popper.min.js"></script>
       

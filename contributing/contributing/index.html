@@ -52,15 +52,17 @@
       
     
     
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css">
+    
       <link rel="stylesheet" href="../../assets/document_dates/fonts/material-icons.css">
-    
-      <link rel="stylesheet" href="../../assets/document_dates/tippy/tippy.css">
-    
-      <link rel="stylesheet" href="../../assets/document_dates/tippy/scale.css">
     
       <link rel="stylesheet" href="../../assets/document_dates/tippy/material.css">
     
       <link rel="stylesheet" href="../../assets/document_dates/tippy/shift-away.css">
+    
+      <link rel="stylesheet" href="../../assets/document_dates/tippy/tippy.css">
+    
+      <link rel="stylesheet" href="../../assets/document_dates/tippy/scale.css">
     
       <link rel="stylesheet" href="../../assets/document_dates/tippy/light.css">
     
@@ -1574,6 +1576,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#fork" class="md-nav__link">
+    <span class="md-ellipsis">
+      方式二：Fork 后提交
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1663,6 +1674,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#fork" class="md-nav__link">
+    <span class="md-ellipsis">
+      方式二：Fork 后提交
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -1687,10 +1707,12 @@
   
 
 
-<h1 id="_1">贡献指南</h1>
+<h1 id="_1">贡献指南<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
 <hr />
-<p>!!! warning "注意"
-    禁止直接 push 至 master 分支，所有更改必须通过 Pull Request 方式提交，经审核通过后方可合并。</p>
+<div class="admonition warning">
+<p class="admonition-title">注意</p>
+<p>禁止直接 push 至 master 分支，所有更改必须通过 Pull Request 方式提交，经审核通过后方可合并。</p>
+</div>
 <p>本文将说明如何提交无论是新文档还是修改至 Wiki 页面，在这之前你应该</p>
 <ul>
 <li>请首先学习 git 基础知识。</li>
@@ -1698,118 +1720,125 @@
 <li>本项目文档均在 docs 目录下编写，编写完成后通过 Pull Request 合并至 master 分支，CI 将自动编译并更新页面。</li>
 <li>对于组件使用，可以依据本项目已有文章中的格式进行编写。</li>
 </ul>
-<h2 id="_2">提交步骤</h2>
-<h3 id="_3">方式一：直接克隆（仅限有仓库写权限的成员）</h3>
+<h2 id="_2">提交步骤<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h3 id="_3">方式一：直接克隆（仅限有仓库写权限的成员）<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
 <ol>
 <li>
 <p>首次克隆仓库</p>
-<p><code>bash
-git clone https://github.com/CAUC-CSA/CAUC-CSA.github.io.git</code></p>
+<div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/CAUC-CSA/CAUC-CSA.github.io.git
+</span></code></pre></div></td></tr></table></div>
 </li>
 <li>
 <p>获取最新主分支（首次克隆后立刻开始工作可跳过此步骤，仅在每次开始新工作前执行）</p>
-<p><code>bash
-git checkout master
-git pull origin master</code></p>
+<div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1"></a>git<span class="w"> </span>checkout<span class="w"> </span>master
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2"></a>git<span class="w"> </span>pull<span class="w"> </span>origin<span class="w"> </span>master
+</span></code></pre></div></td></tr></table></div>
 </li>
 <li>
 <p>创建新的工作分支</p>
-<p><code>bash
-git checkout -b &lt;your-work-branch&gt;</code></p>
+<div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1"></a>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>&lt;your-work-branch&gt;
+</span></code></pre></div></td></tr></table></div>
 </li>
 <li>
 <p>在 docs 下编写文档，强烈建议在本地构建，确认页面无误后再提交，请阅读<a href="../writing/">编写指南</a></p>
 </li>
 <li>
 <p>提交更改</p>
-<p><code>bash
-git add .
-git commit -m "对你作出的更新的描述"</code></p>
+<div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1"></a>git<span class="w"> </span>add<span class="w"> </span>.
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;对你作出的更新的描述&quot;</span>
+</span></code></pre></div></td></tr></table></div>
 <blockquote>
 <p><code>git commit -m</code> 可以直接写提交说明（commit message），包括主题和正文；不加 <code>-m</code> 会进入编辑器，可以更详细地编写多行提交说明，包括主题和扩展描述</p>
 </blockquote>
 </li>
 <li>
 <p>推送至远程仓库</p>
-<p><code>bash
-git push origin &lt;your-work-branch&gt;</code></p>
+<div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1"></a>git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>&lt;your-work-branch&gt;
+</span></code></pre></div></td></tr></table></div>
 </li>
 <li>
 <p>在 GitHub 网站创建 Pull Request</p>
 </li>
 <li>
 <p>若 PR 没有问题，已合并入主分支，那么就可以删除自己本地的分支了</p>
-<p><code>bash
-git checkout master
-git branch -D &lt;your-work-branch&gt;</code></p>
+<div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span>
+<span class="normal"><a href="#__codelineno-5-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1"></a>git<span class="w"> </span>checkout<span class="w"> </span>master
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2"></a>git<span class="w"> </span>branch<span class="w"> </span>-D<span class="w"> </span>&lt;your-work-branch&gt;
+</span></code></pre></div></td></tr></table></div>
 </li>
 <li>
 <p>若后续需要增加新的提交，首先拉取远程仓库的最新代码</p>
-<p>```bash</p>
-<h1 id="master">此时已经在 master 分支</h1>
-<p>git pull origin master
-```</p>
+<div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
+<span class="normal"><a href="#__codelineno-6-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="c1"># 此时已经在 master 分支</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2"></a>git<span class="w"> </span>pull<span class="w"> </span>origin<span class="w"> </span>master
+</span></code></pre></div></td></tr></table></div>
 </li>
 <li>
 <p>重复步骤 3~7（创建新分支 → 编写文档 → 提交 → 推送 → 创建 PR 等待 review）即可</p>
 </li>
 </ol>
-<h3 id="fork">方式二：Fork 后提交</h3>
+<h3 id="fork">方式二：Fork 后提交<a class="headerlink" href="#fork" title="Permanent link">&para;</a></h3>
 <ol>
 <li>
 <p>在 GitHub 上 Fork 本仓库到你的账号下</p>
 </li>
 <li>
 <p>克隆你 fork 的仓库</p>
-<p><code>bash
-git clone https://github.com/&lt;your-username&gt;/CAUC-CSA.github.io.git
-cd CAUC-CSA.github.io</code></p>
+<div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/&lt;your-username&gt;/CAUC-CSA.github.io.git
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="nb">cd</span><span class="w"> </span>CAUC-CSA.github.io
+</span></code></pre></div></td></tr></table></div>
 </li>
 <li>
 <p>添加上游仓库</p>
-<p><code>bash
-git remote add upstream https://github.com/CAUC-CSA/CAUC-CSA.github.io.git</code></p>
+<div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1"></a>git<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>upstream<span class="w"> </span>https://github.com/CAUC-CSA/CAUC-CSA.github.io.git
+</span></code></pre></div></td></tr></table></div>
 </li>
 <li>
 <p>创建工作分支</p>
-<p><code>bash
-git checkout -b &lt;your-work-branch&gt;</code></p>
+<div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1"></a>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>&lt;your-work-branch&gt;
+</span></code></pre></div></td></tr></table></div>
 </li>
 <li>
 <p>在 docs 下编写文档，强烈建议在本地构建，确认页面无误后再提交，请阅读<a href="../writing/">编写指南</a></p>
 </li>
 <li>
 <p>提交更改</p>
-<p><code>bash
-git add .
-git commit -m "对你作出的更新的描述"</code></p>
+<div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
+<span class="normal"><a href="#__codelineno-10-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1"></a>git<span class="w"> </span>add<span class="w"> </span>.
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;对你作出的更新的描述&quot;</span>
+</span></code></pre></div></td></tr></table></div>
 </li>
 <li>
 <p>推送到你的 fork 仓库</p>
-<p><code>bash
-git push origin &lt;your-work-branch&gt;</code></p>
+<div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1"></a>git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>&lt;your-work-branch&gt;
+</span></code></pre></div></td></tr></table></div>
 </li>
 <li>
 <p>在 GitHub 上从你的 fork 仓库创建 Pull Request 到主仓库</p>
 </li>
 <li>
 <p>若 PR 没有问题，已合并入主分支，那么就可以删除自己本地的分支了</p>
-<p><code>bash
-git checkout master
-git branch -D &lt;your-work-branch&gt;</code></p>
+<div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span>
+<span class="normal"><a href="#__codelineno-12-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1"></a>git<span class="w"> </span>checkout<span class="w"> </span>master
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2"></a>git<span class="w"> </span>branch<span class="w"> </span>-D<span class="w"> </span>&lt;your-work-branch&gt;
+</span></code></pre></div></td></tr></table></div>
 </li>
 <li>
 <p>若后续需要增加新的提交，首先同步上游仓库的最新代码</p>
-<p>```bash</p>
-<h1 id="master_1">此时已经在 master 分支</h1>
-<p>git pull upstream master
-git push origin master  # 同步到你的 fork 仓库
-```</p>
+<div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span>
+<span class="normal"><a href="#__codelineno-13-2">2</a></span>
+<span class="normal"><a href="#__codelineno-13-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="c1"># 此时已经在 master 分支</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2"></a>git<span class="w"> </span>pull<span class="w"> </span>upstream<span class="w"> </span>master
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3"></a>git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>master<span class="w">  </span><span class="c1"># 同步到你的 fork 仓库</span>
+</span></code></pre></div></td></tr></table></div>
 <p>或者直接在 GitHub 网页上通过 "Sync fork" 按钮同步，然后拉取：</p>
-<p>```bash</p>
-<h1 id="master_2">此时已经在 master 分支</h1>
-<p>git pull origin master
-```</p>
+<div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span>
+<span class="normal"><a href="#__codelineno-14-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="c1"># 此时已经在 master 分支</span>
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2"></a>git<span class="w"> </span>pull<span class="w"> </span>origin<span class="w"> </span>master
+</span></code></pre></div></td></tr></table></div>
 </li>
 <li>
 <p>然后重复步骤 4~8（创建新分支 → 编写文档 → 提交 → 推送 → 创建 PR 等待 review）即可</p>
@@ -1924,7 +1953,15 @@ git push origin master  # 同步到你的 fork 仓库
     
       <script src="../../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
-        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.js"></script>
+      
+        <script src="../../assets/javascripts/pangu-init.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js"></script>
+      
+        <script src="../../assets/javascripts/katex-init.js"></script>
       
         <script src="../../assets/document_dates/tippy/popper.min.js"></script>
       

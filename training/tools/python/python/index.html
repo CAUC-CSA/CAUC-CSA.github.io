@@ -52,15 +52,17 @@
       
     
     
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css">
+    
       <link rel="stylesheet" href="../../../../assets/document_dates/fonts/material-icons.css">
-    
-      <link rel="stylesheet" href="../../../../assets/document_dates/tippy/tippy.css">
-    
-      <link rel="stylesheet" href="../../../../assets/document_dates/tippy/scale.css">
     
       <link rel="stylesheet" href="../../../../assets/document_dates/tippy/material.css">
     
       <link rel="stylesheet" href="../../../../assets/document_dates/tippy/shift-away.css">
+    
+      <link rel="stylesheet" href="../../../../assets/document_dates/tippy/tippy.css">
+    
+      <link rel="stylesheet" href="../../../../assets/document_dates/tippy/scale.css">
     
       <link rel="stylesheet" href="../../../../assets/document_dates/tippy/light.css">
     
@@ -1749,7 +1751,7 @@
   
 
 
-<h1 id="python">我最怕蛇了，但是Python，嘿嘿好用</h1>
+<h1 id="python">我最怕蛇了，但是Python，嘿嘿好用<a class="headerlink" href="#python" title="Permanent link">&para;</a></h1>
 <p>最后编辑于 2025-10-30 by N0rth5ea</p>
 <hr />
 <p><img alt="image" src="https://www.python.org/static/img/python-logo.png" /></p>
@@ -1758,41 +1760,47 @@
 在信息安全领域，Python 也展现出了强大的能力，成为渗透测试、漏洞分析和自动化任务的首选工具。</p>
 </blockquote>
 <p>不多废话，直接开装，我不信你不需要用Python</p>
-<p>!!! warning
-    为了避免歧义，本文中 Python x.y.z 中的 x.y 表述为大版本号和小版本号，z 表述为补丁版本号。</p>
-<h2 id="_1">第一步： 版本的选择</h2>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>为了避免歧义，本文中 Python x.y.z 中的 x.y 表述为大版本号和小版本号，z 表述为补丁版本号。</p>
+</div>
+<h2 id="_1">第一步： 版本的选择<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <ul>
 <li>Python 分两个大版本：Python 2 和 Python 3。Python 2 支持不多，且官方已经停止维护，建议直接使用 Python 3。</li>
 <li>截止写本文时，Python 最新版本为 3.15.x，Python 每个小版本间都可能存在一些不兼容的改动。</li>
 <li>常用且好用的版本有 3.8、3.10、3.12，第一次装可以装 3.10 各种项目兼容性较好。</li>
 </ul>
-<h2 id="_2">第二步： 下载</h2>
+<h2 id="_2">第二步： 下载<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <ul>
-<li>访问 Python 官方网站 <a href="https://www.python.org/downloads/">https://www.python.org/downloads/</a>{target="_blank" rel="noopener"} 下载适合你操作系统的安装包。</li>
+<li>访问 Python 官方网站 <a href="https://www.python.org/downloads/" rel="noopener" target="_blank">https://www.python.org/downloads/</a> 下载适合你操作系统的安装包。</li>
 <li>当你想下载一个较旧的版本时，很可能点击该版本的下载链接后，只能看到源码(Source release)的下载选项。通常会有这样的描述<code>This is a security release of Python 3.10
   Note: The release you're looking at is Python 3.10.19, a security bugfix release for the legacy 3.10 series.</code></li>
-<li>往往这是因为该小版本已经进入"security fixes only"阶段，该补丁号版本只包含安全修复，不再提供二进制安装包。你需要在该页面找到类似下面这样一段话：
-!!! quote
-    According to the release calendar specified in PEP 619, Python 3.10 is now in the "security fixes only" stage of its life cycle: 3.10 branch only accepts security fixes and releases of those are made irregularly in source-only form until October 2026. Python 3.10 isn't receiving regular bug fixes anymore, and binary installers are no longer provided for it. Python 3.10.11 was the last full bugfix release of Python 3.10 with binary installers.</li>
-<li>可以看出，3.10.11 是改小版本最后一个包含二进制安装包的补丁版本，你需要找到该版本号进入下载页面，找到适合你操作系统的安装包进行下载。
-<img alt="img.png" src="../img_install.png" />
-/// caption
-正确的下载链接显示
-///</li>
+<li>往往这是因为该小版本已经进入"security fixes only"阶段，该补丁号版本只包含安全修复，不再提供二进制安装包。你需要在该页面找到类似下面这样一段话：</li>
 </ul>
-<h2 id="_3">第三步： 安装</h2>
+<div class="admonition quote">
+<p class="admonition-title">Quote</p>
+<p>According to the release calendar specified in PEP 619, Python 3.10 is now in the "security fixes only" stage of its life cycle: 3.10 branch only accepts security fixes and releases of those are made irregularly in source-only form until October 2026. Python 3.10 isn't receiving regular bug fixes anymore, and binary installers are no longer provided for it. Python 3.10.11 was the last full bugfix release of Python 3.10 with binary installers.</p>
+</div>
+<figure>
+<ul>
+<li>可以看出，3.10.11 是改小版本最后一个包含二进制安装包的补丁版本，你需要找到该版本号进入下载页面，找到适合你操作系统的安装包进行下载。
+<img alt="img.png" src="../img_install.png" /></li>
+</ul>
+<figcaption>
+<p>正确的下载链接显示</p>
+</figcaption>
+</figure>
+<h2 id="_3">第三步： 安装<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <ul>
 <li>建议勾选 Add Python x.y to PATH 选项，省的后续手动配环境变量。</li>
 <li>我个人推荐一键安装而不是自定义安装，当然这也取决于个人习惯。</li>
 </ul>
-<h2 id="_4">第四步： 验证安装与环境变量</h2>
+<h2 id="_4">第四步： 验证安装与环境变量<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <ul>
 <li>打开命令行工具（Windows 按 徽标键 + R，输入 cmd 回车）</li>
-<li>输入以下命令查看 Python 版本：</li>
-</ul>
-<pre><code class="language-bash">python --version
-</code></pre>
-<ul>
+<li>输入以下命令查看 Python 版本：
+<div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a>python<span class="w"> </span>--version
+</span></code></pre></div></td></tr></table></div></li>
 <li>如果显示了你安装的 Python 版本号，说明安装成功且环境变量配置正确。</li>
 <li>如果提示找不到命令，说明环境变量未配置成功，需要手动添加环境变量：<ol>
 <li>右键“此电脑”或“计算机”，选择“属性”。</li>
@@ -1805,69 +1813,71 @@
 </ol>
 </li>
 </ul>
-<p>!!! success
-    恭喜你，Python 已经安装完了，但是你以为这就完了？
-    Python 之所以好用，是因为它有丰富的第三方库。</p>
-<h2 id="_5">第五步： 安装三方库</h2>
+<div class="admonition success">
+<p class="admonition-title">Success</p>
+<p>恭喜你，Python 已经安装完了，但是你以为这就完了？
+Python 之所以好用，是因为它有丰富的第三方库。</p>
+</div>
+<h2 id="_5">第五步： 安装三方库<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
 <ul>
 <li>默认安装和自定义都默认勾选了 pip 安装，如果你在命令行输入 <code>pip --version</code> 能看到版本号，说明 pip 已经安装成功。</li>
-<li>如果没有安装，请输入以下命令安装 pip：</li>
+<li>如果没有安装，请输入以下命令安装 pip：
+<div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-1-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1"></a>python<span class="w"> </span>-m<span class="w"> </span>ensurepip<span class="w"> </span>--upgrade
+</span></code></pre></div></td></tr></table></div></li>
+<li>安装第三方包的命令很简单，当你需要安装某个包时，只需运行以下命令：
+<div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-2-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1"></a>pip<span class="w"> </span>install<span class="w"> </span>包名
+</span></code></pre></div></td></tr></table></div></li>
+<li>当一个项目会需要很多三方包时，通常会有一个 requirements.txt 文件，里面列出了所有需要安装的包及其版本号，你只需运行以下命令即可安装所有依赖：
+<div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-3-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1"></a>pip<span class="w"> </span>install<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+</span></code></pre></div></td></tr></table></div></li>
+<li>配置 pip 镜像源。pip 官方源位于国外，在国内速度较慢，建议配置国内镜像源。可以通过以下命令临时使用清华镜像源安装包：
+<div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-4-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1"></a>pip<span class="w"> </span>install<span class="w"> </span>包名<span class="w"> </span>-i<span class="w"> </span>https://pypi.tuna.tsinghua.edu.cn/simple
+</span></code></pre></div></td></tr></table></div></li>
+<li>如果想永久配置镜像源，例如清华大学的镜像源，可以输入以下命令：
+<div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-5-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1"></a>pip<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>global.index-url<span class="w"> </span>https://pypi.tuna.tsinghua.edu.cn/simple
+</span></code></pre></div></td></tr></table></div></li>
+<li>切回官方源：
+<div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-6-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1"></a>pip<span class="w"> </span>config<span class="w"> </span><span class="nb">set</span><span class="w"> </span>global.index-url<span class="w"> </span>https://pypi.org/simple
+</span></code></pre></div></td></tr></table></div></li>
 </ul>
-<pre><code class="language-bash">python -m ensurepip --upgrade
-</code></pre>
-<ul>
-<li>安装第三方包的命令很简单，当你需要安装某个包时，只需运行以下命令：</li>
-</ul>
-<pre><code class="language-bash">pip install 包名
-</code></pre>
-<ul>
-<li>当一个项目会需要很多三方包时，通常会有一个 requirements.txt 文件，里面列出了所有需要安装的包及其版本号，你只需运行以下命令即可安装所有依赖：</li>
-</ul>
-<pre><code class="language-bash">pip install -r requirements.txt
-</code></pre>
-<ul>
-<li>配置 pip 镜像源。pip 官方源位于国外，在国内速度较慢，建议配置国内镜像源。可以通过以下命令临时使用清华镜像源安装包：</li>
-</ul>
-<pre><code class="language-bash">pip install 包名 -i https://pypi.tuna.tsinghua.edu.cn/simple
-</code></pre>
-<ul>
-<li>如果想永久配置镜像源，例如清华大学的镜像源，可以输入以下命令：</li>
-</ul>
-<pre><code class="language-bash">pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
-</code></pre>
-<ul>
-<li>切回官方源：</li>
-</ul>
-<pre><code class="language-bash">pip config set global.index-url https://pypi.org/simple
-</code></pre>
-<p>??? note "更多国内源"
-    清华源 https://pypi.tuna.tsinghua.edu.cn/simple</br>
-    阿里源 https://mirrors.aliyun.com/pypi/simple/</br>
-    腾讯源 http://mirrors.cloud.tencent.com/pypi/simple</br>
-    豆瓣源 http://pypi.douban.com/simple/</p>
-<h2 id="_6">第六步： 虚拟环境</h2>
+<details class="note">
+<summary>更多国内源</summary>
+<p>清华源 https://pypi.tuna.tsinghua.edu.cn/simple</br>
+阿里源 https://mirrors.aliyun.com/pypi/simple/</br>
+腾讯源 http://mirrors.cloud.tencent.com/pypi/simple</br>
+豆瓣源 http://pypi.douban.com/simple/</p>
+</details>
+<h2 id="_6">第六步： 虚拟环境<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
 <ul>
 <li>当你用了一段时间 Python，你会发现不同项目对包的版本要求不一样，这时候虚拟环境就派上用场了。</li>
 <li>虚拟环境有很多种选择，我个人喜欢使用 venv ，其他更高级的模块欢迎补充。</li>
 <li>创建虚拟环境后，将会提供一个纯净的 Python 环境，当你下载三方包/运行项目时必须在激活虚拟环境状态，此时虚拟环境的三方库仅在该环境生效。</li>
-<li>创建虚拟环境：</li>
+<li>创建虚拟环境：
+<div class="language-text highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Text Only</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-7-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1"></a>python -m venv myenv
+</span></code></pre></div></td></tr></table></div></li>
+<li>激活虚拟环境：</li>
 </ul>
-<pre><code class="language-bashnn">python -m venv myenv
-</code></pre>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Windows</label><label for="__tabbed_1_2">Linux/macOS</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-8-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1"></a>.<span class="se">\m</span>yenv<span class="se">\S</span>cripts<span class="se">\a</span>ctivate
+</span></code></pre></div></td></tr></table></div>
+</div>
+<div class="tabbed-block">
+<div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-9-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1"></a><span class="nb">source</span><span class="w"> </span>myenv/bin/activate
+</span></code></pre></div></td></tr></table></div>
+</div>
+</div>
+</div>
 <ul>
-<li>激活虚拟环境：
-=== "Windows"
-    <code>bash
-    .\myenv\Scripts\activate</code>
-=== "Linux/macOS"
-    <code>bash
-    source myenv/bin/activate</code></li>
-<li>退出虚拟环境：</li>
+<li>退出虚拟环境：
+<div class="language-bash highlight"><table class="highlighttable"><tr><th colspan="2" class="filename"><span class="filename">Bash</span></th></tr><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-10-1">1</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1"></a>deactivate
+</span></code></pre></div></td></tr></table></div></li>
 </ul>
-<pre><code class="language-bash">deactivate
-</code></pre>
-<p>!!! success
-    至此，你已经学会了最基础的 Python 使用，好好享受与蛇共舞的时光吧！</p>
+<div class="admonition success">
+<p class="admonition-title">Success</p>
+<p>至此，你已经学会了最基础的 Python 使用，好好享受与蛇共舞的时光吧！</p>
+</div>
 <div class='document-dates-plugin-wrapper document-dates-bottom'><div class='document-dates-plugin' locale=''><span data-tippy-content data-tippy-raw='2025-10-30'><span class='material-icons' data-icon='doc_created'></span><time datetime='2025-10-30T22:42:55.296485+08:00'>2025-10-30 22:42:55</time></span><span data-tippy-content data-tippy-raw='2025-10-30'><span class='material-icons' data-icon='doc_modified'></span><time datetime='2025-10-30T23:45:54+08:00'>2025-10-30 23:45:54</time></span></div></div>
 
 
@@ -1977,7 +1987,15 @@
     
       <script src="../../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
-        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.js"></script>
+      
+        <script src="../../../../assets/javascripts/pangu-init.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js"></script>
+      
+        <script src="../../../../assets/javascripts/katex-init.js"></script>
       
         <script src="../../../../assets/document_dates/tippy/popper.min.js"></script>
       

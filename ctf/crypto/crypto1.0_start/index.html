@@ -52,15 +52,17 @@
       
     
     
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0/dist/katex.min.css">
+    
       <link rel="stylesheet" href="../../../assets/document_dates/fonts/material-icons.css">
-    
-      <link rel="stylesheet" href="../../../assets/document_dates/tippy/tippy.css">
-    
-      <link rel="stylesheet" href="../../../assets/document_dates/tippy/scale.css">
     
       <link rel="stylesheet" href="../../../assets/document_dates/tippy/material.css">
     
       <link rel="stylesheet" href="../../../assets/document_dates/tippy/shift-away.css">
+    
+      <link rel="stylesheet" href="../../../assets/document_dates/tippy/tippy.css">
+    
+      <link rel="stylesheet" href="../../../assets/document_dates/tippy/scale.css">
     
       <link rel="stylesheet" href="../../../assets/document_dates/tippy/light.css">
     
@@ -1899,21 +1901,21 @@
   
 
 
-<h1 id="_1">密码学补完计划 · 开篇</h1>
+<h1 id="_1">密码学补完计划 · 开篇<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
 <blockquote>
 <p>本文档为社团内部学习资料，系统讲解密码学相关内容。</p>
 </blockquote>
 <hr />
-<h2 id="1">1. 为什么要学密码学？</h2>
+<h2 id="1">1. 为什么要学密码学？<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
 <p>无论是 CTF 比赛中的解谜，还是理解 HTTPS、数字证书、电子支付这些日常技术，背后都是密码学的影子。密码学不是数学家的专利，它是连接理论与现实攻防的桥梁。</p>
 <p>本系列将从零开始，带你从古典密码，一路走到现代密码的数学根基，最终在 CTF 实战中能够独立分析、拆解各类密码学问题。</p>
 <hr />
-<h2 id="2">2. 什么是密码学</h2>
+<h2 id="2">2. 什么是密码学<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
 <p><strong>密码学</strong>（英语：Cryptography）可分为古典密码学和现代密码学。在西方语文中，密码学一词源于希腊语 <em>kryptós</em>“隐藏的”，和 <em>gráphein</em>“书写”。古典密码学主要关注资讯的保密书写和传递，以及与其相对应的破译方法。而现代密码学不只关注资讯保密问题，还同时涉及资讯完整性验证（消息验证码）、资讯发布的不可抵赖性（数码签名）、以及在分布式计算中产生的来源于内部和外部的攻击的所有信息安全问题。</p>
 <p>—— <a href="https://zh.wikipedia.org/zh-sg/密码学">维基 · 密码学</a></p>
 <hr />
-<h2 id="3">3. 密码学的两大分支</h2>
-<h3 id="31">3.1 古典密码学 —— 隐藏与欺骗的艺术</h3>
+<h2 id="3">3. 密码学的两大分支<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<h3 id="31">3.1 古典密码学 —— 隐藏与欺骗的艺术<a class="headerlink" href="#31" title="Permanent link">&para;</a></h3>
 <p>古典密码学作为一种实用性艺术存在，其编码和破译通常依赖于设计者和敌手的创造力与技巧，并没有对密码学原件进行清晰的定义。古典密码学主要包含以下几个方面：</p>
 <ul>
 <li><strong>单表替换加密</strong>：如凯撒密码、仿射密码，一个明文字母固定替换为另一个密文字母</li>
@@ -1921,7 +1923,7 @@
 <li><strong>奇奇怪怪的加密方式</strong>：如猪圈密码、舞动的小人、键盘布局密码等</li>
 </ul>
 <p>古典密码的核心思想至今仍在某些场景沿用，但面对现代计算能力，几乎全部可以被暴力或统计方法攻破。</p>
-<h3 id="32">3.2 现代密码学 —— 数学与计算的博弈</h3>
+<h3 id="32">3.2 现代密码学 —— 数学与计算的博弈<a class="headerlink" href="#32" title="Permanent link">&para;</a></h3>
 <p>现代密码学起源于 20 世纪中后期出现的大量相关理论。<strong>1949 年香农（C. E. Shannon）发表了题为《保密系统的通信理论》的经典论文</strong>，标志着现代密码学的开始。现代密码学主要包含以下几个方面：</p>
 <table>
 <thead>
@@ -1958,7 +1960,7 @@
 - <strong>分组密码（Block Cipher）</strong>：将数据分块加密，如 AES
 - <strong>序列密码（Stream Cipher）</strong>：逐字节/逐位加密，如 RC4</p>
 <hr />
-<h2 id="4">4. 信息安全的核心目标</h2>
+<h2 id="4">4. 信息安全的核心目标<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
 <p>密码设计者的根本目标是保障信息及信息系统的以下特性。前三者被称为 <strong>CIA 三要素</strong>，是所有安全体系的基石。</p>
 <table>
 <thead>
@@ -1997,7 +1999,7 @@
 </tbody>
 </table>
 <hr />
-<h2 id="5">5. 攻击者模型</h2>
+<h2 id="5">5. 攻击者模型<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
 <p>在密码学中，我们通常假设<strong>攻击者已知待破解的密码体制</strong>（柯克霍夫原则），只不知道密钥。攻击类型通常分为以下四种，难度依次降低：</p>
 <table>
 <thead>
@@ -2034,7 +2036,7 @@
 <p>在 CTF 密码学题目中，常需要根据题目提供的接口判断攻击类型，并选择合适的攻击手段。</p>
 </blockquote>
 <hr />
-<h2 id="6">6. 系列路线图</h2>
+<h2 id="6">6. 系列路线图<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
 <p>本系列将按照以下路线展开，逐步深入：</p>
 <table>
 <thead>
@@ -2073,26 +2075,26 @@
 </tbody>
 </table>
 <hr />
-<h2 id="7">7. 学习资源推荐</h2>
-<h3 id="71">7.1 在线文档(入门介绍)</h3>
+<h2 id="7">7. 学习资源推荐<a class="headerlink" href="#7" title="Permanent link">&para;</a></h2>
+<h3 id="71">7.1 在线文档(入门介绍)<a class="headerlink" href="#71" title="Permanent link">&para;</a></h3>
 <ul>
 <li><a href="https://ctf-wiki.org/crypto/introduction/">CTF-Wiki 密码学板块</a> —— 中文 CTF 知识库，体系完整</li>
 <li><a href="https://hello-ctf.com/hc-crypto/">Hello-CTF 密码学篇</a> —— 面向新手的入门教程，例题丰富</li>
 <li><a href="http://www.practicalcryptography.com/">Practical Cryptography</a> —— 英文站，古典密码工具与经典算法实现很全</li>
 </ul>
-<h3 id="72">7.2 书籍</h3>
+<h3 id="72">7.2 书籍<a class="headerlink" href="#72" title="Permanent link">&para;</a></h3>
 <ul>
 <li><strong>《初等数论》</strong> —— 离散数学是现代密码学的理论基础，各类现代密码算法都离不开数论的支持</li>
 <li><strong>《Understanding Cryptography》</strong> —— 这是大二应用密码学课程的教材<strong>（纯英）</strong></li>
 <li><strong>《离散数学》</strong>——就是你们现在手里的教材就可以</li>
 </ul>
-<h3 id="73">7.3 视频课程</h3>
+<h3 id="73">7.3 视频课程<a class="headerlink" href="#73" title="Permanent link">&para;</a></h3>
 <ul>
 <li>B站《密码学补完计划》，适合有一定了解后再去review，我为数不多不敢开倍速的视频</li>
 <li>英语好的去YouTube上去搜搜看吧，感觉国内一堆臭卖课的还讲不好（哭泣）</li>
 </ul>
 <hr />
-<h2 id="8">8. 写在前面的话</h2>
+<h2 id="8">8. 写在前面的话<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
 <p>密码学是一门<strong>既古老又年轻</strong>的学科。从凯撒的军令到比特币的私钥，从恩尼格玛的破解到量子安全的挑战，每一次技术的跃迁都在重塑我们对“秘密”的认知。</p>
 <p>这个系列不会要求你成为数学家，但会带你读懂数学的语言；不会让你背诵所有算法，但会帮你建立分析问题的框架。每篇文章都会尽量配合 CTF 例题或用例场景，让你“用完即走，走完还能回来翻”。</p>
 <div class='document-dates-plugin-wrapper document-dates-bottom'><div class='document-dates-plugin' locale=''><span data-tippy-content data-tippy-raw='2026-03-27'><span class='material-icons' data-icon='doc_created'></span><time datetime='2026-03-27T17:08:35.721757+08:00'>2026-03-27 17:08:35</time></span><span data-tippy-content data-tippy-raw='2026-03-27'><span class='material-icons' data-icon='doc_modified'></span><time datetime='2026-03-27T18:02:23+08:00'>2026-03-27 18:02:23</time></span></div></div>
@@ -2204,7 +2206,15 @@
     
       <script src="../../../assets/javascripts/bundle.f55a23d4.min.js"></script>
       
-        <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/pangu@4.0.7/dist/browser/pangu.js"></script>
+      
+        <script src="../../../assets/javascripts/pangu-init.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"></script>
+      
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js"></script>
+      
+        <script src="../../../assets/javascripts/katex-init.js"></script>
       
         <script src="../../../assets/document_dates/tippy/popper.min.js"></script>
       
