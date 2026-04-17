@@ -118,7 +118,7 @@
     #define fastbin_index(sz) \
       ((((unsigned int) (sz)) >> (SIZE_SZ == 8 ? 4 : 3)) - 2)
     	#define NFASTBINS  (fastbin_index (request2size (MAX_FAST_SIZE)) + 1)=fastbin_index (0xb0)+1=10
-    //想要注意的是这边所计算的fastbin最大大小是0xa0，不过会被默认通过global_max_fast全局变量将最大chunk值限制到128字节，就是0~128，对应chunk大小就是0x20~0x90
+    // 需要注意的是这边所计算的fastbin最大大小是0xa0，不过会被默认通过global_max_fast全局变量将最大chunk值限制到128字节，就是0~128，对应chunk大小就是0x20~0x80
     struct malloc_state
     {
       __libc_lock_define (, mutex);
