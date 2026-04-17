@@ -2182,7 +2182,7 @@
 </span><span id="__span-1-40"><a id="__codelineno-1-40" name="__codelineno-1-40"></a><span class="cp">#define fastbin_index(sz) \</span>
 </span><span id="__span-1-41"><a id="__codelineno-1-41" name="__codelineno-1-41"></a><span class="cp">  ((((unsigned int) (sz)) &gt;&gt; (SIZE_SZ == 8 ? 4 : 3)) - 2)</span>
 </span><span id="__span-1-42"><a id="__codelineno-1-42" name="__codelineno-1-42"></a><span class="w">    </span><span class="cp">#define NFASTBINS  (fastbin_index (request2size (MAX_FAST_SIZE)) + 1)=fastbin_index (0xb0)+1=10</span>
-</span><span id="__span-1-43"><a id="__codelineno-1-43" name="__codelineno-1-43"></a><span class="c1">//想要注意的是这边所计算的fastbin最大大小是0xa0，不过会被默认通过global_max_fast全局变量将最大chunk值限制到128字节，就是0~128，对应chunk大小就是0x20~0x90</span>
+</span><span id="__span-1-43"><a id="__codelineno-1-43" name="__codelineno-1-43"></a><span class="c1">// 需要注意的是这边所计算的fastbin最大大小是0xa0，不过会被默认通过global_max_fast全局变量将最大chunk值限制到128字节，就是0~128，对应chunk大小就是0x20~0x80</span>
 </span><span id="__span-1-44"><a id="__codelineno-1-44" name="__codelineno-1-44"></a><span class="k">struct</span><span class="w"> </span><span class="nc">malloc_state</span>
 </span><span id="__span-1-45"><a id="__codelineno-1-45" name="__codelineno-1-45"></a><span class="p">{</span>
 </span><span id="__span-1-46"><a id="__codelineno-1-46" name="__codelineno-1-46"></a><span class="w">  </span><span class="n">__libc_lock_define</span><span class="w"> </span><span class="p">(,</span><span class="w"> </span><span class="n">mutex</span><span class="p">);</span>
@@ -3428,7 +3428,7 @@
 </div>
 </div>
 </div>
-<div class='document-dates-plugin-wrapper document-dates-bottom'><div class='document-dates-plugin' locale=''><span data-tippy-content data-tippy-raw='2026-04-17'><span class='material-icons' data-icon='doc_created'></span><time datetime='2026-04-17T17:56:13.648999+08:00'>2026-04-17 17:56:13</time></span><span data-tippy-content data-tippy-raw='2026-04-17'><span class='material-icons' data-icon='doc_modified'></span><time datetime='2026-04-17T18:06:34+08:00'>2026-04-17 18:06:34</time></span></div></div>
+<div class='document-dates-plugin-wrapper document-dates-bottom'><div class='document-dates-plugin' locale=''><span data-tippy-content data-tippy-raw='2026-04-17'><span class='material-icons' data-icon='doc_created'></span><time datetime='2026-04-17T17:56:13.648999+08:00'>2026-04-17 17:56:13</time></span><span data-tippy-content data-tippy-raw='2026-04-17'><span class='material-icons' data-icon='doc_modified'></span><time datetime='2026-04-17T19:43:20+08:00'>2026-04-17 19:43:20</time></span></div></div>
 
 
 
