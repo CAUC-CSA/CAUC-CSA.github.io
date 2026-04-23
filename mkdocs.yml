@@ -166,6 +166,14 @@ nav:
           - 精读 1：malloc 入口、初始化与 tcache 建立: ctf/pwn/ptmalloc_source_code_glibc-2.35/source-reading-01-malloc-init.md
           - 精读 2：_int_malloc 主分配路径: ctf/pwn/ptmalloc_source_code_glibc-2.35/source-reading-02-int-malloc.md
           - 精读 3：free、合并与 trim 路径: ctf/pwn/ptmalloc_source_code_glibc-2.35/source-reading-03-free-trim.md
+        - 异构 PWN 基础:
+          - ARMv7 / AArch32 架构基础: ctf/pwn/architecture/aarch32-armv7.md
+          - AArch64 架构基础: ctf/pwn/architecture/aarch64.md
+          - MIPS32 架构基础: ctf/pwn/architecture/mips32.md
+          - MIPS64 架构基础: ctf/pwn/architecture/mips64.md
+          - RISC-V 32 位架构基础: ctf/pwn/architecture/riscv32.md
+          - RISC-V 64 位架构基础: ctf/pwn/architecture/riscv64.md
+          - PowerPC 架构基础: ctf/pwn/architecture/powerpc.md
       - Reverse:
         - xxx: ctf/reverse/reverse.md
       - Misc:
@@ -173,4 +181,3 @@ nav:
   - Wiki建设:
       - 提交规范: contributing/contributing.md
       - 撰写规范: contributing/writing.md
-

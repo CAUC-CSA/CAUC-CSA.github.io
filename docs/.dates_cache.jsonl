@@ -9,6 +9,13 @@
 {"ctf/pwn/Ret2csu/Ret2csu.md": {"created": "2026-03-13T12:43:48.669247+08:00"}}
 {"ctf/pwn/Ret2dlresolve/Ret2dlresolve.md": {"created": "2026-03-13T12:43:48.672990+08:00"}}
 {"ctf/pwn/Ret2gets/Ret2gets.md": {"created": "2026-03-20T17:13:16.622848+08:00"}}
+{"ctf/pwn/architecture/aarch32-armv7.md": {"created": "2026-04-23T12:33:45.022068+08:00"}}
+{"ctf/pwn/architecture/aarch64.md": {"created": "2026-04-23T12:33:45.022454+08:00"}}
+{"ctf/pwn/architecture/mips32.md": {"created": "2026-04-23T12:33:45.022739+08:00"}}
+{"ctf/pwn/architecture/mips64.md": {"created": "2026-04-23T12:33:45.023124+08:00"}}
+{"ctf/pwn/architecture/powerpc.md": {"created": "2026-04-23T12:33:45.024314+08:00"}}
+{"ctf/pwn/architecture/riscv32.md": {"created": "2026-04-23T12:33:45.023467+08:00"}}
+{"ctf/pwn/architecture/riscv64.md": {"created": "2026-04-23T12:33:45.024015+08:00"}}
 {"ctf/pwn/environment/pwn_environment.md": {"created": "2025-11-13T17:02:30.292920+08:00"}}
 {"ctf/pwn/ptmalloc_source_code_glibc-2.35/source-reading-00-heap-model.md": {"created": "2026-04-17T17:56:13.648509+08:00"}}
 {"ctf/pwn/ptmalloc_source_code_glibc-2.35/source-reading-01-malloc-init.md": {"created": "2026-04-17T17:56:13.648999+08:00"}}
